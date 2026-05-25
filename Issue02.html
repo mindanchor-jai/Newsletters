@@ -17,15 +17,15 @@
   --gold-bright: #d4a843;
   --gold-mid: #b8901f;
   --gold-soft: #c8a84b;
-  --gold-muted: #8a6a1a;
+  --gold-muted: #b8901f;
   --gold-pale: #f0d080;
   --gold-whisper: rgba(212, 168, 67, 0.08);
   --gold-whisper2: rgba(212, 168, 67, 0.15);
   --cream: #f5edd8;
   --cream-mid: #e8d9b8;
   --text-primary: #e8d9b8;
-  --text-secondary: rgba(232, 217, 184, 0.72);
-  --text-muted: rgba(232, 217, 184, 0.45);
+  --text-secondary: rgba(245, 237, 216, 0.86);
+  --text-muted: rgba(245, 237, 216, 0.62);
   --divider: rgba(212, 168, 67, 0.2);
   --divider-strong: rgba(212, 168, 67, 0.45);
 }
@@ -35,11 +35,11 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background-color: var(--navy-deepest);
+  background: linear-gradient(180deg, #040d1f 0%, #070f24 34%, #040d1f 100%);
   color: var(--text-primary);
   font-family: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
-  font-size: 19px;
-  line-height: 1.85;
+  font-size: 19.5px;
+  line-height: 1.9;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
@@ -57,7 +57,7 @@ body::before {
 
 /* ─── Layout ─── */
 .issue-wrap {
-  max-width: 760px;
+  max-width: 780px;
   margin: 0 auto;
   padding: 0 32px;
 }
@@ -97,20 +97,27 @@ body::before {
 }
 
 .masthead-inner {
-  max-width: 760px;
+  max-width: 780px;
   margin: 0 auto;
   padding: 0 32px;
   position: relative;
   z-index: 2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
 /* Peacock SVG emblem */
 .peacock-emblem {
   width: 64px;
   height: 64px;
-  margin: 0 auto 28px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 28px;
   opacity: 0.92;
   animation: peacock-glow 4s ease-in-out infinite;
+  transform-origin: center;
 }
 
 @keyframes peacock-glow {
@@ -142,7 +149,7 @@ body::before {
   font-family: 'EB Garamond', serif;
   font-style: italic;
   font-size: 16px;
-  color: var(--text-secondary);
+  color: var(--cream-mid);
   letter-spacing: 0.06em;
   margin-bottom: 32px;
 }
@@ -155,7 +162,7 @@ body::before {
   font-family: 'Cinzel', serif;
   font-size: 9.5px;
   letter-spacing: 0.25em;
-  color: var(--gold-muted);
+  color: var(--gold-soft);
   text-transform: uppercase;
 }
 
@@ -222,7 +229,7 @@ body::before {
   font-family: 'Cinzel', serif;
   font-size: 9px;
   letter-spacing: 0.38em;
-  color: var(--gold-muted);
+  color: var(--gold-soft);
   text-transform: uppercase;
   margin-bottom: 32px;
   display: flex;
@@ -238,7 +245,7 @@ body::before {
 
 .toc-issue-link {
   font-family: 'Cinzel', serif;
-  font-size: 8px;
+  font-size: 8.5px;
   letter-spacing: 0.28em;
   color: var(--gold-muted);
   text-decoration: none;
@@ -250,7 +257,7 @@ body::before {
   margin-bottom: 28px;
   opacity: 0.7;
 }
-.toc-issue-link:hover { color: var(--gold-soft); opacity: 1; }
+.toc-issue-link:hover { color: var(--gold-pale); opacity: 1; }
 
 .toc-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
 
@@ -295,8 +302,8 @@ body::before {
 }
 .toc-item-sub {
   font-style: italic;
-  font-size: 13px;
-  color: var(--text-muted);
+  font-size: 13.5px;
+  color: var(--text-secondary);
   display: block;
   margin-top: 2px;
   text-align: right;
@@ -331,7 +338,7 @@ body::before {
   font-family: 'Cinzel', serif;
   font-size: 8.5px;
   letter-spacing: 0.35em;
-  color: var(--gold-muted);
+  color: var(--gold-soft);
   text-transform: uppercase;
   border: 1px solid var(--divider);
   padding: 4px 10px;
@@ -363,7 +370,7 @@ body::before {
 /* ─── Body Typography ─── */
 .body-text {
   font-family: 'EB Garamond', serif;
-  font-size: 19px;
+  font-size: 19.5px;
   line-height: 1.9;
   color: var(--text-secondary);
   margin-bottom: 28px;
@@ -458,7 +465,7 @@ p:last-child { margin-bottom: 0; }
   font-family: 'Cinzel', serif;
   font-size: 8px;
   letter-spacing: 0.35em;
-  color: var(--gold-muted);
+  color: var(--gold-soft);
   text-transform: uppercase;
   margin-bottom: 14px;
   display: block;
@@ -545,7 +552,7 @@ p:last-child { margin-bottom: 0; }
 }
 .diagnosis-card p {
   font-family: 'EB Garamond', serif;
-  font-size: 16.5px;
+  font-size: 17px;
   color: var(--text-secondary);
   margin: 0;
   line-height: 1.75;
@@ -626,7 +633,7 @@ p:last-child { margin-bottom: 0; }
   font-family: 'Cinzel', serif;
   font-size: 9px;
   letter-spacing: 0.38em;
-  color: var(--gold-muted);
+  color: var(--gold-soft);
   text-transform: uppercase;
 }
 
@@ -704,16 +711,16 @@ p:last-child { margin-bottom: 0; }
   font-family: 'Cinzel', serif;
   font-size: 8px;
   letter-spacing: 0.3em;
-  color: var(--gold-muted);
+  color: var(--gold-soft);
   text-transform: uppercase;
   flex-shrink: 0;
 }
 .continuity-text {
   font-family: 'EB Garamond', serif;
   font-style: italic;
-  font-size: 14.5px;
-  color: var(--text-muted);
-  line-height: 1.5;
+  font-size: 15.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 /* ─── Footer ─── */
@@ -723,7 +730,7 @@ p:last-child { margin-bottom: 0; }
   padding: 56px 0;
   text-align: center;
 }
-.footer-inner { max-width: 760px; margin: 0 auto; padding: 0 32px; }
+.footer-inner { max-width: 780px; margin: 0 auto; padding: 0 32px; }
 .footer-emblem { width: 48px; height: 48px; margin: 0 auto 24px; opacity: 0.55; }
 .footer-name {
   font-family: 'Cinzel', serif;
@@ -745,7 +752,7 @@ p:last-child { margin-bottom: 0; }
   font-family: 'Cinzel', serif;
   font-size: 8.5px;
   letter-spacing: 0.25em;
-  color: var(--gold-muted);
+  color: var(--gold-soft);
   text-transform: uppercase;
   line-height: 2;
 }
@@ -762,6 +769,76 @@ p:last-child { margin-bottom: 0; }
 .masthead-title    { animation-delay: 0.38s; }
 .masthead-tagline  { animation-delay: 0.52s; }
 .masthead-meta     { animation-delay: 0.65s; }
+
+
+/* ─── Issue 02 readability + alignment fixes ─── */
+.issue-badge {
+  color: var(--gold-pale);
+}
+
+.toc-item {
+  align-items: flex-start;
+}
+
+.toc-item-title {
+  line-height: 1.22;
+}
+
+.section-eyebrow {
+  flex-wrap: wrap;
+}
+
+.section-tag {
+  color: var(--gold-soft);
+}
+
+.callout-inline {
+  background: rgba(212,168,67,0.075);
+}
+
+.timeline-event,
+.versus-cell p,
+.step-desc,
+.fragment-list li,
+.callout-inline p {
+  color: var(--text-secondary);
+}
+
+.footer-meta {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 600px) {
+  .masthead-meta {
+    gap: 14px;
+    line-height: 1.8;
+  }
+
+  .toc-item {
+    align-items: flex-start;
+  }
+
+  .toc-item-dots {
+    display: none;
+  }
+
+  .toc-item-title {
+    max-width: none;
+    text-align: left;
+  }
+
+  .toc-item-sub {
+    text-align: left;
+  }
+
+  .section-eyebrow {
+    align-items: flex-start;
+  }
+
+  .section-rule {
+    min-width: 70px;
+  }
+}
 
 /* ─── Responsive ─── */
 @media (max-width: 600px) {
@@ -859,7 +936,7 @@ p:last-child { margin-bottom: 0; }
   <!-- ─── Table of Contents ─── -->
   <nav class="toc-section" aria-label="Table of Contents">
     <div class="toc-label">Contents — Issue 02</div>
-    <a class="toc-issue-link" href="#">← Issue 01: The Avoidance Reflex</a>
+    <a class="toc-issue-link" href="Issue01.html">← Issue 01: The Avoidance Reflex</a>
 
     <ul class="toc-list">
       <li class="toc-item">
