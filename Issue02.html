@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchored Intelligence — Issue 02 | Mind Anchor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ─── CSS Variables ─── */
+:root {
+  --navy-deepest: #040d1f;
+  --navy-deep: #070f24;
+  --navy-mid: #0c1735;
+  --navy-light: #112050;
+  --gold-bright: #d4a843;
+  --gold-mid: #b8901f;
+  --gold-soft: #c8a84b;
+  --gold-muted: #8a6a1a;
+  --gold-pale: #f0d080;
+  --gold-whisper: rgba(212, 168, 67, 0.08);
+  --gold-whisper2: rgba(212, 168, 67, 0.15);
+  --cream: #f5edd8;
+  --cream-mid: #e8d9b8;
+  --text-primary: #e8d9b8;
+  --text-secondary: rgba(232, 217, 184, 0.72);
+  --text-muted: rgba(232, 217, 184, 0.45);
+  --divider: rgba(212, 168, 67, 0.2);
+  --divider-strong: rgba(212, 168, 67, 0.45);
+}
+
+/* ─── Reset & Base ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--navy-deepest);
+  color: var(--text-primary);
+  font-family: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
+  font-size: 19px;
+  line-height: 1.85;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Grain overlay ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.6;
+}
+
+/* ─── Layout ─── */
+.issue-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ─── Issue 02 ribbon ─── */
+.issue-ribbon {
+  background: linear-gradient(90deg, var(--gold-mid), var(--gold-bright), var(--gold-mid));
+  height: 3px;
+  width: 100%;
+}
+
+/* ─── Masthead ─── */
+.masthead {
+  background: var(--navy-deep);
+  border-bottom: 1px solid var(--divider);
+  padding: 56px 0 52px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.masthead::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(212,168,67,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Issue 02 — secondary ambient light from bottom */
+.masthead::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 25%; right: 25%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,168,67,0.4), transparent);
+}
+
+.masthead-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Peacock SVG emblem */
+.peacock-emblem {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 28px;
+  opacity: 0.92;
+  animation: peacock-glow 4s ease-in-out infinite;
+}
+
+@keyframes peacock-glow {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(212,168,67,0.3)); }
+  50%       { filter: drop-shadow(0 0 14px rgba(212,168,67,0.6)); }
+}
+
+.publication-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  color: var(--gold-soft);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.masthead-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(44px, 8vw, 72px);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+.masthead-title em { font-style: italic; color: var(--gold-soft); }
+
+.masthead-tagline {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  margin-bottom: 32px;
+}
+
+.masthead-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  font-family: 'Cinzel', serif;
+  font-size: 9.5px;
+  letter-spacing: 0.25em;
+  color: var(--gold-muted);
+  text-transform: uppercase;
+}
+
+.masthead-meta-dot {
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--gold-muted);
+  opacity: 0.5;
+}
+
+/* Issue badge */
+.issue-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto 32px;
+  border: 1px solid var(--divider-strong);
+  padding: 6px 18px;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.38em;
+  color: var(--gold-bright);
+  text-transform: uppercase;
+  background: rgba(212,168,67,0.05);
+}
+
+.issue-badge span { opacity: 0.4; }
+
+/* ─── Feather-eye section divider ─── */
+.peacock-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 0;
+  padding: 20px 0;
+}
+.peacock-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--divider), transparent);
+}
+.feather-eye { width: 22px; height: 22px; opacity: 0.7; }
+
+/* ─── Table of Contents ─── */
+.toc-section {
+  background: linear-gradient(135deg, rgba(12,23,53,0.9) 0%, rgba(7,15,36,0.95) 100%);
+  border: 1px solid var(--divider);
+  border-radius: 2px;
+  padding: 48px 52px;
+  margin: 48px 0;
+  position: relative;
+  overflow: hidden;
+}
+.toc-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
+}
+
+.toc-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.38em;
+  color: var(--gold-muted);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.toc-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--divider);
+}
+
+.toc-issue-link {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.28em;
+  color: var(--gold-muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--divider);
+  padding-bottom: 2px;
+  transition: color 0.3s;
+  display: block;
+  margin-bottom: 28px;
+  opacity: 0.7;
+}
+.toc-issue-link:hover { color: var(--gold-soft); opacity: 1; }
+
+.toc-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+
+.toc-item {
+  border-bottom: 1px solid rgba(212,168,67,0.08);
+  padding: 14px 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  transition: all 0.3s ease;
+}
+.toc-item:last-child { border-bottom: none; }
+.toc-item:hover .toc-item-title { color: var(--gold-soft); }
+.toc-item:hover .toc-item-num   { color: var(--gold-bright); }
+
+.toc-item-num {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  color: var(--gold-muted);
+  letter-spacing: 0.15em;
+  min-width: 32px;
+  transition: color 0.3s;
+}
+.toc-item-dots {
+  flex: 1;
+  border-bottom: 1px dotted rgba(212,168,67,0.2);
+  margin: 0 16px;
+  position: relative;
+  top: -4px;
+}
+.toc-item-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text-primary);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color 0.3s;
+  flex-shrink: 0;
+  max-width: 68%;
+  text-align: right;
+}
+.toc-item-sub {
+  font-style: italic;
+  font-size: 13px;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 2px;
+  text-align: right;
+}
+
+/* ─── Section Blocks ─── */
+.section-block {
+  padding: 72px 0;
+  border-bottom: 1px solid rgba(212,168,67,0.1);
+}
+.section-block:last-of-type { border-bottom: none; }
+
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+.section-num {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--gold-bright);
+  text-transform: uppercase;
+}
+.section-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--divider), transparent);
+}
+.section-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 8.5px;
+  letter-spacing: 0.35em;
+  color: var(--gold-muted);
+  text-transform: uppercase;
+  border: 1px solid var(--divider);
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(30px, 5vw, 44px);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--cream);
+  margin-bottom: 28px;
+  letter-spacing: 0.01em;
+}
+.section-title em { font-style: italic; color: var(--gold-soft); }
+
+.section-subtitle {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 17px;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(212,168,67,0.12);
+  letter-spacing: 0.03em;
+}
+
+/* ─── Body Typography ─── */
+.body-text {
+  font-family: 'EB Garamond', serif;
+  font-size: 19px;
+  line-height: 1.9;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+}
+.body-text + .body-text { margin-top: -8px; }
+p { margin-bottom: 24px; }
+p:last-child { margin-bottom: 0; }
+
+/* ─── Pull Quote ─── */
+.pull-quote {
+  margin: 52px -8px;
+  padding: 40px 48px;
+  border-left: 2px solid var(--gold-soft);
+  background: var(--gold-whisper);
+  position: relative;
+}
+.pull-quote::before {
+  content: '\201C';
+  position: absolute;
+  top: -12px; left: 40px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 80px;
+  color: var(--gold-soft);
+  opacity: 0.3;
+  line-height: 1;
+}
+.pull-quote p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(20px, 3.5vw, 26px);
+  line-height: 1.5;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+/* ─── Key Insight Box ─── */
+.insight-box {
+  background: linear-gradient(135deg, rgba(17,32,80,0.6), rgba(12,23,53,0.8));
+  border: 1px solid var(--divider);
+  border-top: 2px solid var(--gold-soft);
+  padding: 36px 40px;
+  margin: 44px 0;
+}
+.insight-label {
+  font-family: 'Cinzel', serif;
+  font-size: 8.5px;
+  letter-spacing: 0.35em;
+  color: var(--gold-bright);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.insight-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(17px, 2.5vw, 21px);
+  line-height: 1.6;
+  color: var(--cream);
+  font-weight: 400;
+}
+
+/* ─── Fragment list ─── */
+.fragment-list { list-style: none; margin: 28px 0; padding: 0; }
+.fragment-list li {
+  font-family: 'EB Garamond', serif;
+  font-size: 17px;
+  color: var(--text-secondary);
+  padding: 6px 0 6px 24px;
+  position: relative;
+  letter-spacing: 0.02em;
+}
+.fragment-list li::before {
+  content: '—';
+  position: absolute; left: 0;
+  color: var(--gold-muted);
+  font-size: 14px;
+}
+
+/* ─── Versus grid ─── */
+.versus-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin: 40px 0;
+  border: 1px solid var(--divider);
+}
+.versus-cell {
+  padding: 28px 32px;
+  background: rgba(7,15,36,0.6);
+}
+.versus-cell:first-child { border-right: 1px solid var(--divider); }
+.versus-label {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.35em;
+  color: var(--gold-muted);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: block;
+}
+.versus-cell p {
+  font-family: 'EB Garamond', serif;
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ─── Step list (toolkit) ─── */
+.step-list {
+  list-style: none;
+  margin: 40px 0;
+  counter-reset: step-counter;
+}
+.step-item {
+  counter-increment: step-counter;
+  display: flex;
+  gap: 24px;
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(212,168,67,0.08);
+}
+.step-item:last-child { border-bottom: none; }
+.step-num {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border: 1px solid var(--gold-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--gold-soft);
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+}
+.step-num::before { content: counter(step-counter, decimal-leading-zero); }
+.step-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--cream);
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+.step-desc {
+  font-family: 'EB Garamond', serif;
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin: 0;
+}
+.step-highlight {
+  display: inline-block;
+  font-style: italic;
+  color: var(--gold-soft);
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+/* ─── Diagnosis cards ─── */
+.diagnosis-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin: 40px 0;
+}
+.diagnosis-card {
+  background: rgba(7,15,36,0.7);
+  border: 1px solid var(--divider);
+  border-left: 3px solid var(--gold-mid);
+  padding: 28px 32px;
+}
+.diagnosis-card-label {
+  font-family: 'Cinzel', serif;
+  font-size: 8.5px;
+  letter-spacing: 0.32em;
+  color: var(--gold-bright);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.diagnosis-card p {
+  font-family: 'EB Garamond', serif;
+  font-size: 16.5px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.75;
+}
+
+/* ─── Timeline (Issue 02 — Ford failures) ─── */
+.timeline {
+  margin: 44px 0;
+  position: relative;
+  padding-left: 32px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px; top: 8px; bottom: 8px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--gold-muted), transparent);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 36px;
+}
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot {
+  position: absolute;
+  left: -29px; top: 6px;
+  width: 10px; height: 10px;
+  border: 1px solid var(--gold-soft);
+  border-radius: 50%;
+  background: var(--navy-deepest);
+}
+.timeline-year {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--gold-bright);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.timeline-event {
+  font-family: 'EB Garamond', serif;
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.timeline-event strong { color: var(--cream); font-weight: 500; }
+
+/* ─── Signal one-liner ─── */
+.signal-line { text-align: center; padding: 52px 0; }
+.signal-line p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(22px, 4vw, 30px);
+  color: var(--gold-soft);
+  letter-spacing: 0.03em;
+  line-height: 1.45;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ─── Closing reflection ─── */
+.closing-block {
+  background: linear-gradient(180deg, transparent 0%, rgba(212,168,67,0.04) 50%, transparent 100%);
+  padding: 80px 0;
+  text-align: center;
+  border-top: 1px solid var(--divider);
+}
+.closing-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(20px, 3vw, 26px);
+  color: var(--cream);
+  line-height: 1.55;
+  margin: 0 auto 40px;
+  max-width: 560px;
+}
+.closing-byline {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.38em;
+  color: var(--gold-muted);
+  text-transform: uppercase;
+}
+
+/* ─── Opening signal ─── */
+.opening-signal {
+  background: linear-gradient(160deg, rgba(12,23,53,0.5) 0%, transparent 60%);
+}
+.opening-signal .lead-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(22px, 3.5vw, 30px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1.4;
+  margin-bottom: 44px;
+  border-left: 2px solid var(--gold-soft);
+  padding-left: 28px;
+  letter-spacing: 0.01em;
+}
+
+/* ─── Ashes section ─── */
+.ashes-section .invisible-grief {
+  padding: 40px 0;
+  margin: 40px 0;
+  border-top: 1px solid rgba(212,168,67,0.12);
+  border-bottom: 1px solid rgba(212,168,67,0.12);
+}
+.ashes-section .invisible-grief p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(18px, 3vw, 23px);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  text-align: center;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* ─── Inline callout (Issue 02 new element) ─── */
+.callout-inline {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  background: rgba(212,168,67,0.05);
+  border: 1px solid rgba(212,168,67,0.15);
+  padding: 28px 32px;
+  margin: 36px 0;
+}
+.callout-inline-icon {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  margin-top: 2px;
+}
+.callout-inline p {
+  font-family: 'EB Garamond', serif;
+  font-size: 16.5px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin: 0;
+}
+.callout-inline p strong { color: var(--cream); font-weight: 500; }
+
+/* ─── Issue continuity banner ─── */
+.continuity-banner {
+  background: rgba(7,15,36,0.8);
+  border: 1px solid rgba(212,168,67,0.12);
+  border-left: 2px solid var(--gold-muted);
+  padding: 16px 24px;
+  margin-bottom: 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.continuity-label {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  color: var(--gold-muted);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.continuity-text {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 14.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ─── Footer ─── */
+.footer {
+  background: var(--navy-deep);
+  border-top: 1px solid var(--divider);
+  padding: 56px 0;
+  text-align: center;
+}
+.footer-inner { max-width: 760px; margin: 0 auto; padding: 0 32px; }
+.footer-emblem { width: 48px; height: 48px; margin: 0 auto 24px; opacity: 0.55; }
+.footer-name {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: var(--gold-soft);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.footer-sub {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+.footer-rule { width: 80px; height: 1px; background: var(--divider); margin: 28px auto; }
+.footer-meta {
+  font-family: 'Cinzel', serif;
+  font-size: 8.5px;
+  letter-spacing: 0.25em;
+  color: var(--gold-muted);
+  text-transform: uppercase;
+  line-height: 2;
+}
+
+/* ─── Animate on load ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.masthead-inner > * { animation: fadeUp 0.8s ease both; }
+.peacock-emblem    { animation-delay: 0.1s; }
+.issue-badge       { animation-delay: 0.2s; }
+.publication-label { animation-delay: 0.25s; }
+.masthead-title    { animation-delay: 0.38s; }
+.masthead-tagline  { animation-delay: 0.52s; }
+.masthead-meta     { animation-delay: 0.65s; }
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+  .issue-wrap { padding: 0 20px; }
+  .toc-section { padding: 36px 28px; }
+  .pull-quote { padding: 28px 24px; margin: 40px 0; }
+  .insight-box { padding: 28px 24px; }
+  .versus-grid { grid-template-columns: 1fr; }
+  .versus-cell:first-child { border-right: none; border-bottom: 1px solid var(--divider); }
+  .step-item { flex-direction: column; gap: 12px; }
+  .step-num { width: 36px; height: 36px; }
+  .toc-item-title { max-width: 55%; font-size: 15px; }
+  .callout-inline { flex-direction: column; gap: 12px; }
+  .continuity-banner { flex-direction: column; gap: 8px; }
+}
+
+::selection { background: rgba(212,168,67,0.25); color: var(--cream); }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     ISSUE RIBBON
+════════════════════════════════════════════ -->
+<div class="issue-ribbon"></div>
+
+<!-- ═══════════════════════════════════════════
+     MASTHEAD
+════════════════════════════════════════════ -->
+<header class="masthead">
+  <div class="masthead-inner">
+
+    <!-- Peacock Anchor SVG -->
+    <svg class="peacock-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="url(#gG2)"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="url(#gG2)"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="url(#gG2)" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="url(#gG2)" opacity="0.95"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="url(#gG2)" opacity="0.95"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="url(#gG2)" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="url(#gG2)"/>
+      <circle cx="50" cy="30" r="5" fill="url(#gG2)"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="url(#gG2)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="url(#gG2)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="url(#gG2)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="url(#gG2)"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="url(#gG2)"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="url(#gG2)"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="url(#gG2)" opacity="0.7"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="url(#gG2)" opacity="0.8"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="url(#gG2)" opacity="0.7"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="url(#gG2)" opacity="0.8"/>
+      <ellipse cx="30" cy="90" rx="3" ry="3.5" fill="url(#gG2)" opacity="0.5"/>
+      <ellipse cx="66" cy="90" rx="3" ry="3.5" fill="url(#gG2)" opacity="0.5"/>
+      <defs>
+        <linearGradient id="gG2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f0d080"/>
+          <stop offset="50%" stop-color="#d4a843"/>
+          <stop offset="100%" stop-color="#b8901f"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="issue-badge">
+      <span>Issue 01 ✦</span> Issue 02 — The Proximity Tax
+    </div>
+
+    <div class="publication-label">Mind Anchor · Anchored Intelligence</div>
+    <h1 class="masthead-title"><em>Anchored</em> Intelligence</h1>
+    <p class="masthead-tagline">Invisible patterns shaping people, pressure, and performance.</p>
+
+    <div class="masthead-meta">
+      <span>Issue 02</span>
+      <span class="masthead-meta-dot"></span>
+      <span>The Proximity Tax</span>
+      <span class="masthead-meta-dot"></span>
+      <span>Mind Anchor · Jai</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     MAIN
+════════════════════════════════════════════ -->
+<main>
+<div class="issue-wrap">
+
+  <!-- Continuity banner -->
+  <div class="continuity-banner" style="margin-top:40px;">
+    <span class="continuity-label">Continuing from Issue 01</span>
+    <span class="continuity-text">Issue 01 examined <em>The Avoidance Reflex</em> — how avoidance stops looking emotional and starts looking intelligent. This issue traces what happens next: the compounding cost that accumulates when relief becomes a repeating reward.</span>
+  </div>
+
+  <!-- ─── Table of Contents ─── -->
+  <nav class="toc-section" aria-label="Table of Contents">
+    <div class="toc-label">Contents — Issue 02</div>
+    <a class="toc-issue-link" href="#">← Issue 01: The Avoidance Reflex</a>
+
+    <ul class="toc-list">
+      <li class="toc-item">
+        <span class="toc-item-num">I</span>
+        <span class="toc-item-dots"></span>
+        <a href="#opening-signal" class="toc-item-title">
+          Opening Signal
+          <span class="toc-item-sub">The Psychology of Immediate Relief</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">II</span>
+        <span class="toc-item-dots"></span>
+        <a href="#framework" class="toc-item-title">
+          Framework Lens
+          <span class="toc-item-sub">The Relief-Reinforcement Loop</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">III</span>
+        <span class="toc-item-dots"></span>
+        <a href="#toolkit" class="toc-item-title">
+          Toolkit Application
+          <span class="toc-item-sub">Toolkit 02 — The Founder Conflict Toolkit</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">IV</span>
+        <span class="toc-item-dots"></span>
+        <a href="#field-diagnosis" class="toc-item-title">
+          Field Diagnosis
+          <span class="toc-item-sub">OpenAI — The Five-Day Proximity Tax Event</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">V</span>
+        <span class="toc-item-dots"></span>
+        <a href="#ashes" class="toc-item-title">
+          Ashes to Arrival · Episode 05
+          <span class="toc-item-sub">Henry Ford — Two Failures Before 40</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg width="28" height="28" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:0.55">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       I · OPENING SIGNAL
+  ════════════════════════════════════════════ -->
+  <section class="section-block opening-signal" id="opening-signal">
+
+    <div class="section-eyebrow">
+      <span class="section-num">I</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Opening Signal</span>
+    </div>
+
+    <h2 class="section-title">The Psychology of<br><em>Immediate Relief</em></h2>
+    <p class="section-subtitle">Why the most expensive decisions are rarely made from aggression — and almost always made from relief that successfully disguises itself as wisdom.</p>
+
+    <p class="lead-line" style="font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,30px);font-weight:300;font-style:italic;color:var(--cream);line-height:1.4;margin-bottom:44px;border-left:2px solid var(--gold-soft);padding-left:28px;letter-spacing:0.01em;">
+      Most destructive decisions do not initially feel destructive. They feel relieving. That is what makes them dangerous.
+    </p>
+
+    <div class="body-text">
+      <p>A difficult conversation gets postponed. A challenging person loses access. A tense room is entered less often. A risky opportunity is abandoned. A painful rebuild is quietly stopped.</p>
+      <p>And immediately, the nervous system relaxes. The body interprets the reduction in discomfort as evidence: "You made the correct decision."</p>
+      <p>This is one of the most underdiagnosed distortions in human behavior.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Core Invisible Pattern — Issue 02</div>
+      <div class="insight-text">The invisible pattern connecting every section is this: emotional relief becomes mistaken for evidence of correctness. The nervous system rewards reduction in activation before reality reveals the strategic cost. Not avoidance alone. Rewarded avoidance.</div>
+    </div>
+
+    <div class="body-text">
+      <p>People assume strategic collapse comes from recklessness, incompetence, or visible irrationality. More often, it comes from repeated emotional relief becoming neurologically persuasive enough to override long-term value.</p>
+      <p>The founder removes friction and calls it alignment. The organization avoids confrontation and calls it operational continuity. The board escapes discomfort and calls it governance. The exhausted builder considers surrender and calls it realism.</p>
+      <p>Different environments. Same loop.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>Relief arrives first. Reality arrives later. And because no single moment appears catastrophic, the pattern compounds invisibly.</p>
+    </div>
+
+    <div class="body-text">
+      <p>This is how organizations slowly become emotionally optimized instead of strategically optimized. This is how talented people gradually shrink their own range while believing they are becoming wiser, calmer, or more selective.</p>
+      <p>The nervous system does not ask first: "What preserves the highest long-term value?" It asks: "Did the discomfort reduce?" And if the answer is yes, the body rewards the decision before reality has time to evaluate it.</p>
+      <p>That reward loop changes everything.</p>
+    </div>
+
+    <div class="body-text">
+      <p>Because eventually, human beings stop merely avoiding discomfort. They begin restructuring their lives around the anticipation of it. Smaller rooms. Safer people. Lower-friction ambitions. Predictable environments. Reduced exposure. Filtered truth.</p>
+      <p>The person feels more regulated. But their strategic world becomes smaller.</p>
+    </div>
+
+    <ul class="fragment-list">
+      <li>the conversation disappears</li>
+      <li>the difficult person leaves</li>
+      <li>the pressure lowers</li>
+      <li>the room becomes quieter</li>
+      <li>the tension softens</li>
+    </ul>
+
+    <div class="body-text">
+      <p>The nervous system interprets the emotional silence as safety. But underneath, strategic range is shrinking. The tragedy is not that people move toward comfort. It is that comfort feels neurologically persuasive enough to disguise contraction while it is happening.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>The nervous system rewards emotional relief immediately.<br>Reality charges interest later.</p>
+    </div>
+
+  </section>
+
+  <!-- Peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       II · FRAMEWORK LENS
+  ════════════════════════════════════════════ -->
+  <section class="section-block" id="framework">
+
+    <div class="section-eyebrow">
+      <span class="section-num">II</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Framework Lens</span>
+    </div>
+
+    <h2 class="section-title">The Relief-Reinforcement<br><em>Loop</em></h2>
+    <p class="section-subtitle">The moment emotional relief becomes neurological evidence that avoidance was the correct decision — and why avoidance compounds instead of correcting itself.</p>
+
+    <div class="body-text">
+      <p>Most people assume repeated withdrawal is a discipline problem. It is usually a reward-loop problem.</p>
+      <p>The first act of avoidance creates relief. That relief becomes neurological confirmation. The nervous system interprets reduced tension, reduced exposure, reduced uncertainty, reduced ego activation as evidence of successful decision-making.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Core Psychological Mechanism</div>
+      <div class="insight-text">The nervous system prioritizes immediate regulation over delayed strategic value. Avoidance reduces activation. The brain experiences this as successful danger reduction. Dopaminergic reward pathways reinforce the behavior. Over time, avoidance becomes easier, tolerance decreases, discomfort sensitivity rises, and withdrawal becomes automatic.</div>
+    </div>
+
+    <div class="body-text">
+      <p>The person no longer consciously chooses retreat. Retreat becomes the body's preferred prediction model for safety. This is the exact point where emotional behavior begins shaping strategic reality.</p>
+    </div>
+
+    <div class="versus-grid">
+      <div class="versus-cell">
+        <span class="versus-label">What the nervous system evaluates</span>
+        <p>Did the tension reduce? Did the uncertainty soften? Did the ego threat disappear? If yes — reward.</p>
+      </div>
+      <div class="versus-cell">
+        <span class="versus-label">What reality evaluates</span>
+        <p>What was the strategic cost? What leverage was surrendered? What proximity was lost? Invoice pending.</p>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>This creates organizations optimized for nervous-system comfort instead of strategic truth exposure. Most organizational inefficiency is not operational first. It is emotional first.</p>
+      <p>The Relief-Reinforcement Loop explains why organizations repeatedly preserve emotionally comfortable communication structures, low-friction teams, politically safe operators, filtered information channels, and weak accountability systems — even when performance visibly declines.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>Every avoided confrontation produces temporary emotional relief. And temporary relief feels productive in the moment. The invoice eventually appears as slower execution, weakened decision quality, and declining strategic aggression.</p>
+    </div>
+
+    <div class="body-text">
+      <p><strong style="color:var(--cream);font-weight:500;">For founders,</strong> the loop explains why they increasingly isolate themselves from dissent, why difficult high-performers get removed, why organizations become politically sanitized, and why executive teams stop telling the truth upward.</p>
+      <p>Every emotionally relieving avoidance decision trains the organization psychologically. Eventually, the company inherits the founder's tolerance threshold. And that threshold silently determines innovation tolerance, conflict quality, truth exposure, execution sharpness, and strategic courage.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">The Invisible Cost — Decreased Discomfort Capacity</div>
+      <div class="insight-text">Every rewarded withdrawal lowers future tolerance for tension, disagreement, uncertainty, confrontation, exposure, and strategic vulnerability. The nervous system adapts downward. Emotional fragility disguises itself as selectiveness. Low-risk positioning disguises itself as maturity. Withdrawal disguises itself as discernment.</div>
+    </div>
+
+    <div class="body-text">
+      <p>The person believes they are protecting themselves. But often they are conditioning themselves into smaller strategic range. The loop survives because the nervous system never immediately shows the full invoice. So each withdrawal feels relieving individually — and the pattern remains psychologically invisible.</p>
+    </div>
+
+    <div class="callout-inline">
+      <svg class="callout-inline-icon" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <circle cx="14" cy="14" r="12" stroke="#d4a843" stroke-width="1" opacity="0.5"/>
+        <line x1="14" y1="8" x2="14" y2="16" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="14" cy="20" r="1.2" fill="#d4a843" opacity="0.7"/>
+      </svg>
+      <p><strong>The post-rationalization layer:</strong> The person does not consciously say "I chose relief over value." They say: "It wasn't aligned." "I'm protecting my peace." "The energy felt wrong." "I've become more selective." Sometimes those statements are true. But often they are post-rationalized nervous-system negotiations masquerading as strategic clarity.</p>
+    </div>
+
+  </section>
+
+  <!-- Peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       III · TOOLKIT APPLICATION
+  ════════════════════════════════════════════ -->
+  <section class="section-block" id="toolkit">
+
+    <div class="section-eyebrow">
+      <span class="section-num">III</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Toolkit Application</span>
+    </div>
+
+    <h2 class="section-title">Toolkit 02 —<br><em>The Founder Conflict Toolkit</em></h2>
+    <p class="section-subtitle">Map. Diagnose. Govern. — Operationalizing the exact moment emotional discomfort becomes organizational cost.</p>
+
+    <div class="body-text">
+      <p>Most founders believe conflict damages companies. The framework reveals something more dangerous: unresolved avoidance damages companies faster than conflict does.</p>
+      <p>This toolkit is not a relationship tool. It is a strategic economics tool disguised as a founder conflict system.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">The Problem It Solves</div>
+      <div class="insight-text">Founders rarely remove value directly. They reduce exposure, reduce access, reduce influence, reduce communication, and quietly reorganize the company around emotional comfort. The toolkit identifies this as emotional governance failure — the point where The Proximity Tax becomes measurable.</div>
+    </div>
+
+    <div class="body-text">
+      <p>The strongest manifestation: a founder has a highly capable, strategically sharp co-founder or operator who improves decisions, catches execution risks early, and creates real leverage — but who also challenges authority, triggers insecurity, and activates ego discomfort. The founder begins excluding them, routing decisions elsewhere, and emotionally labeling them "negative." Short-term: relief. Long-term: degraded company intelligence.</p>
+    </div>
+
+    <ol class="step-list">
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Run the Co-Founder Proximity Map</div>
+          <p class="step-desc">Score two dimensions separately: <span class="step-highlight">Strategic Value</span> and <span class="step-highlight">Proximity Discomfort.</span> Most founders collapse these into one emotional judgment. The toolkit separates "How valuable are they?" from "How uncomfortable do they make me feel?" That separation changes everything.</p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Identify the Active Conflict Pattern</div>
+          <p class="step-desc">Diagnose the exact avoidance architecture. Is this <span class="step-highlight">Ego-Vision Clash</span> (challenge interpreted as disrespect), <span class="step-highlight">Competence Envy</span> (excellence becomes psychologically threatening), or <span class="step-highlight">Righteousness Exit</span> (emotional withdrawal reframed as moral clarity)? The toolkit strips away narrative camouflage.</p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Audit Emotional Triggers</div>
+          <p class="step-desc">Identify the founder's specific trigger architecture: Authority Trigger, Competence Threat, Validation Deficit, Vision Sovereignty Trigger. This is where the founder realizes: <span class="step-highlight">"I am not reacting to operational danger. I am reacting to ego activation."</span> That distinction prevents massive strategic damage.</p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Use the Difficult Conversation Structure</div>
+          <p class="step-desc">Most founder partnerships collapse because the conversation never happens. The six-phase structure: <span class="step-highlight">Name the state → State the observation → Name your feeling → State the need → Invite response → Agree to structure.</span> The toolkit reframes transparency as governance infrastructure, not vulnerability.</p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Run the Decision Rights Audit</div>
+          <p class="step-desc">Audit who currently decides, who should decide, and whether authority is formally agreed. The toolkit reveals that many "relationship conflicts" are actually <span class="step-highlight">governance failures disguised as emotional tension.</span> The friction was real — but structural ambiguity amplified it.</p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Calculate the Real Cost of Removal</div>
+          <p class="step-desc">Force the answer: <span class="step-highlight">"If this person left tomorrow, what would replacing their functions actually cost?"</span> Operational replacement cost, strategic intelligence loss, network damage, execution slowdown, cultural consequences. Now the founder can finally compare emotional relief against strategic destruction. This is the invoice.</p>
+        </div>
+      </li>
+
+    </ol>
+
+    <div class="insight-box">
+      <div class="insight-label">The Deepest Realization</div>
+      <div class="insight-text">Many founders are not protecting the company. They are protecting their nervous system. The toolkit exposes how easily discomfort becomes morality, ego becomes governance, avoidance becomes strategy, and relief becomes "intuition." The founder realizes: "I thought I was removing friction. I was removing pressure against my blind spots."</div>
+    </div>
+
+    <div class="body-text">
+      <p>The most common failure pattern is moralized avoidance — where the founder emotionally decides to withdraw first, then retroactively creates culture narratives, alignment narratives, wellness narratives, or personality narratives to justify the exit. The toolkit calls this the Righteousness Exit. One of the most expensive founder behaviors, because high-value people are removed while the founder still feels psychologically correct.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>Emotional relief becomes expensive the moment it starts reorganizing your company.</p>
+    </div>
+
+  </section>
+
+  <!-- Peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       IV · FIELD DIAGNOSIS
+  ════════════════════════════════════════════ -->
+  <section class="section-block" id="field-diagnosis">
+
+    <div class="section-eyebrow">
+      <span class="section-num">IV</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Field Diagnosis</span>
+    </div>
+
+    <h2 class="section-title">OpenAI — The Invoice<br><em>Arrived in Five Days</em></h2>
+    <p class="section-subtitle">The Sam Altman board crisis as a live Proximity Tax event — where a high-value, high-discomfort relationship became economically measurable through rupture.</p>
+
+    <div class="body-text">
+      <p>The public story was simple: a board lost trust in a CEO. The CEO was removed. Employees revolted. Microsoft moved quickly. The CEO returned. The board changed.</p>
+      <p>That is true. But incomplete.</p>
+    </div>
+
+    <div class="diagnosis-grid">
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Surface Narrative</div>
+        <p>OpenAI's board fired Sam Altman on November 17, 2023. Employees threatened mass departure. Microsoft positioned aggressively. Altman was reinstated within five days. The board that acted was effectively dissolved.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Hidden Psychological Pattern — Proximity Failure Under Pressure</div>
+        <p>The board appears to have faced a high-stakes discomfort problem: staying close enough to a powerful, high-value, high-complexity founder-CEO long enough to govern him effectively. Instead, the conflict escalated into rupture. The system had no mature architecture for governing high-value discomfort before it became a binary decision.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Emotional Mechanism — Reward-Loop Reinforcement</div>
+        <p>When discomfort becomes intolerable, decisive removal can feel like clarity. The nervous system reads the reduction of tension as confirmation: "This was the right move." But the framework warns that high-value, high-discomfort decisions sit inside the Pyrrhic Zone — where the correct move is not immediate exit but separation, audit, and governance design.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Framework Diagnosis: Q4 — High Value · High Discomfort</div>
+        <p>Altman was strategically high-value. The board relationship was emotionally and institutionally high-discomfort. The failure was not discomfort itself. The failure was allowing discomfort to become a binary decision. This is the exact moment emotional discomfort silently overpowers strategic judgment and gets reframed as wisdom.</p>
+      </div>
+
+    </div>
+
+    <div class="body-text">
+      <p>Nearly all OpenAI employees reportedly threatened to resign unless Altman returned and the board resigned. The invoice arrived not through slow erosion but through a five-day organizational rupture that compressed years of accumulated proximity cost into a single visible moment.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>Avoidance does not always look weak. Sometimes it looks decisive. Sometimes it looks principled. Sometimes it looks like governance. But when the avoided object is high-value, distance is never free.</p>
+    </div>
+
+    <div class="body-text">
+      <p>This is what most leaders miss. The board did not experience their decision as avoidance. They experienced it as clarity. As governance. As the correct institutional response.</p>
+      <p>But the framework diagnosis holds: the system had learned to tolerate discomfort until it couldn't — and then produced rupture instead of resolution. There was no governance infrastructure for the high-value, high-discomfort zone. So the only available response was removal.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">The Direct Truth</div>
+      <div class="insight-text">Emotional relief is often financially expensive. You just are not looking at the receipt. The five-day OpenAI event made the receipt visible. Most Proximity Tax events never do — they simply accumulate as slower execution, weaker decisions, and declining strategic range, until the contraction becomes the new normal.</div>
+    </div>
+
+  </section>
+
+  <!-- Peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       V · ASHES TO ARRIVAL
+  ════════════════════════════════════════════ -->
+  <section class="section-block ashes-section" id="ashes">
+
+    <div class="section-eyebrow">
+      <span class="section-num">V</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Ashes to Arrival · Episode 05</span>
+    </div>
+
+    <h2 class="section-title">Two Failures Before 40 —<br><em>Henry Ford</em></h2>
+    <p class="section-subtitle">On failure as compressed information, identity as separable from outcome, and the psychological sophistication required to keep rebuilding while the world keeps moving ahead.</p>
+
+    <div class="body-text">
+      <p>Most people experience failure as identity collapse. A failed attempt quietly becomes: "Maybe I'm not capable." "Maybe this was unrealistic." "Maybe I should stop."</p>
+      <p>But some individuals interpret failure differently. They do not see collapse. They see incomplete construction.</p>
+    </div>
+
+    <div class="body-text">
+      <p>Henry Ford's story is not fundamentally about business success. It is about psychological endurance through repeated invalidation. Two failed companies before 40. Most people would have converted those experiences into permanent self-doubt. He converted them into refinement.</p>
+    </div>
+
+    <!-- Ford timeline -->
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1899</div>
+        <div class="timeline-event"><strong>Detroit Automobile Company founded — and dissolved within two years.</strong> Poor product quality, high costs, insufficient output. The first visible failure.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1901</div>
+        <div class="timeline-event"><strong>Henry Ford Company — departed before it could become anything.</strong> Investor conflict, creative control disputes. The company he left would become Cadillac. The second failure, more complex than the first.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1903</div>
+        <div class="timeline-event"><strong>Ford Motor Company founded.</strong> The third structure, built on the lessons of two collapses. Five years of failure becoming the infrastructure of a company that would reshape modern transportation.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1908</div>
+        <div class="timeline-event"><strong>The Model T.</strong> The world celebrated a breakthrough. Nobody publicly accounted for the invisible redesign process that made it possible.</div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Identity Lesson</div>
+      <div class="insight-text">Failure becomes dangerous when a person begins treating temporary outcomes as permanent definitions. Henry Ford's deeper lesson is not persistence alone — it is separation. He separated failed models from failed capability, broken systems from broken identity, unsuccessful attempts from personal worth. That distinction allowed him to continue iterating without emotionally disintegrating after every setback.</div>
+    </div>
+
+    <div class="ashes-section">
+      <div class="invisible-grief">
+        <p>There is a specific emotional heaviness attached to repeated failure. The first failure hurts. The second failure becomes existential. Because eventually the question changes — from "Will this work?" to "Am I becoming foolish for continuing?" That internal transition breaks many people quietly. Not publicly. Privately.</p>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>The exhaustion of rebuilding. Explaining setbacks. Watching others move ahead. Carrying invisible embarrassment. Starting again while appearing "behind." This is why stories like Henry Ford's continue resonating across generations. Because underneath ambition, many people are carrying fatigue.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>Failure exposes reality faster than comfort does. Ford did not simply ask "Did this fail?" He asked "What exactly did this failure reveal?" Over time, repeated iteration compounds into structural superiority.</p>
+    </div>
+
+    <div class="body-text">
+      <p>Modern environments punish visible failure psychologically. People now fail publicly — online, professionally, socially, financially. And digital culture creates the illusion that successful people moved linearly. They did not.</p>
+      <p>Most meaningful creation still emerges through correction, adaptation, redesign, and emotional endurance. But today, many people abandon long-term visions after early setbacks because failure now feels permanently recorded. Henry Ford's story restores an older truth: human progress has always been iterative. The final version is rarely the first version.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">One Powerful Observation</div>
+      <div class="insight-text">Some people are not successful because they avoid failure. They become successful because failure no longer frightens them into stopping. That is a very different kind of strength — and one that cannot be built without first passing through the seasons it requires.</div>
+    </div>
+
+    <div class="body-text">
+      <p>Many people are standing emotionally inside unfinished versions of their future — mistaking the current stage for the final outcome. But unfinished does not mean impossible. Incomplete construction is not the same as failed identity.</p>
+      <p>Henry Ford's early failures did not erase his vision. They refined his relationship with reality. And eventually, the man who experienced collapse before 40 helped reshape modern transportation itself.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>Henry Ford did not become extraordinary because he avoided mistakes.<br>He became extraordinary because he stayed psychologically<br>engaged long enough to learn from them.</p>
+    </div>
+
+  </section>
+
+
+  <!-- Peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       CLOSING REFLECTION
+  ════════════════════════════════════════════ -->
+  <section class="closing-block" id="closing">
+
+    <h2 class="section-title" style="font-size:clamp(28px,4vw,40px);margin-bottom:24px;">Closing <em>Reflection</em></h2>
+
+    <div class="closing-quote">
+      The moment emotional relief becomes evidence of correctness,<br>avoidance begins compounding into identity, strategy, and structure.
+    </div>
+
+    <div style="max-width:560px;margin:0 auto 48px;font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);line-height:1.85;">
+      <p>This issue traced a single mechanism across four environments: the founder, the board, the institution, the individual. The mechanism was identical in each case — relief arrived first, consequence arrived later, and the gap between them was long enough to make avoidance feel correct.</p>
+      <p>The OpenAI event compressed that gap into five days. Ford stretched it across a decade. Most people live somewhere between the two — accumulating a proximity tax that never becomes visible enough to interrupt the pattern until the strategic world has already reorganized itself around the reduction.</p>
+      <p>The highest form of intelligence is not the absence of discomfort. It is the capacity to remain near high-value friction long enough to let reality evaluate it — before the nervous system does.</p>
+    </div>
+
+    <div class="closing-byline">Mind Anchor · Anchored Intelligence · Issue 02</div>
+
+  </section>
+
+</div><!-- /issue-wrap -->
+</main>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+
+    <svg class="footer-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="#d4a843"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="#d4a843"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="#d4a843" opacity="0.7"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="#d4a843" opacity="0.7"/>
+    </svg>
+
+    <div class="footer-name">Mind Anchor</div>
+    <div class="footer-sub">Anchored Intelligence — by Jai</div>
+
+    <div class="footer-rule"></div>
+
+    <div class="footer-meta">
+      Issue 02 · The Proximity Tax<br>
+      Invisible patterns shaping people, pressure, and performance.<br><br>
+      Previous: Issue 01 · The Avoidance Reflex<br><br>
+      © Mind Anchor · All rights reserved<br>
+      The highest form of intelligence is not the absence of discomfort.<br>
+      It is the capacity to remain near value long enough to evaluate it clearly.
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
