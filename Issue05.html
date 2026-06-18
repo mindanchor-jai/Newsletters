@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchored Intelligence — Issue 05 | Mind Anchor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ─── CSS Variables ─── */
+:root {
+  --navy-deepest: #040d1f;
+  --navy-deep:    #070f24;
+  --navy-mid:     #0c1735;
+  --navy-light:   #112050;
+  --gold-bright:  #d4a843;
+  --gold-mid:     #b8901f;
+  --gold-soft:    #c8a84b;
+  --gold-muted:   #8a6a1a;
+  --gold-pale:    #f0d080;
+  --gold-whisper:  rgba(212,168,67,0.08);
+  --gold-whisper2: rgba(212,168,67,0.15);
+  --cream:      #f5edd8;
+  --cream-mid:  #e8d9b8;
+  --text-primary:   #e8d9b8;
+  --text-secondary: rgba(232,217,184,0.72);
+  --text-muted:     rgba(232,217,184,0.45);
+  --divider:        rgba(212,168,67,0.2);
+  --divider-strong: rgba(212,168,67,0.45);
+}
+
+/* ─── Reset ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background-color:var(--navy-deepest);
+  color:var(--text-primary);
+  font-family:'EB Garamond','Cormorant Garamond',Georgia,serif;
+  font-size:19px;line-height:1.85;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ─── Grain ─── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;opacity:0.6;
+}
+
+/* ─── Layout ─── */
+.issue-wrap{max-width:760px;margin:0 auto;padding:0 32px;}
+
+/* ─── Issue 05 ribbon ─── */
+.issue-ribbon{
+  background:linear-gradient(90deg,var(--gold-bright),var(--gold-pale),var(--gold-soft),var(--gold-pale),var(--gold-bright));
+  height:3px;width:100%;
+}
+
+/* ─── Masthead ─── */
+.masthead{
+  background:var(--navy-deep);
+  border-bottom:1px solid var(--divider);
+  padding:56px 0 52px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.masthead::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 45% at 50% 0%,rgba(212,168,67,0.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.masthead::after{
+  content:'';position:absolute;
+  bottom:0;left:20%;right:20%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,168,67,0.35),transparent);
+}
+.masthead-inner{max-width:760px;margin:0 auto;padding:0 32px;position:relative;z-index:2;}
+
+/* ─── Peacock emblem ─── */
+.peacock-emblem{
+  width:64px;height:64px;
+  margin:0 auto 28px;opacity:0.92;
+  animation:peacock-glow 4s ease-in-out infinite;
+}
+@keyframes peacock-glow{
+  0%,100%{filter:drop-shadow(0 0 6px rgba(212,168,67,0.3));}
+  50%     {filter:drop-shadow(0 0 16px rgba(212,168,67,0.65));}
+}
+
+.publication-label{
+  font-family:'Cinzel',serif;font-size:10px;
+  letter-spacing:0.32em;color:var(--gold-soft);
+  text-transform:uppercase;margin-bottom:18px;
+}
+
+.issue-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  margin:0 auto 32px;
+  border:1px solid var(--divider-strong);padding:6px 18px;
+  font-family:'Cinzel',serif;font-size:9px;
+  letter-spacing:0.38em;color:var(--gold-bright);
+  text-transform:uppercase;background:rgba(212,168,67,0.05);
+}
+.issue-badge span{opacity:0.38;}
+
+.masthead-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(44px,8vw,72px);font-weight:300;
+  letter-spacing:0.04em;color:var(--cream);
+  line-height:1.05;margin-bottom:16px;
+}
+.masthead-title em{font-style:italic;color:var(--gold-soft);}
+
+.masthead-tagline{
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:16px;color:var(--text-secondary);
+  letter-spacing:0.06em;margin-bottom:32px;
+}
+
+.masthead-meta{
+  display:flex;align-items:center;justify-content:center;
+  gap:28px;font-family:'Cinzel',serif;font-size:9.5px;
+  letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;
+}
+.masthead-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--gold-muted);opacity:0.5;}
+
+/* ─── Peacock section dividers ─── */
+.peacock-divider{display:flex;align-items:center;justify-content:center;gap:20px;margin:0;padding:20px 0;}
+.peacock-divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--divider),transparent);}
+.feather-eye{width:22px;height:22px;opacity:0.7;}
+
+/* ─── ToC ─── */
+.toc-section{
+  background:linear-gradient(135deg,rgba(12,23,53,0.9) 0%,rgba(7,15,36,0.95) 100%);
+  border:1px solid var(--divider);border-radius:2px;
+  padding:48px 52px;margin:48px 0;position:relative;overflow:hidden;
+}
+.toc-section::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-soft),transparent);
+}
+.toc-label{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;
+  color:var(--gold-muted);text-transform:uppercase;margin-bottom:8px;
+  display:flex;align-items:center;gap:14px;
+}
+.toc-label::after{content:'';flex:1;height:1px;background:var(--divider);}
+
+.toc-series-line{
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:13.5px;color:var(--text-muted);
+  margin-bottom:28px;letter-spacing:0.02em;
+  padding-bottom:20px;border-bottom:1px solid rgba(212,168,67,0.1);
+}
+.toc-series-line a{color:var(--gold-muted);text-decoration:none;transition:color 0.3s;}
+.toc-series-line a:hover{color:var(--gold-soft);}
+
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.toc-item{
+  border-bottom:1px solid rgba(212,168,67,0.08);
+  padding:14px 0;display:flex;align-items:baseline;gap:0;
+  transition:all 0.3s ease;
+}
+.toc-item:last-child{border-bottom:none;}
+.toc-item:hover .toc-item-title{color:var(--gold-soft);}
+.toc-item:hover .toc-item-num{color:var(--gold-bright);}
+.toc-item-num{
+  font-family:'Cinzel',serif;font-size:10px;
+  color:var(--gold-muted);letter-spacing:0.15em;
+  min-width:32px;transition:color 0.3s;
+}
+.toc-item-dots{
+  flex:1;border-bottom:1px dotted rgba(212,168,67,0.2);
+  margin:0 16px;position:relative;top:-4px;
+}
+.toc-item-title{
+  font-family:'Cormorant Garamond',serif;font-size:17px;
+  font-weight:400;color:var(--text-primary);text-decoration:none;
+  letter-spacing:0.02em;transition:color 0.3s;
+  flex-shrink:0;max-width:68%;text-align:right;
+}
+.toc-item-sub{
+  font-style:italic;font-size:13px;color:var(--text-muted);
+  display:block;margin-top:2px;text-align:right;
+}
+
+/* ─── Section blocks ─── */
+.section-block{padding:72px 0;border-bottom:1px solid rgba(212,168,67,0.1);}
+.section-block:last-of-type{border-bottom:none;}
+
+.section-eyebrow{display:flex;align-items:center;gap:16px;margin-bottom:36px;}
+.section-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;color:var(--gold-bright);text-transform:uppercase;}
+.section-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--divider),transparent);}
+.section-tag{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-muted);text-transform:uppercase;border:1px solid var(--divider);padding:4px 10px;white-space:nowrap;}
+
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,44px);font-weight:300;line-height:1.15;color:var(--cream);margin-bottom:28px;letter-spacing:0.01em;}
+.section-title em{font-style:italic;color:var(--gold-soft);}
+
+.section-subtitle{font-family:'EB Garamond',serif;font-style:italic;font-size:17px;color:var(--text-secondary);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid rgba(212,168,67,0.12);letter-spacing:0.03em;}
+
+/* ─── Body text ─── */
+.body-text{font-family:'EB Garamond',serif;font-size:19px;line-height:1.9;color:var(--text-secondary);margin-bottom:28px;}
+.body-text+.body-text{margin-top:-8px;}
+p{margin-bottom:24px;}p:last-child{margin-bottom:0;}
+
+/* ─── Pull quote ─── */
+.pull-quote{margin:52px -8px;padding:40px 48px;border-left:2px solid var(--gold-soft);background:var(--gold-whisper);position:relative;}
+.pull-quote::before{content:'\201C';position:absolute;top:-12px;left:40px;font-family:'Cormorant Garamond',serif;font-size:80px;color:var(--gold-soft);opacity:0.3;line-height:1;}
+.pull-quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,3.5vw,26px);line-height:1.5;color:var(--cream);letter-spacing:0.02em;margin:0;}
+
+/* ─── Insight box ─── */
+.insight-box{background:linear-gradient(135deg,rgba(17,32,80,0.6),rgba(12,23,53,0.8));border:1px solid var(--divider);border-top:2px solid var(--gold-soft);padding:36px 40px;margin:44px 0;}
+.insight-label{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:16px;}
+.insight-text{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.5vw,21px);line-height:1.6;color:var(--cream);font-weight:400;}
+
+/* ─── Fragment list ─── */
+.fragment-list{list-style:none;margin:28px 0;padding:0;}
+.fragment-list li{font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);padding:6px 0 6px 24px;position:relative;letter-spacing:0.02em;}
+.fragment-list li::before{content:'—';position:absolute;left:0;color:var(--gold-muted);font-size:14px;}
+
+/* ─── Versus grid ─── */
+.versus-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:40px 0;border:1px solid var(--divider);}
+.versus-cell{padding:28px 32px;background:rgba(7,15,36,0.6);}
+.versus-cell:first-child{border-right:1px solid var(--divider);}
+.versus-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.35em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:14px;display:block;}
+.versus-cell p{font-family:'EB Garamond',serif;font-size:16px;color:var(--text-secondary);line-height:1.7;margin:0;}
+
+/* ─── Step list ─── */
+.step-list{list-style:none;margin:40px 0;counter-reset:step-counter;}
+.step-item{counter-increment:step-counter;display:flex;gap:24px;padding:32px 0;border-bottom:1px solid rgba(212,168,67,0.08);}
+.step-item:last-child{border-bottom:none;}
+.step-num{flex-shrink:0;width:40px;height:40px;border:1px solid var(--gold-muted);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:11px;color:var(--gold-soft);letter-spacing:0.05em;margin-top:4px;}
+.step-num::before{content:counter(step-counter,decimal-leading-zero);}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--cream);margin-bottom:10px;letter-spacing:0.02em;}
+.step-desc{font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);line-height:1.8;margin:0;}
+.step-highlight{display:inline-block;font-style:italic;color:var(--gold-soft);margin-top:8px;font-size:16px;}
+
+/* ─── Diagnosis cards ─── */
+.diagnosis-grid{display:grid;grid-template-columns:1fr;gap:20px;margin:40px 0;}
+.diagnosis-card{background:rgba(7,15,36,0.7);border:1px solid var(--divider);border-left:3px solid var(--gold-mid);padding:28px 32px;}
+.diagnosis-card-label{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.32em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:12px;}
+.diagnosis-card p{font-family:'EB Garamond',serif;font-size:16.5px;color:var(--text-secondary);margin:0;line-height:1.75;}
+
+/* ─── Loop sequence (Issue 05 — identity immunization) ─── */
+.loop-sequence{
+  margin:44px 0;
+  display:flex;flex-direction:column;gap:0;
+  border:1px solid var(--divider);
+}
+.loop-step{
+  padding:20px 32px;
+  background:rgba(7,15,36,0.5);
+  border-bottom:1px solid rgba(212,168,67,0.1);
+  display:grid;
+  grid-template-columns:20px 1fr;
+  gap:20px;
+  align-items:center;
+}
+.loop-step:last-child{
+  border-bottom:none;
+  background:rgba(212,168,67,0.07);
+}
+.loop-step-icon{
+  font-family:'Cinzel',serif;font-size:10px;
+  color:var(--gold-muted);text-align:center;
+}
+.loop-step-text{
+  font-family:'EB Garamond',serif;font-size:17px;
+  color:var(--text-secondary);letter-spacing:0.01em;
+}
+.loop-step:last-child .loop-step-text{
+  color:var(--gold-soft);font-style:italic;
+}
+
+/* ─── Toolkit cost table ─── */
+.cost-table{
+  margin:44px 0;border:1px solid var(--divider);
+}
+.cost-table-header{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:16px;
+  padding:16px 32px;
+  background:rgba(212,168,67,0.06);
+  border-bottom:1px solid var(--divider);
+}
+.cost-table-head{
+  font-family:'Cinzel',serif;font-size:8.5px;
+  letter-spacing:0.3em;color:var(--gold-bright);
+  text-transform:uppercase;
+}
+.cost-row{
+  display:grid;grid-template-columns:1fr auto;
+  gap:16px;padding:16px 32px;
+  border-bottom:1px solid rgba(212,168,67,0.06);
+  align-items:baseline;
+}
+.cost-row:last-child{border-bottom:none;}
+.cost-category{
+  font-family:'Cormorant Garamond',serif;font-size:18px;
+  color:var(--cream);font-weight:500;margin-bottom:4px;
+}
+.cost-description{
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:15px;color:var(--text-muted);
+}
+.cost-score{
+  font-family:'Cinzel',serif;font-size:9px;
+  letter-spacing:0.2em;color:var(--gold-muted);
+  white-space:nowrap;align-self:center;
+}
+
+/* ─── Language substitution table (Issue 05 new element) ─── */
+.language-table{
+  margin:40px 0;border:1px solid var(--divider);
+}
+.language-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid rgba(212,168,67,0.08);
+}
+.language-row:last-child{border-bottom:none;}
+.language-cell{
+  padding:18px 28px;
+  font-family:'EB Garamond',serif;font-size:16px;
+  line-height:1.6;
+}
+.language-cell:first-child{
+  border-right:1px solid var(--divider);
+  color:var(--text-muted);
+  font-style:italic;
+}
+.language-cell:last-child{
+  color:var(--gold-soft);
+  font-style:italic;
+}
+.language-row-header .language-cell{
+  font-family:'Cinzel',serif;font-size:8px;
+  letter-spacing:0.3em;color:var(--gold-muted);
+  text-transform:uppercase;font-style:normal;
+  background:rgba(212,168,67,0.04);padding:12px 28px;
+}
+
+/* ─── Story arc (Fauja Singh) ─── */
+.arc-flow{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;margin:44px 0;border:1px solid var(--divider);
+}
+.arc-flow.six-step{grid-template-columns:repeat(3,1fr);}
+.arc-step{
+  padding:28px 20px 24px;
+  background:rgba(7,15,36,0.6);
+  text-align:center;
+  border-right:1px solid var(--divider);
+  border-bottom:1px solid var(--divider);
+}
+.arc-flow.six-step .arc-step:nth-child(3n){border-right:none;}
+.arc-flow.six-step .arc-step:nth-last-child(-n+3){border-bottom:none;}
+.arc-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:12px;display:block;}
+.arc-word{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.5vw,20px);font-weight:400;color:var(--cream);letter-spacing:0.03em;margin-bottom:8px;display:block;}
+.arc-note{font-family:'EB Garamond',serif;font-style:italic;font-size:13px;color:var(--text-muted);line-height:1.55;}
+
+/* ─── Callout inline ─── */
+.callout-inline{display:flex;gap:20px;align-items:flex-start;background:rgba(212,168,67,0.05);border:1px solid rgba(212,168,67,0.15);padding:28px 32px;margin:36px 0;}
+.callout-inline-icon{flex-shrink:0;width:28px;height:28px;margin-top:2px;}
+.callout-inline p{font-family:'EB Garamond',serif;font-size:16.5px;color:var(--text-secondary);line-height:1.75;margin:0;}
+.callout-inline p strong{color:var(--cream);font-weight:500;}
+
+/* ─── Continuity banner ─── */
+.continuity-banner{background:rgba(7,15,36,0.8);border:1px solid rgba(212,168,67,0.12);border-left:2px solid var(--gold-muted);padding:16px 24px;margin-bottom:48px;display:flex;align-items:center;gap:16px;}
+.continuity-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.3em;color:var(--gold-muted);text-transform:uppercase;flex-shrink:0;}
+.continuity-text{font-family:'EB Garamond',serif;font-style:italic;font-size:14.5px;color:var(--text-muted);line-height:1.5;}
+
+/* ─── Signal one-liner ─── */
+.signal-line{text-align:center;padding:52px 0;}
+.signal-line p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,4vw,30px);color:var(--gold-soft);letter-spacing:0.03em;line-height:1.45;max-width:560px;margin:0 auto;}
+
+/* ─── Opening signal ─── */
+.opening-signal{background:linear-gradient(160deg,rgba(12,23,53,0.5) 0%,transparent 60%);}
+.lead-line{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,30px);font-weight:300;font-style:italic;color:var(--cream);line-height:1.4;margin-bottom:44px;border-left:2px solid var(--gold-soft);padding-left:28px;letter-spacing:0.01em;}
+
+/* ─── Ashes section ─── */
+.ashes-section .invisible-grief{padding:40px 0;margin:40px 0;border-top:1px solid rgba(212,168,67,0.12);border-bottom:1px solid rgba(212,168,67,0.12);}
+.ashes-section .invisible-grief p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,3vw,23px);color:var(--text-secondary);line-height:1.65;text-align:center;max-width:580px;margin:0 auto;}
+
+/* ─── Closing block ─── */
+.closing-block{background:linear-gradient(180deg,transparent 0%,rgba(212,168,67,0.04) 50%,transparent 100%);padding:80px 0;text-align:center;border-top:1px solid var(--divider);}
+.closing-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,3vw,26px);color:var(--cream);line-height:1.55;margin:0 auto 40px;max-width:560px;}
+.closing-byline{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;}
+
+/* ─── Footer ─── */
+.footer{background:var(--navy-deep);border-top:1px solid var(--divider);padding:56px 0;text-align:center;}
+.footer-inner{max-width:760px;margin:0 auto;padding:0 32px;}
+.footer-emblem{width:48px;height:48px;margin:0 auto 24px;opacity:0.55;}
+.footer-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.3em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:8px;}
+.footer-sub{font-family:'EB Garamond',serif;font-style:italic;font-size:14px;color:var(--text-muted);margin-bottom:32px;}
+.footer-rule{width:80px;height:1px;background:var(--divider);margin:28px auto;}
+.footer-meta{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;line-height:2;}
+
+/* ─── Animation ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+.masthead-inner>*{animation:fadeUp 0.8s ease both;}
+.peacock-emblem{animation-delay:0.1s;}
+.issue-badge{animation-delay:0.2s;}
+.publication-label{animation-delay:0.25s;}
+.masthead-title{animation-delay:0.38s;}
+.masthead-tagline{animation-delay:0.52s;}
+.masthead-meta{animation-delay:0.65s;}
+
+/* ─── Responsive ─── */
+@media(max-width:600px){
+  .issue-wrap{padding:0 20px;}
+  .toc-section{padding:36px 28px;}
+  .pull-quote{padding:28px 24px;margin:40px 0;}
+  .insight-box{padding:28px 24px;}
+  .versus-grid{grid-template-columns:1fr;}
+  .versus-cell:first-child{border-right:none;border-bottom:1px solid var(--divider);}
+  .arc-flow,.arc-flow.six-step{grid-template-columns:1fr;}
+  .arc-flow .arc-step{border-right:none;border-bottom:1px solid var(--divider);}
+  .arc-flow .arc-step:last-child{border-bottom:none;}
+  .step-item{flex-direction:column;gap:12px;}
+  .step-num{width:36px;height:36px;}
+  .toc-item-title{max-width:55%;font-size:15px;}
+  .callout-inline{flex-direction:column;gap:12px;}
+  .continuity-banner{flex-direction:column;gap:8px;}
+  .language-row{grid-template-columns:1fr;}
+  .language-cell:first-child{border-right:none;border-bottom:1px solid rgba(212,168,67,0.08);}
+  .cost-row,.cost-table-header{grid-template-columns:1fr;}
+  .loop-step{grid-template-columns:16px 1fr;gap:14px;}
+}
+::selection{background:rgba(212,168,67,0.25);color:var(--cream);}
+
+</style>
+</head>
+<body>
+
+<!-- ribbon -->
+<div class="issue-ribbon"></div>
+
+<!-- ═══════════════════════════════════
+     MASTHEAD
+════════════════════════════════════ -->
+<header class="masthead">
+  <div class="masthead-inner">
+
+    <svg class="peacock-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="url(#gG5)"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="url(#gG5)"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="url(#gG5)" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="url(#gG5)" opacity="0.95"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="url(#gG5)" opacity="0.95"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="url(#gG5)" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="url(#gG5)"/>
+      <circle cx="50" cy="30" r="5" fill="url(#gG5)"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="url(#gG5)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="url(#gG5)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="url(#gG5)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="url(#gG5)"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="url(#gG5)"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="url(#gG5)"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="url(#gG5)" opacity="0.7"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="url(#gG5)" opacity="0.8"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="url(#gG5)" opacity="0.7"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="url(#gG5)" opacity="0.8"/>
+      <ellipse cx="30" cy="90" rx="3" ry="3.5" fill="url(#gG5)" opacity="0.5"/>
+      <ellipse cx="66" cy="90" rx="3" ry="3.5" fill="url(#gG5)" opacity="0.5"/>
+      <defs>
+        <linearGradient id="gG5" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f0d080"/>
+          <stop offset="50%" stop-color="#d4a843"/>
+          <stop offset="100%" stop-color="#b8901f"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="issue-badge">
+      <span>Issue 01 ✦ Issue 02 ✦ Issue 03 ✦ Issue 04 ✦</span> Issue 05 — The Righteousness Loop
+    </div>
+
+    <div class="publication-label">Mind Anchor · Anchored Intelligence</div>
+    <h1 class="masthead-title"><em>Anchored</em> Intelligence</h1>
+    <p class="masthead-tagline">Invisible patterns shaping people, pressure, and performance.</p>
+
+    <div class="masthead-meta">
+      <span>Issue 05</span>
+      <span class="masthead-meta-dot"></span>
+      <span>The Righteousness Loop</span>
+      <span class="masthead-meta-dot"></span>
+      <span>Mind Anchor · Jai</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════
+     MAIN
+════════════════════════════════════ -->
+<main>
+<div class="issue-wrap">
+
+  <!-- Continuity banner -->
+  <div class="continuity-banner" style="margin-top:40px;">
+    <span class="continuity-label">Series Arc</span>
+    <span class="continuity-text">Issues 01–04 traced avoidance through its stages: it exists, it is expensive, it becomes navigation, it becomes architecture. This issue asks the hardest question yet: <em>what happens when the architecture learns the language of virtue — and begins defending itself as wisdom?</em></span>
+  </div>
+
+  <!-- ─── ToC ─── -->
+  <nav class="toc-section" aria-label="Table of Contents">
+    <div class="toc-label">Contents — Issue 05</div>
+    <div class="toc-series-line">
+      <a href="#">← 01: Avoidance Reflex</a> &ensp;·&ensp;
+      <a href="#">← 02: Proximity Tax</a> &ensp;·&ensp;
+      <a href="#">← 03: Sovereignty Collapse</a> &ensp;·&ensp;
+      <a href="#">← 04: Shadow Governance</a>
+    </div>
+    <ul class="toc-list">
+      <li class="toc-item">
+        <span class="toc-item-num">I</span>
+        <span class="toc-item-dots"></span>
+        <a href="#opening-signal" class="toc-item-title">
+          Opening Signal
+          <span class="toc-item-sub">When Virtue Becomes a Wall</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">II</span>
+        <span class="toc-item-dots"></span>
+        <a href="#framework" class="toc-item-title">
+          Framework Lens
+          <span class="toc-item-sub">The Identity Immunization Effect</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">III</span>
+        <span class="toc-item-dots"></span>
+        <a href="#toolkit" class="toc-item-title">
+          Toolkit Application
+          <span class="toc-item-sub">Toolkit 05 — The Proximity Tax Calculator</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">IV</span>
+        <span class="toc-item-dots"></span>
+        <a href="#field-diagnosis" class="toc-item-title">
+          Field Diagnosis
+          <span class="toc-item-sub">OpenAI — When Governance Becomes Moral Armor</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">V</span>
+        <span class="toc-item-dots"></span>
+        <a href="#ashes" class="toc-item-title">
+          Ashes to Arrival · Episode 08
+          <span class="toc-item-sub">Fauja Singh — The Man Who Began at 89</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg width="28" height="28" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:0.55">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       I · OPENING SIGNAL
+  ════════════════════════════════════ -->
+  <section class="section-block opening-signal" id="opening-signal">
+
+    <div class="section-eyebrow">
+      <span class="section-num">I</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Opening Signal</span>
+    </div>
+
+    <h2 class="section-title">When Virtue<br><em>Becomes a Wall</em></h2>
+    <p class="section-subtitle">The most dangerous psychological defenses are rarely hidden. They are admired. That is what makes them so difficult to escape.</p>
+
+    <p class="lead-line">Most people imagine self-deception as denial, arrogance, or ignorance. More often, it arrives wearing the language of integrity.</p>
+
+    <div class="body-text">
+      <p>Not: "I don't want this conversation." But: "I'm protecting my peace." Not: "I don't want to be challenged." But: "I'm protecting the culture." Not: "This criticism makes me uncomfortable." But: "We need better alignment."</p>
+      <p>The words sound wise. Sometimes they are. That is precisely why the pattern survives.</p>
+    </div>
+
+    <!-- Language substitution table -->
+    <div class="language-table">
+      <div class="language-row language-row-header">
+        <div class="language-cell">What is felt</div>
+        <div class="language-cell">What is said</div>
+      </div>
+      <div class="language-row">
+        <div class="language-cell">I don't want this conversation.</div>
+        <div class="language-cell">I'm protecting my peace.</div>
+      </div>
+      <div class="language-row">
+        <div class="language-cell">I don't want to be challenged.</div>
+        <div class="language-cell">I'm protecting the culture.</div>
+      </div>
+      <div class="language-row">
+        <div class="language-cell">This criticism makes me uncomfortable.</div>
+        <div class="language-cell">We need better alignment.</div>
+      </div>
+      <div class="language-row">
+        <div class="language-cell">I want this person gone.</div>
+        <div class="language-cell">They're not a culture fit.</div>
+      </div>
+      <div class="language-row">
+        <div class="language-cell">I feel threatened by their competence.</div>
+        <div class="language-cell">I'm protecting psychological safety.</div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Core Invisible Pattern — Issue 05</div>
+      <div class="insight-text">The moment a story about ourselves becomes more important than reality itself. The founder no longer protects the mission — they protect the identity of being a good founder. The organization no longer protects culture — it protects the image of being values-driven. Once behavior becomes fused with identity, questioning the behavior begins to feel like questioning the self.</div>
+    </div>
+
+    <div class="body-text">
+      <p>Human beings do not only protect themselves from discomfort. They protect themselves from becoming the kind of person they do not believe themselves to be. The moment a behavior becomes fused with identity, questioning the behavior begins to feel like questioning the self.</p>
+      <p>A conversation is no longer about strategy. It becomes about character. Feedback is no longer about improvement. It becomes about whether one is still a good leader, a good colleague, a good partner, a good person.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>Avoidance no longer requires effort. Identity performs the defense automatically.</p>
+    </div>
+
+    <div class="body-text">
+      <p>This is where the architecture changes. Organizations experience the same transformation. A value statement slowly becomes a shield. A cultural principle becomes immune to scrutiny. A mission statement becomes a reason not to hear difficult truths. The language remains noble. The learning quietly disappears.</p>
+      <p>The deepest form of integrity is not the absence of values. It is the willingness to examine whether those values still lead us toward reality — or merely protect us from it.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>The strongest prisons are built<br>from virtues that are never questioned.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       II · FRAMEWORK LENS
+  ════════════════════════════════════ -->
+  <section class="section-block" id="framework">
+
+    <div class="section-eyebrow">
+      <span class="section-num">II</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Framework Lens</span>
+    </div>
+
+    <h2 class="section-title">The Identity<br><em>Immunization Effect</em></h2>
+    <p class="section-subtitle">The moment a psychological defense is redefined as a moral virtue, it becomes resistant to correction — and why intelligent, ethical, self-aware people can become remarkably resistant to self-examination.</p>
+
+    <div class="body-text">
+      <p>Most psychological defenses survive because they are invisible. The most durable ones survive because they become virtuous.</p>
+      <p>The Identity Immunization Effect explains how the brain converts emotional discomfort into ethical necessity. Once this occurs, feedback no longer feels informative. It feels immoral. Because changing your mind now feels like betraying your identity. The loop becomes self-sealing.</p>
+    </div>
+
+    <!-- The immunization sequence -->
+    <div class="loop-sequence">
+      <div class="loop-step">
+        <span class="loop-step-icon">①</span>
+        <span class="loop-step-text">Emotional discomfort — something creates activation, threat, or ego challenge</span>
+      </div>
+      <div class="loop-step">
+        <span class="loop-step-icon">②</span>
+        <span class="loop-step-text">Avoidance — withdrawal, removal, distance, or restructuring</span>
+      </div>
+      <div class="loop-step">
+        <span class="loop-step-icon">③</span>
+        <span class="loop-step-text">Relief — the nervous system rewards the decision immediately</span>
+      </div>
+      <div class="loop-step">
+        <span class="loop-step-icon">④</span>
+        <span class="loop-step-text">Moral explanation — the avoidance is reframed as a principled choice</span>
+      </div>
+      <div class="loop-step">
+        <span class="loop-step-icon">⑤</span>
+        <span class="loop-step-text">Identity integration — the explanation fuses with self-concept and virtue</span>
+      </div>
+      <div class="loop-step">
+        <span class="loop-step-icon">∞</span>
+        <span class="loop-step-text">Disagreement now feels like disrespect. Correction feels like accusation. The loop is closed.</span>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Core Psychological Mechanism</div>
+      <div class="insight-text">The brain no longer asks "Is this behavior useful?" It asks "Am I still a good person?" Once those questions merge, objective evaluation becomes extraordinarily difficult. The behavior is no longer defended by emotion alone. It is defended by identity.</div>
+    </div>
+
+    <div class="versus-grid">
+      <div class="versus-cell">
+        <span class="versus-label">Healthy Principle</span>
+        <p>Remains accountable to reality. Tolerates questions. Invites examination. Can be updated without threatening who you are.</p>
+      </div>
+      <div class="versus-cell">
+        <span class="versus-label">Immunized Defense</span>
+        <p>Becomes accountable only to itself. Demands agreement. Treats disagreement as disrespect. Cannot be updated without triggering identity threat.</p>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>Organizations rarely institutionalize insecurity directly. They institutionalize the language that protects it. Over time, emotional preferences become cultural principles. Each can be entirely legitimate. The diagnostic question is different: <em style="color:var(--gold-soft);">"Is this principle serving the mission, or protecting an unexamined emotional preference?"</em></p>
+      <p>When moral language consistently shields leaders from discomfort rather than improving collective performance, culture begins functioning as a defense mechanism instead of a strategic asset.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>The most dangerous organizational cultures are rarely built through obvious authoritarianism. They are built through sincere conviction.</p>
+    </div>
+
+    <div class="body-text">
+      <p>The invisible cost is epistemic closure — the system slowly loses its ability to learn. Feedback no longer functions as information. It becomes evidence that outsiders "don't understand." Curiosity declines, dissent weakens, assumptions harden, self-correction disappears. The individual still appears principled. The organization still appears values-driven. But both have quietly become less adaptive.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">One Core Insight</div>
+      <div class="insight-text">The strongest psychological defenses are rarely hidden. They are celebrated as virtues. The most resilient ones are not sustained by fear. They are sustained by the sincere belief that one is behaving well.</div>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       III · TOOLKIT APPLICATION
+  ════════════════════════════════════ -->
+  <section class="section-block" id="toolkit">
+
+    <div class="section-eyebrow">
+      <span class="section-num">III</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Toolkit Application</span>
+    </div>
+
+    <h2 class="section-title">Toolkit 05 — The Proximity<br><em>Tax Calculator</em></h2>
+    <p class="section-subtitle">Quantify the Cost. Claim Back the Future. — Moral language hides measurable strategic cost. This toolkit replaces stories with measurements.</p>
+
+    <div class="body-text">
+      <p>Most people never notice when avoidance becomes expensive. Fewer still notice when it becomes virtuous. That is where the Righteousness Loop begins. The discomfort remains exactly the same. Only the language changes.</p>
+    </div>
+
+    <div class="callout-inline">
+      <svg class="callout-inline-icon" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <circle cx="14" cy="14" r="12" stroke="#d4a843" stroke-width="1" opacity="0.5"/>
+        <line x1="14" y1="8" x2="14" y2="16" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="14" cy="20" r="1.2" fill="#d4a843" opacity="0.7"/>
+      </svg>
+      <p><strong>The core reframe:</strong> Instead of debating whether a decision was justified, audit its consequences. Not "Was I right?" but "What did being right cost?" That shift from justification to measurement is what interrupts the loop.</p>
+    </div>
+
+    <!-- Cost categories -->
+    <div class="cost-table">
+      <div class="cost-table-header">
+        <span class="cost-table-head">The Proximity Tax — Four Categories</span>
+        <span class="cost-table-head" style="font-size:8px;">Score 0–25 per category</span>
+      </div>
+      <div class="cost-row">
+        <div>
+          <div class="cost-category">Opportunity Cost Tax</div>
+          <div class="cost-description">Opportunities declined, collaborations rejected, rooms avoided, strategic introductions missed, business decisions distorted by emotional positioning.</div>
+        </div>
+        <span class="cost-score">/ 25</span>
+      </div>
+      <div class="cost-row">
+        <div>
+          <div class="cost-category">Ego Cost Tax</div>
+          <div class="cost-description">Honest feedback removed, blind spots accumulated, status protected over value, energy spent defending moral justification instead of improving outcomes. This is where the Righteousness Loop becomes visible.</div>
+        </div>
+        <span class="cost-score">/ 25</span>
+      </div>
+      <div class="cost-row">
+        <div>
+          <div class="cost-category">Strategic Range Tax</div>
+          <div class="cost-description">Reduced freedom of movement, narrowed collaboration possibilities, diminished decision quality, creative partnerships lost, future options quietly closed.</div>
+        </div>
+        <span class="cost-score">/ 25</span>
+      </div>
+      <div class="cost-row">
+        <div>
+          <div class="cost-category">Righteous Momentum Tax</div>
+          <div class="cost-description">Energy spent defending moral justification rather than improving strategic outcomes. Feedback deprivation and blind-spot accumulation as consequences of protection-driven decision-making.</div>
+        </div>
+        <span class="cost-score">/ 25</span>
+      </div>
+    </div>
+
+    <ol class="step-list">
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Audit One Decision</div>
+          <p class="step-desc">Use the calculator in Single Avoidance Audit mode. Choose one decision you still describe with moral language — a person you removed, a partnership you declined, a conversation you never had. The goal is not to defend the decision. <span class="step-highlight">The goal is to measure it.</span></p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Calculate the Opportunity Cost</div>
+          <p class="step-desc">Score where avoidance closed doors. Then answer: <span class="step-highlight">"What was the single greatest opportunity I lost because emotional comfort became more important than strategic value?"</span> Precision matters here — abstraction protects the loop.</p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Measure the Ego Cost</div>
+          <p class="step-desc">Assess whether you removed honest feedback, accumulated blind spots, protected status over value, or spent energy justifying rather than improving. Most leaders expect a low score here. <span class="step-highlight">Many discover the highest cost was never financial — it was intellectual isolation.</span></p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Assess Strategic Range</div>
+          <p class="step-desc">Measure how much future quietly disappeared. Score whether the decision reduced freedom of movement, collaboration possibilities, decision quality, creative partnerships, or future options. <span class="step-highlight">If one decision consistently narrows where you can go, the issue is no longer emotional. It has become strategic.</span></p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Review the Total Invoice</div>
+          <p class="step-desc">Transfer category totals. The calculator classifies your overall Proximity Tax from Low to Critical. This changes the conversation. The question is no longer "Was I justified?" It becomes: <span class="step-highlight">"What did my justification cost?"</span></p>
+        </div>
+      </li>
+
+    </ol>
+
+    <div class="insight-box">
+      <div class="insight-label">Common Failure Pattern</div>
+      <div class="insight-text">The most common mistake is completing the calculator only after obviously bad decisions. That misses its real value. The highest-return use is auditing the decisions you still believe were unquestionably right. Those are often the places where moral certainty has replaced strategic curiosity. If every withdrawal still feels virtuous years later, it deserves measurement. Not because it was wrong — because it may have been expensive.</div>
+    </div>
+
+    <div class="pull-quote">
+      <p>The most expensive decisions are rarely the ones made in anger. They are the ones defended as virtue.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       IV · FIELD DIAGNOSIS
+  ════════════════════════════════════ -->
+  <section class="section-block" id="field-diagnosis">
+
+    <div class="section-eyebrow">
+      <span class="section-num">IV</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Field Diagnosis</span>
+    </div>
+
+    <h2 class="section-title">OpenAI — When Governance<br><em>Becomes Moral Armor</em></h2>
+    <p class="section-subtitle">The same event — revisited through a different lens. Issue 02 examined the Proximity Tax: the economic cost of removing a high-value, high-discomfort relationship. This issue examines what made both sides so certain they represented the moral position.</p>
+
+    <div class="body-text">
+      <p>Issue 02 asked: what did the five-day OpenAI board crisis cost? This issue asks a harder question: how did an organizational conflict become — on both sides — framed as a battle of principles rather than a negotiation over uncertainty?</p>
+      <p>The framework does not adjudicate who was right. It identifies the psychological architecture that made certainty so available, so quickly, to both sides.</p>
+    </div>
+
+    <div class="diagnosis-grid">
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Surface Narrative — Two Moral Positions</div>
+        <p>The board cited concerns about communication and trust — framed as governance responsibility. Employees demanded Altman's return — framed as protecting the organization's future. Supporters on both sides spoke in the language of responsibility, safety, integrity, and mission. Everyone appeared to be defending values. Neither side presented its position as emotional.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Hidden Psychological Pattern — Moral Reframing</div>
+        <p>The Righteousness Loop begins when discomfort acquires moral vocabulary. Instead of "I no longer trust this relationship," the mind says "This is the only ethical decision." Instead of "I cannot tolerate this tension," it becomes "I am protecting the mission." The emotional experience remains. Only the language changes — and once it changes, the loop becomes self-sealing.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Strategic Distortion — The Shift That Makes It Expensive</div>
+        <p>Once decisions become morally framed: feedback becomes opposition, disagreement becomes disloyalty, criticism becomes evidence of misunderstanding, compromise becomes compromise of values. The conversation quietly shifts from "What is true?" to "Who is good?" That shift is strategically expensive — and almost impossible to interrupt from inside a loop that has already closed.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Framework Diagnosis — Epistemic Closure at Organizational Scale</div>
+        <p>The most important thing most people miss: the greatest organizational risk is rarely bad intent. It is unquestioned good intent. The more convinced we are that we are acting virtuously, the less likely we are to examine whether our emotions are shaping our principles. That is why this manifestation is dangerous — it is genuinely difficult to interrupt a mistake that feels like integrity.</p>
+      </div>
+
+    </div>
+
+    <div class="pull-quote">
+      <p>Not every boundary is wisdom. Not every exit is self-respect. And not every appeal to culture is evidence that culture is what is actually being defended.</p>
+    </div>
+
+    <div class="body-text">
+      <p>Healthy organizations certainly need values, boundaries, and culture. But they also need the humility to ask a harder question: are we protecting what we believe — or protecting ourselves from what we would rather not hear?</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">The Direct Truth</div>
+      <div class="insight-text">Organizations rarely announce that they are avoiding difficult people. They announce they are protecting their culture. Leaders rarely say they cannot tolerate disagreement. They say they value alignment. The most effective emotional defense is not denial. It is moral certainty. Once discomfort learns the language of virtue, it becomes almost impossible to question.</div>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       V · ASHES TO ARRIVAL
+  ════════════════════════════════════ -->
+  <section class="section-block ashes-section" id="ashes">
+
+    <div class="section-eyebrow">
+      <span class="section-num">V</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Ashes to Arrival · Episode 08</span>
+    </div>
+
+    <h2 class="section-title">The Man Who<br><em>Began at 89</em></h2>
+    <p class="section-subtitle">Fauja Singh — on age, perception, loss, and what happens when a person refuses to let time become a moral verdict about who they still are.</p>
+
+    <!-- Story arc — six beats -->
+    <div class="arc-flow six-step">
+      <div class="arc-step">
+        <span class="arc-num">01 — Age</span>
+        <span class="arc-word">The Number</span>
+        <span class="arc-note">The world saw age. He saw another beginning. That distinction is the entire story.</span>
+      </div>
+      <div class="arc-step">
+        <span class="arc-num">02 — Loss</span>
+        <span class="arc-word">Grief</span>
+        <span class="arc-note">His son died. His wife died. He moved to England alone, without English, without a map for what came next.</span>
+      </div>
+      <div class="arc-step">
+        <span class="arc-num">03 — Isolation</span>
+        <span class="arc-word">Alone</span>
+        <span class="arc-note">He didn't know English. He knew grief. That became the only language that mattered in the beginning.</span>
+      </div>
+      <div class="arc-step">
+        <span class="arc-num">04 — Decision</span>
+        <span class="arc-word">Running</span>
+        <span class="arc-note">Loneliness could have become the end of his story. Instead, it became a starting line. He started running.</span>
+      </div>
+      <div class="arc-step">
+        <span class="arc-num">05 — Achievement</span>
+        <span class="arc-word">89 Years Old</span>
+        <span class="arc-note">At 89, he crossed his first finish line. Then another. Then more. He became the world's oldest marathon runner.</span>
+      </div>
+      <div class="arc-step">
+        <span class="arc-num">06 — Legacy</span>
+        <span class="arc-word">The Lesson</span>
+        <span class="arc-note">There is no age by which you must have arrived. The calendar said late. Life said begin.</span>
+      </div>
+    </div>
+
+    <!-- Best slide — set apart -->
+    <div class="pull-quote" style="text-align:center;">
+      <p>He didn't know English.<br>He knew grief.</p>
+    </div>
+
+    <div class="body-text">
+      <p>That single sentence does almost nothing descriptively. It communicates everything symbolically. It says: the tools he had were not the tools the world would have expected. But they were the only tools that were real. And grief, as this series has established across multiple episodes, is not simply something to survive. It is sometimes the most accurate information a person carries.</p>
+    </div>
+
+    <div class="ashes-section">
+      <div class="invisible-grief">
+        <p>Loneliness could have become the end of his story. Instead, it became a starting line. The distinction between an ending and a beginning is sometimes nothing more than a decision about which one to let it be.</p>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>This issue has examined the Righteousness Loop — the way identity, once fused with a defense, quietly forecloses learning. Fauja Singh's story operates on the same psychological terrain, approached from the opposite direction. The identity trap Issue 05 describes says: "I cannot change, because changing would mean I was wrong, and being wrong means I am not who I believe myself to be."</p>
+      <p>Fauja Singh's life demonstrates the inverse: identity held loosely enough that age could not become a verdict. He did not build his sense of self around being "too old." He refused to let time become a story he was obligated to live inside.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">The Strongest Line — Why It Lands</div>
+      <div class="insight-text">"The world saw age. He saw another beginning." This isn't really about Fauja Singh. It's about perception. And perception is what Mind Anchor is fundamentally building as a practice: helping people see the same reality differently. That's why this episode feels so aligned with the broader identity. It isn't simply telling an inspiring story — it expresses the brand philosophy through someone else's life.</div>
+    </div>
+
+    <div class="body-text">
+      <p>The series arc across this issue's Ashes to Arrival episodes has been precise and intentional:</p>
+      <p>Episode 05 taught that failure can become wisdom. Episode 06 taught that grief can become music. Episode 07 taught that purpose can move a mountain. Episode 08 teaches that time is not a verdict — unless you allow it to become one.</p>
+      <p>These are not repetitions of the same motivational message. Each explores a different psychological barrier, a different way the mind closes around an identity and refuses to let new information in. The progression gives the series intellectual coherence rather than just thematic consistency.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>There is no age by which you must have arrived. The calendar said late. Life said begin.</p>
+    </div>
+
+    <div class="body-text">
+      <p>That ending is the inverse of every pattern examined in this issue. The Righteousness Loop survives because identity becomes immune to correction. Fauja Singh's life demonstrates what it looks like when identity remains open — when the story about who you are stays malleable enough to include a starting line at 89.</p>
+      <p>He didn't become young again. He became new again. And those are entirely different things.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>The world saw age.<br>He saw another beginning.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       CLOSING REFLECTION
+  ════════════════════════════════════ -->
+  <section class="closing-block" id="closing">
+
+    <h2 class="section-title" style="font-size:clamp(28px,4vw,40px);margin-bottom:24px;">Closing <em>Reflection</em></h2>
+
+    <div class="closing-quote">
+      When the ego learns the language of virtue,<br>correction begins to feel like betrayal.
+    </div>
+
+    <div style="max-width:560px;margin:0 auto 48px;font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);line-height:1.85;">
+      <p>This series began by identifying that avoidance exists and ends here: avoidance eventually learns to defend itself as integrity. At that point, the original discomfort has disappeared entirely from view. What remains is a principle that sounds wise, a culture that feels safe, and a person who believes they have become more selective, more boundaried, more aligned.</p>
+      <p>The Proximity Tax Calculator exists specifically for this moment. Not to prove that every withdrawal was wrong — but to ask what it cost. The question "Was I justified?" is the wrong frame. "What did my justification cost?" is the question that opens the loop.</p>
+      <p>Fauja Singh refused to let age become a verdict. The deepest integrity is the same refusal — not the absence of values, but the willingness to remain curious about whether those values still serve reality. Or whether they have quietly become a very comfortable wall.</p>
+    </div>
+
+    <div class="closing-byline">Mind Anchor · Anchored Intelligence · Issue 05</div>
+
+  </section>
+
+</div><!-- /issue-wrap -->
+</main>
+
+
+<!-- ═══════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+
+    <svg class="footer-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="#d4a843"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="#d4a843"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="#d4a843" opacity="0.7"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="#d4a843" opacity="0.7"/>
+    </svg>
+
+    <div class="footer-name">Mind Anchor</div>
+    <div class="footer-sub">Anchored Intelligence — by Jai</div>
+
+    <div class="footer-rule"></div>
+
+    <div class="footer-meta">
+      Issue 05 · The Righteousness Loop<br>
+      Invisible patterns shaping people, pressure, and performance.<br><br>
+      01 · Avoidance Reflex &ensp;·&ensp; 02 · Proximity Tax &ensp;·&ensp; 03 · Sovereignty Collapse &ensp;·&ensp; 04 · Shadow Governance<br><br>
+      © Mind Anchor · All rights reserved<br>
+      The deepest integrity is not the absence of values.<br>
+      It is the willingness to examine whether they still lead toward reality.
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
