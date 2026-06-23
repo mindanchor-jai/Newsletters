@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchored Intelligence — Issue 06 | Mind Anchor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ─── CSS Variables ─── */
+:root {
+  --navy-deepest: #040d1f;
+  --navy-deep:    #070f24;
+  --navy-mid:     #0c1735;
+  --navy-light:   #112050;
+  --gold-bright:  #d4a843;
+  --gold-mid:     #b8901f;
+  --gold-soft:    #c8a84b;
+  --gold-muted:   #8a6a1a;
+  --gold-pale:    #f0d080;
+  --gold-whisper:  rgba(212,168,67,0.08);
+  --gold-whisper2: rgba(212,168,67,0.15);
+  --cream:      #f5edd8;
+  --cream-mid:  #e8d9b8;
+  --text-primary:   #e8d9b8;
+  --text-secondary: rgba(232,217,184,0.72);
+  --text-muted:     rgba(232,217,184,0.45);
+  --divider:        rgba(212,168,67,0.2);
+  --divider-strong: rgba(212,168,67,0.45);
+}
+
+/* ─── Reset ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background-color:var(--navy-deepest);
+  color:var(--text-primary);
+  font-family:'EB Garamond','Cormorant Garamond',Georgia,serif;
+  font-size:19px;line-height:1.85;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ─── Grain ─── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;opacity:0.6;
+}
+
+/* ─── Layout ─── */
+.issue-wrap{max-width:760px;margin:0 auto;padding:0 32px;}
+
+/* ─── Issue 06 ribbon — full gold to signal finale ─── */
+.issue-ribbon{
+  background:linear-gradient(90deg,var(--gold-mid),var(--gold-bright),var(--gold-pale),var(--gold-bright),var(--gold-soft),var(--gold-bright),var(--gold-pale),var(--gold-bright),var(--gold-mid));
+  height:4px;width:100%;
+}
+
+/* ─── Masthead ─── */
+.masthead{
+  background:var(--navy-deep);
+  border-bottom:1px solid var(--divider);
+  padding:60px 0 56px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.masthead::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(212,168,67,0.1) 0%,transparent 70%);
+  pointer-events:none;
+}
+.masthead::after{
+  content:'';position:absolute;
+  bottom:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,168,67,0.45),transparent);
+}
+.masthead-inner{max-width:760px;margin:0 auto;padding:0 32px;position:relative;z-index:2;}
+
+/* ─── Peacock emblem ─── */
+.peacock-emblem{
+  width:72px;height:72px;
+  margin:0 auto 32px;opacity:0.95;
+  animation:peacock-glow 3.5s ease-in-out infinite;
+}
+@keyframes peacock-glow{
+  0%,100%{filter:drop-shadow(0 0 8px rgba(212,168,67,0.4));}
+  50%     {filter:drop-shadow(0 0 22px rgba(212,168,67,0.8));}
+}
+
+.publication-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.32em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:18px;}
+
+/* ─── Series finale badge ─── */
+.issue-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  margin:0 auto 32px;
+  border:1px solid var(--gold-soft);padding:8px 20px;
+  font-family:'Cinzel',serif;font-size:9px;
+  letter-spacing:0.38em;color:var(--gold-bright);
+  text-transform:uppercase;background:rgba(212,168,67,0.08);
+}
+.issue-badge span{opacity:0.38;}
+
+.masthead-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,8vw,72px);font-weight:300;letter-spacing:0.04em;color:var(--cream);line-height:1.05;margin-bottom:16px;}
+.masthead-title em{font-style:italic;color:var(--gold-soft);}
+
+.masthead-tagline{font-family:'EB Garamond',serif;font-style:italic;font-size:16px;color:var(--text-secondary);letter-spacing:0.06em;margin-bottom:32px;}
+
+.masthead-meta{display:flex;align-items:center;justify-content:center;gap:28px;font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;}
+.masthead-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--gold-muted);opacity:0.5;}
+
+/* ─── Peacock section dividers ─── */
+.peacock-divider{display:flex;align-items:center;justify-content:center;gap:20px;margin:0;padding:20px 0;}
+.peacock-divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--divider),transparent);}
+.feather-eye{width:22px;height:22px;opacity:0.7;}
+
+/* ─── ToC ─── */
+.toc-section{background:linear-gradient(135deg,rgba(12,23,53,0.9) 0%,rgba(7,15,36,0.95) 100%);border:1px solid var(--divider);border-radius:2px;padding:48px 52px;margin:48px 0;position:relative;overflow:hidden;}
+.toc-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-soft),transparent);}
+.toc-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:14px;}
+.toc-label::after{content:'';flex:1;height:1px;background:var(--divider);}
+.toc-series-line{font-family:'EB Garamond',serif;font-style:italic;font-size:13px;color:var(--text-muted);margin-bottom:28px;letter-spacing:0.02em;padding-bottom:20px;border-bottom:1px solid rgba(212,168,67,0.1);}
+.toc-series-line a{color:var(--gold-muted);text-decoration:none;transition:color 0.3s;}
+.toc-series-line a:hover{color:var(--gold-soft);}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.toc-item{border-bottom:1px solid rgba(212,168,67,0.08);padding:14px 0;display:flex;align-items:baseline;gap:0;transition:all 0.3s ease;}
+.toc-item:last-child{border-bottom:none;}
+.toc-item:hover .toc-item-title{color:var(--gold-soft);}
+.toc-item:hover .toc-item-num{color:var(--gold-bright);}
+.toc-item-num{font-family:'Cinzel',serif;font-size:10px;color:var(--gold-muted);letter-spacing:0.15em;min-width:32px;transition:color 0.3s;}
+.toc-item-dots{flex:1;border-bottom:1px dotted rgba(212,168,67,0.2);margin:0 16px;position:relative;top:-4px;}
+.toc-item-title{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;color:var(--text-primary);text-decoration:none;letter-spacing:0.02em;transition:color 0.3s;flex-shrink:0;max-width:68%;text-align:right;}
+.toc-item-sub{font-style:italic;font-size:13px;color:var(--text-muted);display:block;margin-top:2px;text-align:right;}
+
+/* ─── Section blocks ─── */
+.section-block{padding:72px 0;border-bottom:1px solid rgba(212,168,67,0.1);}
+.section-block:last-of-type{border-bottom:none;}
+.section-eyebrow{display:flex;align-items:center;gap:16px;margin-bottom:36px;}
+.section-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;color:var(--gold-bright);text-transform:uppercase;}
+.section-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--divider),transparent);}
+.section-tag{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-muted);text-transform:uppercase;border:1px solid var(--divider);padding:4px 10px;white-space:nowrap;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,44px);font-weight:300;line-height:1.15;color:var(--cream);margin-bottom:28px;letter-spacing:0.01em;}
+.section-title em{font-style:italic;color:var(--gold-soft);}
+.section-subtitle{font-family:'EB Garamond',serif;font-style:italic;font-size:17px;color:var(--text-secondary);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid rgba(212,168,67,0.12);letter-spacing:0.03em;}
+
+/* ─── Body text ─── */
+.body-text{font-family:'EB Garamond',serif;font-size:19px;line-height:1.9;color:var(--text-secondary);margin-bottom:28px;}
+.body-text+.body-text{margin-top:-8px;}
+p{margin-bottom:24px;}p:last-child{margin-bottom:0;}
+
+/* ─── Pull quote ─── */
+.pull-quote{margin:52px -8px;padding:40px 48px;border-left:2px solid var(--gold-soft);background:var(--gold-whisper);position:relative;}
+.pull-quote::before{content:'\201C';position:absolute;top:-12px;left:40px;font-family:'Cormorant Garamond',serif;font-size:80px;color:var(--gold-soft);opacity:0.3;line-height:1;}
+.pull-quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,3.5vw,26px);line-height:1.5;color:var(--cream);letter-spacing:0.02em;margin:0;}
+
+/* ─── Insight box ─── */
+.insight-box{background:linear-gradient(135deg,rgba(17,32,80,0.6),rgba(12,23,53,0.8));border:1px solid var(--divider);border-top:2px solid var(--gold-soft);padding:36px 40px;margin:44px 0;}
+.insight-label{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:16px;}
+.insight-text{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.5vw,21px);line-height:1.6;color:var(--cream);font-weight:400;}
+
+/* ─── Fragment list ─── */
+.fragment-list{list-style:none;margin:28px 0;padding:0;}
+.fragment-list li{font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);padding:6px 0 6px 24px;position:relative;letter-spacing:0.02em;}
+.fragment-list li::before{content:'—';position:absolute;left:0;color:var(--gold-muted);font-size:14px;}
+
+/* ─── Versus grid ─── */
+.versus-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:40px 0;border:1px solid var(--divider);}
+.versus-cell{padding:28px 32px;background:rgba(7,15,36,0.6);}
+.versus-cell:first-child{border-right:1px solid var(--divider);}
+.versus-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.35em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:14px;display:block;}
+.versus-cell p{font-family:'EB Garamond',serif;font-size:16px;color:var(--text-secondary);line-height:1.7;margin:0;}
+
+/* ─── Step list ─── */
+.step-list{list-style:none;margin:40px 0;counter-reset:step-counter;}
+.step-item{counter-increment:step-counter;display:flex;gap:24px;padding:32px 0;border-bottom:1px solid rgba(212,168,67,0.08);}
+.step-item:last-child{border-bottom:none;}
+.step-num{flex-shrink:0;width:40px;height:40px;border:1px solid var(--gold-muted);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:11px;color:var(--gold-soft);letter-spacing:0.05em;margin-top:4px;}
+.step-num::before{content:counter(step-counter,decimal-leading-zero);}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--cream);margin-bottom:10px;letter-spacing:0.02em;}
+.step-desc{font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);line-height:1.8;margin:0;}
+.step-highlight{display:inline-block;font-style:italic;color:var(--gold-soft);margin-top:8px;font-size:16px;}
+
+/* ─── Diagnosis cards ─── */
+.diagnosis-grid{display:grid;grid-template-columns:1fr;gap:20px;margin:40px 0;}
+.diagnosis-card{background:rgba(7,15,36,0.7);border:1px solid var(--divider);border-left:3px solid var(--gold-mid);padding:28px 32px;}
+.diagnosis-card-label{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.32em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:12px;}
+.diagnosis-card p{font-family:'EB Garamond',serif;font-size:16.5px;color:var(--text-secondary);margin:0;line-height:1.75;}
+
+/* ─── THE GOVERNANCE GAP — Issue 06 hero element ─── */
+.governance-gap{
+  margin:52px 0;
+  position:relative;
+}
+.governance-gap-track{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:0;
+  border:1px solid var(--divider);
+  overflow:hidden;
+}
+.governance-gap-side{
+  padding:32px 28px;
+  background:rgba(7,15,36,0.6);
+}
+.governance-gap-side:first-child{
+  border-right:1px solid var(--divider);
+}
+.governance-gap-center{
+  padding:32px 24px;
+  background:linear-gradient(180deg,rgba(212,168,67,0.1),rgba(212,168,67,0.06));
+  border-right:1px solid var(--divider);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-width:140px;
+}
+.governance-gap-label{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.32em;color:var(--gold-muted);text-transform:uppercase;display:block;margin-bottom:10px;
+}
+.governance-gap-title{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2.2vw,19px);font-weight:400;color:var(--cream);letter-spacing:0.02em;
+}
+.governance-gap-note{
+  font-family:'EB Garamond',serif;font-style:italic;font-size:13px;color:var(--text-muted);line-height:1.5;margin-top:4px;
+}
+.governance-gap-center-label{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.3em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:12px;
+}
+.governance-gap-center-word{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.8vw,24px);font-weight:300;color:var(--gold-soft);letter-spacing:0.05em;text-align:center;
+}
+.governance-gap-center-sub{
+  font-family:'EB Garamond',serif;font-style:italic;font-size:12.5px;color:var(--text-muted);text-align:center;margin-top:6px;line-height:1.5;
+}
+
+/* ─── Sequence chain (emotion → decision) ─── */
+.sequence-chain{
+  display:flex;align-items:center;justify-content:center;
+  gap:0;margin:44px 0;flex-wrap:wrap;
+}
+.seq-node{
+  padding:16px 22px;
+  background:rgba(7,15,36,0.6);
+  border:1px solid var(--divider);
+  text-align:center;
+  flex:1;min-width:100px;
+}
+.seq-node.seq-highlight{
+  background:rgba(212,168,67,0.1);
+  border-color:var(--gold-soft);
+}
+.seq-node-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.28em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:6px;display:block;}
+.seq-node-word{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--cream);font-weight:400;}
+.seq-arrow{
+  font-family:'Cinzel',serif;font-size:12px;color:var(--gold-muted);
+  padding:0 2px;flex-shrink:0;
+}
+
+/* ─── Callout inline ─── */
+.callout-inline{display:flex;gap:20px;align-items:flex-start;background:rgba(212,168,67,0.05);border:1px solid rgba(212,168,67,0.15);padding:28px 32px;margin:36px 0;}
+.callout-inline-icon{flex-shrink:0;width:28px;height:28px;margin-top:2px;}
+.callout-inline p{font-family:'EB Garamond',serif;font-size:16.5px;color:var(--text-secondary);line-height:1.75;margin:0;}
+.callout-inline p strong{color:var(--cream);font-weight:500;}
+
+/* ─── Continuity banner ─── */
+.continuity-banner{background:rgba(7,15,36,0.8);border:1px solid rgba(212,168,67,0.12);border-left:2px solid var(--gold-muted);padding:16px 24px;margin-bottom:48px;display:flex;align-items:center;gap:16px;}
+.continuity-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.3em;color:var(--gold-muted);text-transform:uppercase;flex-shrink:0;}
+.continuity-text{font-family:'EB Garamond',serif;font-style:italic;font-size:14.5px;color:var(--text-muted);line-height:1.5;}
+
+/* ─── Signal one-liner ─── */
+.signal-line{text-align:center;padding:52px 0;}
+.signal-line p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,4vw,30px);color:var(--gold-soft);letter-spacing:0.03em;line-height:1.45;max-width:560px;margin:0 auto;}
+
+/* ─── Opening signal ─── */
+.opening-signal{background:linear-gradient(160deg,rgba(12,23,53,0.5) 0%,transparent 60%);}
+.lead-line{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,30px);font-weight:300;font-style:italic;color:var(--cream);line-height:1.4;margin-bottom:44px;border-left:2px solid var(--gold-soft);padding-left:28px;letter-spacing:0.01em;}
+
+/* ─── Ashes section ─── */
+.ashes-section .invisible-grief{padding:40px 0;margin:40px 0;border-top:1px solid rgba(212,168,67,0.12);border-bottom:1px solid rgba(212,168,67,0.12);}
+.ashes-section .invisible-grief p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,3vw,23px);color:var(--text-secondary);line-height:1.65;text-align:center;max-width:580px;margin:0 auto;}
+
+/* ─── Series arc — closure block (Issue 06 unique) ─── */
+.series-arc{
+  margin:48px 0;
+  border:1px solid var(--divider);
+  border-top:2px solid var(--gold-bright);
+  background:linear-gradient(135deg,rgba(12,23,53,0.9),rgba(7,15,36,0.95));
+  padding:44px 48px;
+  position:relative;
+  overflow:hidden;
+}
+.series-arc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);
+}
+.series-arc-label{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:28px;}
+.series-arc-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.series-arc-item{
+  display:flex;align-items:baseline;gap:16px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(212,168,67,0.06);
+}
+.series-arc-item:last-child{border-bottom:none;padding-bottom:0;}
+.series-arc-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;color:var(--gold-muted);flex-shrink:0;width:60px;}
+.series-arc-title{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--text-secondary);}
+.series-arc-lesson{font-family:'EB Garamond',serif;font-style:italic;font-size:15px;color:var(--text-muted);margin-left:auto;text-align:right;flex-shrink:0;max-width:50%;}
+
+/* ─── Closing block ─── */
+.closing-block{background:linear-gradient(180deg,transparent 0%,rgba(212,168,67,0.05) 50%,transparent 100%);padding:88px 0;text-align:center;border-top:1px solid var(--divider);}
+.closing-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,3.5vw,30px);color:var(--cream);line-height:1.5;margin:0 auto 44px;max-width:600px;}
+.closing-byline{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;}
+
+/* ─── Footer ─── */
+.footer{background:var(--navy-deep);border-top:1px solid var(--divider);padding:64px 0;text-align:center;}
+.footer-inner{max-width:760px;margin:0 auto;padding:0 32px;}
+.footer-emblem{width:56px;height:56px;margin:0 auto 28px;opacity:0.65;}
+.footer-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.3em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:8px;}
+.footer-sub{font-family:'EB Garamond',serif;font-style:italic;font-size:14px;color:var(--text-muted);margin-bottom:32px;}
+.footer-rule{width:80px;height:1px;background:var(--divider);margin:28px auto;}
+.footer-meta{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;line-height:2.2;}
+
+/* ─── Animation ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+.masthead-inner>*{animation:fadeUp 0.8s ease both;}
+.peacock-emblem{animation-delay:0.1s;}
+.issue-badge{animation-delay:0.2s;}
+.publication-label{animation-delay:0.25s;}
+.masthead-title{animation-delay:0.38s;}
+.masthead-tagline{animation-delay:0.52s;}
+.masthead-meta{animation-delay:0.65s;}
+
+/* ─── Responsive ─── */
+@media(max-width:600px){
+  .issue-wrap{padding:0 20px;}
+  .toc-section{padding:36px 28px;}
+  .pull-quote{padding:28px 24px;margin:40px 0;}
+  .insight-box{padding:28px 24px;}
+  .versus-grid{grid-template-columns:1fr;}
+  .versus-cell:first-child{border-right:none;border-bottom:1px solid var(--divider);}
+  .governance-gap-track{grid-template-columns:1fr;}
+  .governance-gap-side:first-child{border-right:none;border-bottom:1px solid var(--divider);}
+  .governance-gap-center{border-right:none;border-bottom:1px solid var(--divider);min-width:auto;}
+  .sequence-chain{gap:4px;}
+  .seq-node{min-width:80px;padding:12px 14px;}
+  .step-item{flex-direction:column;gap:12px;}
+  .step-num{width:36px;height:36px;}
+  .toc-item-title{max-width:55%;font-size:15px;}
+  .series-arc{padding:32px 24px;}
+  .series-arc-item{flex-direction:column;gap:4px;}
+  .series-arc-lesson{text-align:left;margin-left:0;max-width:100%;}
+  .callout-inline{flex-direction:column;gap:12px;}
+  .continuity-banner{flex-direction:column;gap:8px;}
+}
+::selection{background:rgba(212,168,67,0.25);color:var(--cream);}
+
+</style>
+</head>
+<body>
+
+<div class="issue-ribbon"></div>
+
+<!-- ═══════════════════════════════════
+     MASTHEAD
+════════════════════════════════════ -->
+<header class="masthead">
+  <div class="masthead-inner">
+
+    <svg class="peacock-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="url(#gG6)"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="url(#gG6)"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="url(#gG6)" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="url(#gG6)" opacity="0.95"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="url(#gG6)" opacity="0.95"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="url(#gG6)" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="url(#gG6)"/>
+      <circle cx="50" cy="30" r="5" fill="url(#gG6)"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="url(#gG6)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="url(#gG6)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="url(#gG6)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="url(#gG6)"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="url(#gG6)"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="url(#gG6)"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="url(#gG6)" opacity="0.7"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="url(#gG6)" opacity="0.8"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="url(#gG6)" opacity="0.7"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="url(#gG6)" opacity="0.8"/>
+      <ellipse cx="30" cy="90" rx="3" ry="3.5" fill="url(#gG6)" opacity="0.5"/>
+      <ellipse cx="66" cy="90" rx="3" ry="3.5" fill="url(#gG6)" opacity="0.5"/>
+      <defs>
+        <linearGradient id="gG6" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f0d080"/>
+          <stop offset="50%" stop-color="#d4a843"/>
+          <stop offset="100%" stop-color="#b8901f"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="issue-badge">
+      <span>Issue 01 ✦ 02 ✦ 03 ✦ 04 ✦ 05 ✦</span> Issue 06 · Series Finale
+    </div>
+
+    <div class="publication-label">Mind Anchor · Anchored Intelligence</div>
+    <h1 class="masthead-title"><em>Anchored</em> Intelligence</h1>
+    <p class="masthead-tagline">Invisible patterns shaping people, pressure, and performance.</p>
+
+    <div class="masthead-meta">
+      <span>Issue 06</span>
+      <span class="masthead-meta-dot"></span>
+      <span>Strategic Neutrality</span>
+      <span class="masthead-meta-dot"></span>
+      <span>Mind Anchor · Jai</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════
+     MAIN
+════════════════════════════════════ -->
+<main>
+<div class="issue-wrap">
+
+  <!-- Continuity banner -->
+  <div class="continuity-banner" style="margin-top:40px;">
+    <span class="continuity-label">Series Finale</span>
+    <span class="continuity-text">Five issues traced the quiet expansion of emotional authority — avoidance, accumulated cost, lost sovereignty, inherited architecture, immunized virtue. This final issue marks the turning point. Recovery does not begin when emotion disappears. <em>It begins when emotion loses jurisdiction.</em></span>
+  </div>
+
+  <!-- Series arc summary -->
+  <div class="series-arc">
+    <div class="series-arc-label">The ProximityOS Series — Issues 01–06</div>
+    <ul class="series-arc-list">
+      <li class="series-arc-item">
+        <span class="series-arc-num">Issue 01</span>
+        <span class="series-arc-title">The Avoidance Reflex</span>
+        <span class="series-arc-lesson">Relief masquerades as wisdom.</span>
+      </li>
+      <li class="series-arc-item">
+        <span class="series-arc-num">Issue 02</span>
+        <span class="series-arc-title">The Proximity Tax</span>
+        <span class="series-arc-lesson">Avoidance compounds into cost.</span>
+      </li>
+      <li class="series-arc-item">
+        <span class="series-arc-num">Issue 03</span>
+        <span class="series-arc-title">The Sovereignty Collapse</span>
+        <span class="series-arc-lesson">Avoidance becomes navigation.</span>
+      </li>
+      <li class="series-arc-item">
+        <span class="series-arc-num">Issue 04</span>
+        <span class="series-arc-title">Shadow Governance Architecture</span>
+        <span class="series-arc-lesson">Avoidance becomes architecture.</span>
+      </li>
+      <li class="series-arc-item">
+        <span class="series-arc-num">Issue 05</span>
+        <span class="series-arc-title">The Righteousness Loop</span>
+        <span class="series-arc-lesson">Avoidance becomes ideology.</span>
+      </li>
+      <li class="series-arc-item" style="background:rgba(212,168,67,0.04);padding:16px 0 0;">
+        <span class="series-arc-num" style="color:var(--gold-bright);">Issue 06</span>
+        <span class="series-arc-title" style="color:var(--cream);">Strategic Neutrality</span>
+        <span class="series-arc-lesson" style="color:var(--gold-soft);">Experience and authority separate.</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ─── ToC ─── -->
+  <nav class="toc-section" aria-label="Table of Contents">
+    <div class="toc-label">Contents — Issue 06</div>
+    <div class="toc-series-line">
+      <a href="#">← 01</a> &ensp;·&ensp;
+      <a href="#">← 02</a> &ensp;·&ensp;
+      <a href="#">← 03</a> &ensp;·&ensp;
+      <a href="#">← 04</a> &ensp;·&ensp;
+      <a href="#">← 05</a>
+    </div>
+    <ul class="toc-list">
+      <li class="toc-item">
+        <span class="toc-item-num">I</span>
+        <span class="toc-item-dots"></span>
+        <a href="#opening-signal" class="toc-item-title">
+          Opening Signal
+          <span class="toc-item-sub">The Constitution of the Mind</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">II</span>
+        <span class="toc-item-dots"></span>
+        <a href="#framework" class="toc-item-title">
+          Framework Lens
+          <span class="toc-item-sub">The Governance Gap</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">III</span>
+        <span class="toc-item-dots"></span>
+        <a href="#toolkit" class="toc-item-title">
+          Toolkit Application
+          <span class="toc-item-sub">Toolkit 02 — Founder Conflict Toolkit Revisited</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">IV</span>
+        <span class="toc-item-dots"></span>
+        <a href="#field-diagnosis" class="toc-item-title">
+          Field Diagnosis
+          <span class="toc-item-sub">Satya Nadella &amp; Microsoft — The Leaders Who Stay</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">V</span>
+        <span class="toc-item-dots"></span>
+        <a href="#ashes" class="toc-item-title">
+          Ashes to Arrival · Episode 09
+          <span class="toc-item-sub">Alan Rickman — Construction Without Spectators</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg width="28" height="28" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:0.55">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       I · OPENING SIGNAL
+  ════════════════════════════════════ -->
+  <section class="section-block opening-signal" id="opening-signal">
+
+    <div class="section-eyebrow">
+      <span class="section-num">I</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Opening Signal</span>
+    </div>
+
+    <h2 class="section-title">The Constitution<br><em>of the Mind</em></h2>
+    <p class="section-subtitle">Every system eventually faces the same question: who governs? A healthy organization does not silence every opinion. It establishes clear authority over how decisions are made. The same principle applies to the human mind.</p>
+
+    <p class="lead-line">Recovery does not begin when emotion disappears. It begins when emotion loses jurisdiction.</p>
+
+    <div class="body-text">
+      <p>Over the previous five issues, this series followed the quiet expansion of emotional authority. Avoidance became habit. Habit became cost. Cost became dependency. Dependency became identity. Identity became culture.</p>
+      <p>Each manifestation revealed a different way emotion quietly assumed power. This issue marks the turning point.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Core Invisible Pattern — Issue 06</div>
+      <div class="insight-text">Freedom begins when experience and authority become separate. Every previous manifestation explored what happens when emotions silently acquire governing power. This issue explores the reverse. Not the absence of emotion — the restoration of authorship. The emotion remains real. Its jurisdiction changes.</div>
+    </div>
+
+    <div class="body-text">
+      <p>A founder may still feel threatened by challenge. A leader may still feel anger in negotiation. A professional may still feel embarrassment after failure. None of those experiences are signs of weakness. The question is different. <em style="color:var(--gold-soft);">Who makes the decision next?</em></p>
+    </div>
+
+    <div class="pull-quote">
+      <p>Emotions are extraordinary sources of information. They reveal what matters. What hurts. What feels uncertain. What deserves attention. But information and authority are not the same thing.</p>
+    </div>
+
+    <div class="body-text">
+      <p>Human beings instinctively convert feelings into instructions. Fear says: leave. Anger says: retaliate. Embarrassment says: hide. Resentment says: withdraw. The nervous system speaks in urgency. Wisdom speaks in sequence. It asks a second question: "What does this situation require?"</p>
+      <p>That single question changes everything. It transforms emotion from commander into advisor. From governor into witness. From authority into information. The person does not become emotionally smaller. They become strategically freer.</p>
+    </div>
+
+    <ul class="fragment-list">
+      <li>Relationships survive temporary conflict.</li>
+      <li>Partnerships endure disagreement.</li>
+      <li>Negotiations remain possible despite distrust.</li>
+      <li>Opportunities outlive discomfort.</li>
+      <li>The person no longer needs to wait until they feel differently before acting wisely.</li>
+    </ul>
+
+    <div class="body-text">
+      <p>The most effective leaders are not emotionally empty. They are constitutionally ordered. Every emotion has a voice. Not every emotion receives a vote.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>The emotion is welcome in the room.<br>It simply does not chair the meeting.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       II · FRAMEWORK LENS
+  ════════════════════════════════════ -->
+  <section class="section-block" id="framework">
+
+    <div class="section-eyebrow">
+      <span class="section-num">II</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Framework Lens</span>
+    </div>
+
+    <h2 class="section-title">The<br><em>Governance Gap</em></h2>
+    <p class="section-subtitle">The distance between what you feel and what you allow to govern — the psychological space where strategic freedom exists.</p>
+
+    <div class="body-text">
+      <p>Many people believe emotional maturity means becoming less emotional. The opposite is often true. Highly mature leaders usually experience the same emotions as everyone else: anger, betrayal, fear, disappointment, resentment, insecurity. The difference lies elsewhere.</p>
+      <p>They separate experience from authority. They acknowledge emotion without allowing it to become governance.</p>
+    </div>
+
+    <!-- The Governance Gap — hero visual -->
+    <div class="governance-gap">
+      <div class="governance-gap-track">
+        <div class="governance-gap-side">
+          <span class="governance-gap-label">What arrives</span>
+          <div class="governance-gap-title">The Emotion</div>
+          <div class="governance-gap-note">Anger. Fear. Betrayal. Disappointment. Resentment. These are real, legitimate, and informative. They deserve to be acknowledged fully.</div>
+        </div>
+        <div class="governance-gap-center">
+          <div class="governance-gap-center-label">The Gap</div>
+          <div class="governance-gap-center-word">Awareness<br>&amp;<br>Separation</div>
+          <div class="governance-gap-center-sub">Strategic freedom exists here. This is where experience and authority become distinct.</div>
+        </div>
+        <div class="governance-gap-side" style="border-left:none;">
+          <span class="governance-gap-label">What decides</span>
+          <div class="governance-gap-title">The Objective</div>
+          <div class="governance-gap-note">What does the situation require? What serves long-term value? This is where governance lives — separate from, but informed by, what was felt.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Old sequence vs new sequence -->
+    <div style="margin-bottom:12px;">
+      <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.3em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:12px;">Without the governance gap</div>
+      <div class="sequence-chain">
+        <div class="seq-node"><span class="seq-node-label">Step 1</span><span class="seq-node-word">Emotion</span></div>
+        <div class="seq-arrow">→</div>
+        <div class="seq-node"><span class="seq-node-label">Step 2</span><span class="seq-node-word">Reaction</span></div>
+        <div class="seq-arrow">→</div>
+        <div class="seq-node"><span class="seq-node-label">Step 3</span><span class="seq-node-word">Justification</span></div>
+      </div>
+    </div>
+    <div style="margin-top:20px;margin-bottom:44px;">
+      <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.3em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:12px;">With the governance gap</div>
+      <div class="sequence-chain">
+        <div class="seq-node"><span class="seq-node-label">Step 1</span><span class="seq-node-word">Emotion</span></div>
+        <div class="seq-arrow">→</div>
+        <div class="seq-node seq-highlight"><span class="seq-node-label">Step 2</span><span class="seq-node-word">Awareness</span></div>
+        <div class="seq-arrow">→</div>
+        <div class="seq-node seq-highlight"><span class="seq-node-label">Step 3</span><span class="seq-node-word">Separation</span></div>
+        <div class="seq-arrow">→</div>
+        <div class="seq-node"><span class="seq-node-label">Step 4</span><span class="seq-node-word">Evaluation</span></div>
+        <div class="seq-arrow">→</div>
+        <div class="seq-node"><span class="seq-node-label">Step 5</span><span class="seq-node-word">Decision</span></div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Core Psychological Mechanism — Cognitive Decoupling</div>
+      <div class="insight-text">Strategic Neutrality depends on cognitive decoupling. The feeling is not suppressed — it is observed without being promoted. The individual learns that emotions have legitimacy without necessarily having jurisdiction. That distinction restores executive function.</div>
+    </div>
+
+    <div class="body-text">
+      <p>Leaders who cannot distinguish between emotion as information and emotion as instruction begin making predictable errors: anger becomes policy, disappointment becomes hiring criteria, fear becomes strategy, resentment becomes restructuring, anxiety becomes excessive control. Strategic Neutrality restores the correct hierarchy. Reality informs decisions. Emotion informs awareness. Neither replaces the other.</p>
+    </div>
+
+    <div class="versus-grid">
+      <div class="versus-cell">
+        <span class="versus-label">Emotional Suppression</span>
+        <p>Denies that emotion exists. Loses the information it carries. Produces decisions that are technically ordered but strategically blind to what actually matters.</p>
+      </div>
+      <div class="versus-cell">
+        <span class="versus-label">Strategic Neutrality</span>
+        <p>Acknowledges emotion fully, then places it in the correct role. Emotion informs awareness. Purpose governs action. The feeling is present. It simply does not vote.</p>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>The invisible cost of failing to create the Governance Gap is reduced optionality. Every emotion that becomes an instruction removes choices. Anger removes collaboration. Fear removes experimentation. Embarrassment removes visibility. Resentment removes proximity. Discomfort removes opportunity. Strategic Neutrality restores those lost options. The greatest benefit is not emotional peace. It is freedom of movement.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>Emotional maturity is not deciding without feeling. It is deciding without surrendering authority to the feeling.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       III · TOOLKIT APPLICATION
+  ════════════════════════════════════ -->
+  <section class="section-block" id="toolkit">
+
+    <div class="section-eyebrow">
+      <span class="section-num">III</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Toolkit Application</span>
+    </div>
+
+    <h2 class="section-title">Toolkit 02 Revisited —<br><em>Recovery in Practice</em></h2>
+    <p class="section-subtitle">Map. Diagnose. Govern. — The Founder Conflict Toolkit reread through the lens of Strategic Neutrality: not conflict resolution, but decision separation.</p>
+
+    <div class="body-text">
+      <p>The previous five manifestations taught one uncomfortable truth: emotion can quietly govern strategy. Strategic Neutrality teaches the opposite. Emotion can be acknowledged without being obeyed.</p>
+      <p>The Founder Conflict Toolkit was introduced in Issue 02 as a proximity cost instrument. Revisited here, its deeper purpose becomes visible: it is a decision-separation architecture — training the Governance Gap in practice.</p>
+    </div>
+
+    <div class="callout-inline">
+      <svg class="callout-inline-icon" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <circle cx="14" cy="14" r="12" stroke="#d4a843" stroke-width="1" opacity="0.5"/>
+        <line x1="14" y1="8" x2="14" y2="16" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="14" cy="20" r="1.2" fill="#d4a843" opacity="0.7"/>
+      </svg>
+      <p><strong>The reframe this issue brings:</strong> You can feel threatened — without restructuring the company. You can feel frustrated — without withdrawing from the relationship. You can feel anger — without allowing anger to decide. The toolkit trains that capability one step at a time.</p>
+    </div>
+
+    <ol class="step-list">
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Separate Value from Discomfort</div>
+          <p class="step-desc">Score the relationship twice — once for strategic contribution (operational competence, decision quality, challenge value, network contribution), then separately for emotional experience (ego threat, friction, resentment, avoidance behavior, moral labeling). <span class="step-highlight">Never allow emotional discomfort to overwrite strategic value.</span> This is the Governance Gap applied to a relationship.</p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Diagnose the Pattern, Not the Person</div>
+          <p class="step-desc">Instead of asking "Who's right?", the toolkit asks "Which conflict architecture is active?" Ego–Vision Clash, Silent Resentment Loop, Competence Envy, Vision Drift, Power Asymmetry, Righteousness Exit. <span class="step-highlight">Once conflict becomes a pattern, it becomes governable.</span> Patterns can be restructured. People cannot be corrected from a position of emotional activation.</p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Have the Conversation You Keep Avoiding</div>
+          <p class="step-desc">Six phases: Name the state. Describe the observable pattern. Own the emotional experience. State the operational need. Invite their perspective. Agree on governance going forward. Notice the sequence — feelings are acknowledged, then the discussion returns to structure. <span class="step-highlight">Emotion is recognised. Governance remains strategic.</span></p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Audit Your Trigger Profile</div>
+          <p class="step-desc">Identify recurring patterns: Authority Trigger, Competence Threat, Validation Deficit, Vision Sovereignty, Loyalty Threshold. <span class="step-highlight">A known trigger is far less likely to become company policy.</span> The purpose is predictability, not self-criticism. You cannot govern what you cannot name.</p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Replace Emotion with Governance</div>
+          <p class="step-desc">Clarify who decides, who should decide, and whether responsibilities are formally agreed. This is the practical expression of Strategic Neutrality. <span class="step-highlight">Instead of changing people to reduce discomfort — change governance to reduce ambiguity.</span> The relationship remains human. The operating system becomes objective.</p>
+        </div>
+      </li>
+
+    </ol>
+
+    <div class="insight-box">
+      <div class="insight-label">Common Failure Pattern</div>
+      <div class="insight-text">The most common mistake is trying to eliminate discomfort before making decisions. That day never arrives. The goal is not emotional certainty. The goal is decision integrity despite emotional uncertainty. Leaders who wait until they "feel ready" often continue restructuring around temporary emotional states. Strategic Neutrality begins the moment emotion stops receiving voting rights.</div>
+    </div>
+
+    <div class="pull-quote">
+      <p>Executive maturity begins when your emotions are invited into the room — but no longer permitted to chair the meeting.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       IV · FIELD DIAGNOSIS
+  ════════════════════════════════════ -->
+  <section class="section-block" id="field-diagnosis">
+
+    <div class="section-eyebrow">
+      <span class="section-num">IV</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Field Diagnosis</span>
+    </div>
+
+    <h2 class="section-title">Satya Nadella — The Leaders<br><em>Who Stay in the Room</em></h2>
+    <p class="section-subtitle">Microsoft's response to the OpenAI governance crisis — the final chapter in a three-part case study across Issues 02, 05, and 06. What the board couldn't do, and what Nadella did differently.</p>
+
+    <div class="body-text">
+      <p>This series has used the November 2023 OpenAI board crisis three times, each through a different lens. Issue 02 asked what the removal cost (the Proximity Tax). Issue 05 asked how both sides became morally certain so quickly (the Righteousness Loop). This issue asks a different question: while everyone else reacted — who remained strategically positioned?</p>
+    </div>
+
+    <div class="diagnosis-grid">
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">The Environment Everyone Faced</div>
+        <p>Employees panicked. The board fractured. Investors reacted. Media amplified every development by the hour. The situation produced intense emotional activation across every stakeholder simultaneously — uncertainty, distrust, fear, competitive pressure, strategic risk.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">What Microsoft Did — Operational Decoupling</div>
+        <p>Microsoft did not publicly escalate. It did not attack. It did not withdraw. It simultaneously offered employment to Altman and his team, maintained its partnership with OpenAI, remained engaged with multiple possible outcomes, and adapted immediately when Altman returned. It preserved every relationship regardless of which outcome emerged. Strategic range expanded while others contracted.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">The Hidden Psychological Pattern</div>
+        <p>Most leaders confuse neutrality with passivity. Strategic Neutrality is neither passive nor emotionally detached. It is the ability to acknowledge uncertainty without allowing it to determine positioning. The emotional environment changed by the hour. Microsoft's strategic positioning remained remarkably flexible — because uncertainty and strategy were held separately.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Framework Diagnosis — Expanded Strategic Range</div>
+        <p>Microsoft retained influence, protected its investment, strengthened relationships, increased bargaining power, and preserved future options. This is the opposite of every previous manifestation. Instead of shrinking the decision space, neutrality widened it. That is the practical proof of the Governance Gap at organizational scale.</p>
+      </div>
+
+    </div>
+
+    <div class="pull-quote">
+      <p>You do not become neutral because you stop feeling. You become neutral because your feelings stop determining your coordinates. Presence is not surrender. Proximity is not agreement. It is optionality.</p>
+    </div>
+
+    <div class="body-text">
+      <p>Most leadership advice celebrates decisiveness. Very little celebrates staying power. Yet the highest-performing leaders often possess a quieter capability — they can remain in difficult rooms, negotiate with people they distrust, listen to criticism without reorganizing around it, and sit beside competitors or challenging colleagues without allowing discomfort to become direction.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">The Direct Truth</div>
+      <div class="insight-text">Neutrality is not weakness. It is freedom of movement. The person who can stay in the room has more options than the person who must leave. The board that removed Altman exercised decisive action and lost strategic range. The organization that remained present preserved it. That asymmetry is what the Governance Gap produces at scale.</div>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       V · ASHES TO ARRIVAL
+  ════════════════════════════════════ -->
+  <section class="section-block ashes-section" id="ashes">
+
+    <div class="section-eyebrow">
+      <span class="section-num">V</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Ashes to Arrival · Episode 09</span>
+    </div>
+
+    <h2 class="section-title">Construction<br><em>Without Spectators</em></h2>
+    <p class="section-subtitle">Alan Rickman — on invisibility as preparation, the distinction between being unseen and being absent, and what it means to become someone before the world notices you doing it.</p>
+
+    <div class="body-text">
+      <p>Most people do not fear hard work. They fear becoming invisible while doing it. There is a quiet anxiety that accompanies every long pursuit: what if the years pass and nothing happens? The longer recognition is delayed, the more tempting it becomes to believe that time itself has become evidence against us.</p>
+      <p>Alan Rickman's story confronts this fear directly. He did not spend his thirties waiting for life to begin. He was already becoming the kind of actor who could carry the opportunity when it finally arrived. The world simply had not noticed yet.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">The Distinction That Changes Everything</div>
+      <div class="insight-text">Invisibility is not the same as inactivity. Many of the most important years in a person's life happen before anyone applauds them. The world often mistakes unseen preparation for absence of progress. It is neither. It is construction without spectators.</div>
+    </div>
+
+    <div class="ashes-section">
+      <div class="invisible-grief">
+        <p>There is a particular loneliness in becoming someone before anyone believes you are becoming them. You keep showing up. You keep practising. You improve quietly while wondering if anyone will ever notice. Eventually the hardest question is no longer "Can I do this?" It becomes: "Will I ever be seen?"</p>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>Alan Rickman trained as a graphic designer before becoming an actor. He spent years in theatre building craft, emotional depth, and a particular quality of presence that cannot be manufactured quickly. He was 42 when Hans Gruber announced to the world that he existed. The world called it overnight success. Time called it prepared.</p>
+      <p>His years as a graphic designer were not a detour. His years on stage were not a waiting room. They were the slow accumulation of the qualities that would eventually make every performance feel like it was coming from somewhere irreversibly real.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>Recognition did not create his identity. It revealed it.</p>
+    </div>
+
+    <div class="body-text">
+      <p>One of the greatest psychological mistakes people make is measuring identity through public milestones — promotion, recognition, followers, awards, breakthroughs. When those markers fail to appear, people quietly conclude that they themselves have failed to grow. But identity develops independently of visibility.</p>
+      <p>There is freedom in understanding this. If identity depends entirely on external acknowledgement, it will always feel fragile. But if identity is built through faithful practice, recognition becomes an outcome rather than a requirement. That is another form of the Governance Gap — the refusal to let external absence govern internal direction.</p>
+    </div>
+
+    <div class="body-text">
+      <p>This is what the Ashes to Arrival series has been building toward across nine episodes: not simply that late arrivals happen, but a taxonomy of the psychological barriers that determine whether potential is realised or quietly abandoned.</p>
+      <p>Episode 05 — Henry Ford — taught that failure can become wisdom. Episode 06 — A.R. Rahman — taught that grief can become music. Episode 07 — Dashrath Manjhi — taught that purpose can move a mountain. Episode 08 — Fauja Singh — taught that time is not a verdict. Episode 09 — Alan Rickman — teaches that invisibility is not evidence of absence. Sometimes the years that feel the slowest become the years that built everything future recognition stands on.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Strategic Reflection</div>
+      <div class="insight-text">Sustainable mastery is rarely event-driven. It is infrastructure-driven. Years spent refining craft produce a kind of confidence that cannot be manufactured quickly. When opportunity eventually arrives, preparation compresses into what appears to be overnight success. The audience sees acceleration. The individual experiences continuity.</div>
+    </div>
+
+    <div class="body-text">
+      <p>Modern culture compresses timelines. Social media encourages comparison with people who appear to achieve extraordinary things early. Age has become more than a number. It has become a deadline. By thirty, people feel late. By forty, some feel invisible. By fifty, many quietly stop imagining new beginnings altogether.</p>
+      <p>Yet reality tells a more nuanced story. Human capability does not expire on a fixed schedule. It evolves. The qualities that define enduring work — judgment, emotional intelligence, perspective, patience — are rarely strongest at the beginning. They deepen through experience.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>Not everyone who appears late is behind.<br>Some people simply refuse to arrive before they are ready.</p>
+    </div>
+
+    <div class="body-text" style="margin-top:48px;">
+      <p>Alan Rickman's story is often told as proof that it is never too late to begin. But there is a deeper truth beneath it. He did not suddenly become extraordinary at forty-two. He became visible. There is an important difference. The years before <em>Die Hard</em> were not empty years waiting for significance. They were years in which significance was being built quietly, patiently, and without guarantee.</p>
+      <p>Perhaps the pressure we place on ourselves comes from believing that every meaningful season should produce immediate evidence. But many of life's most enduring contributions spend years beneath the surface before anyone recognises them. Age does not diminish the value of preparation. It often reveals its depth. And sometimes, what the world calls a late beginning is simply the first moment it finally notices a lifetime of becoming.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       CLOSING REFLECTION — SERIES FINALE
+  ════════════════════════════════════ -->
+  <section class="closing-block" id="closing">
+
+    <h2 class="section-title" style="font-size:clamp(28px,4vw,40px);margin-bottom:24px;">Series <em>Closing</em></h2>
+
+    <div class="closing-quote">
+      Strategic freedom begins the moment experience and authority become separate.
+    </div>
+
+    <div style="max-width:600px;margin:0 auto 52px;font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);line-height:1.9;">
+      <p>Six issues. One mechanism traced through six forms. Avoidance that began as a single avoided chair became, across these pages, a habit, a cost, a navigation system, an architecture, an ideology, and finally — a problem with a solution.</p>
+      <p>The solution was never to stop feeling. It was to stop confusing feeling with governance. The Governance Gap is not a skill of emotional suppression. It is a skill of constitutional order — establishing, within the mind, the same clarity that a well-governed organization requires: every voice is heard, not every voice decides.</p>
+      <p>Recovery is not the absence of discomfort. It is the restoration of authorship. The emotion is still present. The room is still difficult. The person across the table may still activate every trigger catalogued across these six issues. None of that changes. What changes is jurisdiction. What changes is who governs the next decision.</p>
+      <p>That is the quiet achievement this series was built toward.</p>
+    </div>
+
+    <div class="closing-byline">Mind Anchor · Anchored Intelligence · Issue 06 · Series Complete</div>
+
+  </section>
+
+</div><!-- /issue-wrap -->
+</main>
+
+
+<!-- ═══════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+
+    <svg class="footer-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="#d4a843"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="#d4a843"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="#d4a843" opacity="0.7"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="#d4a843" opacity="0.7"/>
+    </svg>
+
+    <div class="footer-name">Mind Anchor</div>
+    <div class="footer-sub">Anchored Intelligence — by Jai</div>
+
+    <div class="footer-rule"></div>
+
+    <div class="footer-meta">
+      Issue 06 · Strategic Neutrality · Series Complete<br>
+      Invisible patterns shaping people, pressure, and performance.<br><br>
+      01 · Avoidance Reflex &ensp;·&ensp; 02 · Proximity Tax &ensp;·&ensp; 03 · Sovereignty Collapse<br>
+      04 · Shadow Governance &ensp;·&ensp; 05 · Righteousness Loop &ensp;·&ensp; 06 · Strategic Neutrality<br><br>
+      © Mind Anchor · All rights reserved<br><br>
+      The emotion is welcome in the room.<br>
+      It simply does not chair the meeting.
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
