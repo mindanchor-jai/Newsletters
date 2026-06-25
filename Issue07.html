@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchored Intelligence — Issue 07 | Mind Anchor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ─── CSS Variables ─── */
+:root {
+  --navy-deepest: #040d1f;
+  --navy-deep:    #070f24;
+  --navy-mid:     #0c1735;
+  --navy-light:   #112050;
+  --gold-bright:  #d4a843;
+  --gold-mid:     #b8901f;
+  --gold-soft:    #c8a84b;
+  --gold-muted:   #8a6a1a;
+  --gold-pale:    #f0d080;
+  --gold-whisper:  rgba(212,168,67,0.08);
+  --gold-whisper2: rgba(212,168,67,0.15);
+  --cream:      #f5edd8;
+  --cream-mid:  #e8d9b8;
+  --text-primary:   #e8d9b8;
+  --text-secondary: rgba(232,217,184,0.72);
+  --text-muted:     rgba(232,217,184,0.45);
+  --divider:        rgba(212,168,67,0.2);
+  --divider-strong: rgba(212,168,67,0.45);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background-color:var(--navy-deepest);
+  color:var(--text-primary);
+  font-family:'EB Garamond','Cormorant Garamond',Georgia,serif;
+  font-size:19px;line-height:1.85;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;opacity:0.6;
+}
+
+/* ─── Layout ─── */
+.issue-wrap{max-width:760px;margin:0 auto;padding:0 32px;}
+
+/* ─── Issue 07 ribbon — returns to standard 3px weekly cadence ─── */
+.issue-ribbon{
+  background:linear-gradient(90deg,var(--gold-mid),var(--gold-bright),var(--gold-soft),var(--gold-mid));
+  height:3px;width:100%;
+}
+
+/* ─── Masthead ─── */
+.masthead{background:var(--navy-deep);border-bottom:1px solid var(--divider);padding:56px 0 52px;text-align:center;position:relative;overflow:hidden;}
+.masthead::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 45% at 50% 0%,rgba(212,168,67,0.08) 0%,transparent 70%);pointer-events:none;}
+.masthead::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,0.35),transparent);}
+.masthead-inner{max-width:760px;margin:0 auto;padding:0 32px;position:relative;z-index:2;}
+
+.peacock-emblem{width:64px;height:64px;margin:0 auto 28px;opacity:0.92;animation:peacock-glow 4s ease-in-out infinite;}
+@keyframes peacock-glow{
+  0%,100%{filter:drop-shadow(0 0 6px rgba(212,168,67,0.3));}
+  50%     {filter:drop-shadow(0 0 16px rgba(212,168,67,0.65));}
+}
+
+.publication-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.32em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:18px;}
+
+.issue-badge{display:inline-flex;align-items:center;gap:10px;margin:0 auto 32px;border:1px solid var(--divider-strong);padding:6px 18px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-bright);text-transform:uppercase;background:rgba(212,168,67,0.05);}
+.issue-badge span{opacity:0.38;}
+
+.masthead-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,8vw,72px);font-weight:300;letter-spacing:0.04em;color:var(--cream);line-height:1.05;margin-bottom:16px;}
+.masthead-title em{font-style:italic;color:var(--gold-soft);}
+
+.masthead-tagline{font-family:'EB Garamond',serif;font-style:italic;font-size:16px;color:var(--text-secondary);letter-spacing:0.06em;margin-bottom:32px;}
+
+.masthead-meta{display:flex;align-items:center;justify-content:center;gap:28px;font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;}
+.masthead-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--gold-muted);opacity:0.5;}
+
+/* ─── Peacock section dividers ─── */
+.peacock-divider{display:flex;align-items:center;justify-content:center;gap:20px;margin:0;padding:20px 0;}
+.peacock-divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--divider),transparent);}
+.feather-eye{width:22px;height:22px;opacity:0.7;}
+
+/* ─── ToC ─── */
+.toc-section{background:linear-gradient(135deg,rgba(12,23,53,0.9) 0%,rgba(7,15,36,0.95) 100%);border:1px solid var(--divider);border-radius:2px;padding:48px 52px;margin:48px 0;position:relative;overflow:hidden;}
+.toc-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-soft),transparent);}
+.toc-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:14px;}
+.toc-label::after{content:'';flex:1;height:1px;background:var(--divider);}
+.toc-series-line{font-family:'EB Garamond',serif;font-style:italic;font-size:13px;color:var(--text-muted);margin-bottom:28px;letter-spacing:0.02em;padding-bottom:20px;border-bottom:1px solid rgba(212,168,67,0.1);}
+.toc-series-line a{color:var(--gold-muted);text-decoration:none;transition:color 0.3s;}
+.toc-series-line a:hover{color:var(--gold-soft);}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.toc-item{border-bottom:1px solid rgba(212,168,67,0.08);padding:14px 0;display:flex;align-items:baseline;gap:0;transition:all 0.3s ease;}
+.toc-item:last-child{border-bottom:none;}
+.toc-item:hover .toc-item-title{color:var(--gold-soft);}
+.toc-item:hover .toc-item-num{color:var(--gold-bright);}
+.toc-item-num{font-family:'Cinzel',serif;font-size:10px;color:var(--gold-muted);letter-spacing:0.15em;min-width:32px;transition:color 0.3s;}
+.toc-item-dots{flex:1;border-bottom:1px dotted rgba(212,168,67,0.2);margin:0 16px;position:relative;top:-4px;}
+.toc-item-title{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;color:var(--text-primary);text-decoration:none;letter-spacing:0.02em;transition:color 0.3s;flex-shrink:0;max-width:68%;text-align:right;}
+.toc-item-sub{font-style:italic;font-size:13px;color:var(--text-muted);display:block;margin-top:2px;text-align:right;}
+
+/* ─── Section blocks ─── */
+.section-block{padding:72px 0;border-bottom:1px solid rgba(212,168,67,0.1);}
+.section-block:last-of-type{border-bottom:none;}
+.section-eyebrow{display:flex;align-items:center;gap:16px;margin-bottom:36px;}
+.section-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;color:var(--gold-bright);text-transform:uppercase;}
+.section-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--divider),transparent);}
+.section-tag{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-muted);text-transform:uppercase;border:1px solid var(--divider);padding:4px 10px;white-space:nowrap;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,44px);font-weight:300;line-height:1.15;color:var(--cream);margin-bottom:28px;letter-spacing:0.01em;}
+.section-title em{font-style:italic;color:var(--gold-soft);}
+.section-subtitle{font-family:'EB Garamond',serif;font-style:italic;font-size:17px;color:var(--text-secondary);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid rgba(212,168,67,0.12);letter-spacing:0.03em;}
+
+/* ─── Body text ─── */
+.body-text{font-family:'EB Garamond',serif;font-size:19px;line-height:1.9;color:var(--text-secondary);margin-bottom:28px;}
+.body-text+.body-text{margin-top:-8px;}
+p{margin-bottom:24px;}p:last-child{margin-bottom:0;}
+
+/* ─── Pull quote ─── */
+.pull-quote{margin:52px -8px;padding:40px 48px;border-left:2px solid var(--gold-soft);background:var(--gold-whisper);position:relative;}
+.pull-quote::before{content:'\201C';position:absolute;top:-12px;left:40px;font-family:'Cormorant Garamond',serif;font-size:80px;color:var(--gold-soft);opacity:0.3;line-height:1;}
+.pull-quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,3.5vw,26px);line-height:1.5;color:var(--cream);letter-spacing:0.02em;margin:0;}
+
+/* ─── Insight box ─── */
+.insight-box{background:linear-gradient(135deg,rgba(17,32,80,0.6),rgba(12,23,53,0.8));border:1px solid var(--divider);border-top:2px solid var(--gold-soft);padding:36px 40px;margin:44px 0;}
+.insight-label{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:16px;}
+.insight-text{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.5vw,21px);line-height:1.6;color:var(--cream);font-weight:400;}
+
+/* ─── Fragment list ─── */
+.fragment-list{list-style:none;margin:28px 0;padding:0;}
+.fragment-list li{font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);padding:6px 0 6px 24px;position:relative;letter-spacing:0.02em;}
+.fragment-list li::before{content:'—';position:absolute;left:0;color:var(--gold-muted);font-size:14px;}
+
+/* ─── Versus grid ─── */
+.versus-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:40px 0;border:1px solid var(--divider);}
+.versus-cell{padding:28px 32px;background:rgba(7,15,36,0.6);}
+.versus-cell:first-child{border-right:1px solid var(--divider);}
+.versus-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.35em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:14px;display:block;}
+.versus-cell p{font-family:'EB Garamond',serif;font-size:16px;color:var(--text-secondary);line-height:1.7;margin:0;}
+
+/* ─── Step list ─── */
+.step-list{list-style:none;margin:40px 0;counter-reset:step-counter;}
+.step-item{counter-increment:step-counter;display:flex;gap:24px;padding:32px 0;border-bottom:1px solid rgba(212,168,67,0.08);}
+.step-item:last-child{border-bottom:none;}
+.step-num{flex-shrink:0;width:40px;height:40px;border:1px solid var(--gold-muted);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:11px;color:var(--gold-soft);letter-spacing:0.05em;margin-top:4px;}
+.step-num::before{content:counter(step-counter,decimal-leading-zero);}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--cream);margin-bottom:10px;letter-spacing:0.02em;}
+.step-desc{font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);line-height:1.8;margin:0;}
+.step-highlight{display:inline-block;font-style:italic;color:var(--gold-soft);margin-top:8px;font-size:16px;}
+
+/* ─── Diagnosis cards ─── */
+.diagnosis-grid{display:grid;grid-template-columns:1fr;gap:20px;margin:40px 0;}
+.diagnosis-card{background:rgba(7,15,36,0.7);border:1px solid var(--divider);border-left:3px solid var(--gold-mid);padding:28px 32px;}
+.diagnosis-card-label{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.32em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:12px;}
+.diagnosis-card p{font-family:'EB Garamond',serif;font-size:16.5px;color:var(--text-secondary);margin:0;line-height:1.75;}
+
+/* ─── OPTIONALITY MAP — Issue 07 hero element ─── */
+.optionality-map{
+  margin:52px 0;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2px;border:1px solid var(--divider);
+}
+.optionality-side{
+  padding:32px 28px;
+  background:rgba(7,15,36,0.6);
+}
+.optionality-side.right{
+  background:rgba(212,168,67,0.06);
+  border-left:1px solid var(--divider);
+}
+.optionality-side-label{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.32em;
+  color:var(--gold-muted);text-transform:uppercase;margin-bottom:20px;display:block;
+}
+.optionality-side.right .optionality-side-label{color:var(--gold-bright);}
+.optionality-item{
+  display:flex;align-items:baseline;gap:12px;
+  padding:8px 0;border-bottom:1px solid rgba(212,168,67,0.06);
+}
+.optionality-item:last-child{border-bottom:none;}
+.optionality-dot{
+  flex-shrink:0;width:6px;height:6px;border-radius:50%;
+  background:var(--gold-muted);margin-top:6px;
+}
+.optionality-side.right .optionality-dot{background:var(--gold-bright);opacity:0.7;}
+.optionality-item-text{
+  font-family:'EB Garamond',serif;font-size:16px;
+  color:var(--text-muted);line-height:1.55;
+  text-decoration:line-through;text-decoration-color:rgba(212,168,67,0.3);
+}
+.optionality-side.right .optionality-item-text{
+  color:var(--text-secondary);text-decoration:none;
+}
+
+/* ─── Decision driver test ─── */
+.driver-test{
+  margin:44px 0;border:1px solid var(--divider);
+}
+.driver-test-section{
+  border-bottom:1px solid var(--divider);
+}
+.driver-test-section:last-child{border-bottom:none;}
+.driver-test-header{
+  padding:16px 28px;
+  font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.3em;
+  text-transform:uppercase;
+  border-bottom:1px solid rgba(212,168,67,0.08);
+}
+.driver-test-section:first-child .driver-test-header{color:var(--gold-bright);background:rgba(212,168,67,0.04);}
+.driver-test-section:last-child .driver-test-header{color:var(--text-muted);background:rgba(255,255,255,0.02);}
+.driver-test-row{
+  display:flex;align-items:baseline;gap:14px;
+  padding:13px 28px;
+  border-bottom:1px solid rgba(212,168,67,0.05);
+}
+.driver-test-row:last-child{border-bottom:none;}
+.driver-checkbox{
+  flex-shrink:0;width:14px;height:14px;
+  border:1px solid var(--gold-muted);margin-top:4px;
+}
+.driver-text{font-family:'EB Garamond',serif;font-size:16px;color:var(--text-secondary);line-height:1.6;}
+
+/* ─── Callout inline ─── */
+.callout-inline{display:flex;gap:20px;align-items:flex-start;background:rgba(212,168,67,0.05);border:1px solid rgba(212,168,67,0.15);padding:28px 32px;margin:36px 0;}
+.callout-inline-icon{flex-shrink:0;width:28px;height:28px;margin-top:2px;}
+.callout-inline p{font-family:'EB Garamond',serif;font-size:16.5px;color:var(--text-secondary);line-height:1.75;margin:0;}
+.callout-inline p strong{color:var(--cream);font-weight:500;}
+
+/* ─── Continuity banner ─── */
+.continuity-banner{background:rgba(7,15,36,0.8);border:1px solid rgba(212,168,67,0.12);border-left:2px solid var(--gold-muted);padding:16px 24px;margin-bottom:48px;display:flex;align-items:center;gap:16px;}
+.continuity-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.3em;color:var(--gold-muted);text-transform:uppercase;flex-shrink:0;}
+.continuity-text{font-family:'EB Garamond',serif;font-style:italic;font-size:14.5px;color:var(--text-muted);line-height:1.5;}
+
+/* ─── Signal one-liner ─── */
+.signal-line{text-align:center;padding:52px 0;}
+.signal-line p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,4vw,30px);color:var(--gold-soft);letter-spacing:0.03em;line-height:1.45;max-width:560px;margin:0 auto;}
+
+/* ─── Opening signal ─── */
+.opening-signal{background:linear-gradient(160deg,rgba(12,23,53,0.5) 0%,transparent 60%);}
+.lead-line{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,30px);font-weight:300;font-style:italic;color:var(--cream);line-height:1.4;margin-bottom:44px;border-left:2px solid var(--gold-soft);padding-left:28px;letter-spacing:0.01em;}
+
+/* ─── Ashes section ─── */
+.ashes-section .invisible-grief{padding:40px 0;margin:40px 0;border-top:1px solid rgba(212,168,67,0.12);border-bottom:1px solid rgba(212,168,67,0.12);}
+.ashes-section .invisible-grief p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,3vw,23px);color:var(--text-secondary);line-height:1.65;text-align:center;max-width:580px;margin:0 auto;}
+
+/* ─── Closing block ─── */
+.closing-block{background:linear-gradient(180deg,transparent 0%,rgba(212,168,67,0.04) 50%,transparent 100%);padding:80px 0;text-align:center;border-top:1px solid var(--divider);}
+.closing-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,3vw,26px);color:var(--cream);line-height:1.55;margin:0 auto 40px;max-width:580px;}
+.closing-byline{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;}
+
+/* ─── Footer ─── */
+.footer{background:var(--navy-deep);border-top:1px solid var(--divider);padding:56px 0;text-align:center;}
+.footer-inner{max-width:760px;margin:0 auto;padding:0 32px;}
+.footer-emblem{width:48px;height:48px;margin:0 auto 24px;opacity:0.55;}
+.footer-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.3em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:8px;}
+.footer-sub{font-family:'EB Garamond',serif;font-style:italic;font-size:14px;color:var(--text-muted);margin-bottom:32px;}
+.footer-rule{width:80px;height:1px;background:var(--divider);margin:28px auto;}
+.footer-meta{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;line-height:2.2;}
+
+/* ─── Animation ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+.masthead-inner>*{animation:fadeUp 0.8s ease both;}
+.peacock-emblem{animation-delay:0.1s;}.issue-badge{animation-delay:0.2s;}
+.publication-label{animation-delay:0.25s;}.masthead-title{animation-delay:0.38s;}
+.masthead-tagline{animation-delay:0.52s;}.masthead-meta{animation-delay:0.65s;}
+
+/* ─── Responsive ─── */
+@media(max-width:600px){
+  .issue-wrap{padding:0 20px;}
+  .toc-section{padding:36px 28px;}
+  .pull-quote{padding:28px 24px;margin:40px 0;}
+  .insight-box{padding:28px 24px;}
+  .versus-grid,.optionality-map{grid-template-columns:1fr;}
+  .versus-cell:first-child,.optionality-side.right{border-left:none;border-top:1px solid var(--divider);}
+  .step-item{flex-direction:column;gap:12px;}
+  .step-num{width:36px;height:36px;}
+  .toc-item-title{max-width:55%;font-size:15px;}
+  .callout-inline{flex-direction:column;gap:12px;}
+  .continuity-banner{flex-direction:column;gap:8px;}
+  .driver-test-row{padding:13px 18px;}
+  .driver-test-header{padding:14px 18px;}
+}
+::selection{background:rgba(212,168,67,0.25);color:var(--cream);}
+
+</style>
+</head>
+<body>
+
+<div class="issue-ribbon"></div>
+
+<!-- ═══════════════════════════════════
+     MASTHEAD
+════════════════════════════════════ -->
+<header class="masthead">
+  <div class="masthead-inner">
+
+    <svg class="peacock-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="url(#gG7)"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="url(#gG7)"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="url(#gG7)" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="url(#gG7)" opacity="0.95"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="url(#gG7)" opacity="0.95"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="url(#gG7)" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="url(#gG7)"/>
+      <circle cx="50" cy="30" r="5" fill="url(#gG7)"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="url(#gG7)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="url(#gG7)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="url(#gG7)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="url(#gG7)"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="url(#gG7)"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="url(#gG7)"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="url(#gG7)" opacity="0.7"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="url(#gG7)" opacity="0.8"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="url(#gG7)" opacity="0.7"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="url(#gG7)" opacity="0.8"/>
+      <ellipse cx="30" cy="90" rx="3" ry="3.5" fill="url(#gG7)" opacity="0.5"/>
+      <ellipse cx="66" cy="90" rx="3" ry="3.5" fill="url(#gG7)" opacity="0.5"/>
+      <defs>
+        <linearGradient id="gG7" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f0d080"/>
+          <stop offset="50%" stop-color="#d4a843"/>
+          <stop offset="100%" stop-color="#b8901f"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="issue-badge">
+      <span>Issue 01–06 ✦</span> Issue 07 — Weaponized Neutrality
+    </div>
+
+    <div class="publication-label">Mind Anchor · Anchored Intelligence</div>
+    <h1 class="masthead-title"><em>Anchored</em> Intelligence</h1>
+    <p class="masthead-tagline">Invisible patterns shaping people, pressure, and performance.</p>
+
+    <div class="masthead-meta">
+      <span>Issue 07</span>
+      <span class="masthead-meta-dot"></span>
+      <span>Weaponized Neutrality</span>
+      <span class="masthead-meta-dot"></span>
+      <span>Mind Anchor · Jai</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════
+     MAIN
+════════════════════════════════════ -->
+<main>
+<div class="issue-wrap">
+
+  <div class="continuity-banner" style="margin-top:40px;">
+    <span class="continuity-label">Continuing</span>
+    <span class="continuity-text">Issue 06 restored the Governance Gap — emotion acknowledged, authority reclaimed. This issue explores what happens when that freedom matures. <em>Neutrality stops being recovery. It becomes leverage.</em></span>
+  </div>
+
+  <!-- ─── ToC ─── -->
+  <nav class="toc-section" aria-label="Table of Contents">
+    <div class="toc-label">Contents — Issue 07</div>
+    <div class="toc-series-line">
+      <a href="#">← 06: Strategic Neutrality</a> &ensp;·&ensp;
+      <a href="#">← 05: Righteousness Loop</a> &ensp;·&ensp;
+      <a href="#">← 04: Shadow Governance</a>
+    </div>
+    <ul class="toc-list">
+      <li class="toc-item">
+        <span class="toc-item-num">I</span>
+        <span class="toc-item-dots"></span>
+        <a href="#opening-signal" class="toc-item-title">
+          Opening Signal
+          <span class="toc-item-sub">The Power of Remaining Available</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">II</span>
+        <span class="toc-item-dots"></span>
+        <a href="#framework" class="toc-item-title">
+          Framework Lens
+          <span class="toc-item-sub">Asymmetric Optionality</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">III</span>
+        <span class="toc-item-dots"></span>
+        <a href="#toolkit" class="toc-item-title">
+          Toolkit Application
+          <span class="toc-item-sub">Decision Driver Test — Leadership Governance Toolkit</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">IV</span>
+        <span class="toc-item-dots"></span>
+        <a href="#field-diagnosis" class="toc-item-title">
+          Field Diagnosis
+          <span class="toc-item-sub">Bob Iger &amp; Pixar — Neutrality Becoming Leverage</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">V</span>
+        <span class="toc-item-dots"></span>
+        <a href="#ashes" class="toc-item-title">
+          Ashes to Arrival · Episode 10
+          <span class="toc-item-sub">Kiran Mazumdar-Shaw — The Garage and the Boardroom</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg width="28" height="28" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:0.55">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       I · OPENING SIGNAL
+  ════════════════════════════════════ -->
+  <section class="section-block opening-signal" id="opening-signal">
+
+    <div class="section-eyebrow">
+      <span class="section-num">I</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Opening Signal</span>
+    </div>
+
+    <h2 class="section-title">The Power of<br><em>Remaining Available</em></h2>
+    <p class="section-subtitle">Every decision removes a future. Some futures deserve to disappear. Many vanish long before strategy ever examines them — not because they lack value, but because they carry emotional weight.</p>
+
+    <p class="lead-line">The greatest competitive advantage is not superior intelligence. It is superior freedom of movement.</p>
+
+    <div class="body-text">
+      <p>Every person carries an invisible map of the world. Some rooms are crossed out. Some people are permanently excluded. Some conversations never happen. Not because strategy rejected them. Because emotion did.</p>
+      <p>Most people believe they have considered every available option. Usually they have only considered every emotionally comfortable one. The greatest opportunities often exist just beyond the edge of emotional preference. The question is whether freedom extends far enough to reach them.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Core Invisible Pattern — Issue 07</div>
+      <div class="insight-text">The greatest competitive advantage is not making better decisions. It is preserving opportunities that emotion would have eliminated before strategy ever had the chance to see them. When emotional independence compounds over time, it stops being recovery. It becomes leverage — and the individual becomes increasingly difficult to predict, because their decisions are governed by strategic value rather than emotional history.</div>
+    </div>
+
+    <div class="body-text">
+      <p>A difficult conversation is never started. A former rival is never reconsidered. A partnership remains impossible. A negotiation ends before it begins. The opportunity is not rejected through analysis. It is filtered through memory.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>The individual who is no longer emotionally predictable becomes strategically unpredictable. Criticism no longer dictates withdrawal. Praise no longer guarantees agreement. Conflict no longer determines positioning. History no longer decides opportunity.</p>
+    </div>
+
+    <div class="body-text">
+      <p>This is not emotional detachment. It is strategic availability — the ability to enter rooms others have already abandoned, to negotiate with people others have permanently rejected, to reverse direction without embarrassment, to choose value over memory.</p>
+      <p>The leaders who appear least reactive often possess the greatest strategic range. Reaction feels powerful. Freedom is more powerful. Every emotionally driven decision closes a door. Every strategically governed decision keeps another one open. Over time, those preserved options become asymmetric advantage.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>The strongest competitors are not those who make the boldest moves.<br>They are the ones whose emotions eliminate the fewest possible moves.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       II · FRAMEWORK LENS
+  ════════════════════════════════════ -->
+  <section class="section-block" id="framework">
+
+    <div class="section-eyebrow">
+      <span class="section-num">II</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Framework Lens</span>
+    </div>
+
+    <h2 class="section-title"><em>Asymmetric</em> Optionality</h2>
+    <p class="section-subtitle">The less emotion dictates movement, the more strategic options remain available — and why this gap becomes a competitive advantage competitors struggle to imitate.</p>
+
+    <div class="body-text">
+      <p>Most people think power comes from having superior resources. Many strategic advantages actually come from something simpler: the ability to consider options that everyone else has already eliminated emotionally.</p>
+      <p>Emotion narrows possibility before analysis begins. Neutrality keeps possibility open until analysis is complete. This creates asymmetric decision-making. Others negotiate only with allies. You negotiate with everyone.</p>
+    </div>
+
+    <!-- Optionality map — the core visual for Issue 07 -->
+    <div class="optionality-map">
+      <div class="optionality-side">
+        <span class="optionality-side-label">Emotionally governed — options eliminated before strategy evaluates them</span>
+        <div class="optionality-item">
+          <div class="optionality-dot"></div>
+          <span class="optionality-item-text">The acquisition of someone who publicly criticized you</span>
+        </div>
+        <div class="optionality-item">
+          <div class="optionality-dot"></div>
+          <span class="optionality-item-text">A partnership with a former adversary</span>
+        </div>
+        <div class="optionality-item">
+          <div class="optionality-dot"></div>
+          <span class="optionality-item-text">Retaining a high-performer who challenges authority</span>
+        </div>
+        <div class="optionality-item">
+          <div class="optionality-dot"></div>
+          <span class="optionality-item-text">Reversing a public position to capture greater value</span>
+        </div>
+        <div class="optionality-item">
+          <div class="optionality-dot"></div>
+          <span class="optionality-item-text">Recruiting talent that once opposed or left the organization</span>
+        </div>
+      </div>
+      <div class="optionality-side right">
+        <span class="optionality-side-label">Strategically governed — options evaluated on value, not history</span>
+        <div class="optionality-item">
+          <div class="optionality-dot"></div>
+          <span class="optionality-item-text">The acquisition of someone who publicly criticized you</span>
+        </div>
+        <div class="optionality-item">
+          <div class="optionality-dot"></div>
+          <span class="optionality-item-text">A partnership with a former adversary</span>
+        </div>
+        <div class="optionality-item">
+          <div class="optionality-dot"></div>
+          <span class="optionality-item-text">Retaining a high-performer who challenges authority</span>
+        </div>
+        <div class="optionality-item">
+          <div class="optionality-dot"></div>
+          <span class="optionality-item-text">Reversing a public position to capture greater value</span>
+        </div>
+        <div class="optionality-item">
+          <div class="optionality-dot"></div>
+          <span class="optionality-item-text">Recruiting talent that once opposed or left the organization</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>The list is identical. The difference is whether emotion has already removed each item from consideration before strategy examines it. Both columns face the same landscape. One navigates it fully. The other navigates an emotionally edited version of it.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Core Psychological Mechanism — Emotional Pre-Filtering</div>
+      <div class="insight-text">Before conscious reasoning begins, the nervous system silently removes possibilities associated with discomfort, humiliation, resentment, betrayal, uncertainty, and ego threat. Most people never evaluate those opportunities. They disappear before strategic thinking starts. Weaponized Neutrality interrupts this filter: instead of asking "How do I feel about this?", the mind asks "What is objectively available?"</div>
+    </div>
+
+    <div class="body-text">
+      <p>Markets reward optionality. Negotiation rewards optionality. Leadership rewards optionality. Capital allocation rewards optionality. Organizations become powerful not because they always choose correctly — but because they preserve more viable choices than competitors.</p>
+    </div>
+
+    <div class="versus-grid">
+      <div class="versus-cell">
+        <span class="versus-label">Without Asymmetric Optionality</span>
+        <p>Strategy begins after emotion has already narrowed the landscape. You operate on an emotionally edited map. The best moves are sometimes never evaluated.</p>
+      </div>
+      <div class="versus-cell">
+        <span class="versus-label">With Asymmetric Optionality</span>
+        <p>Emotional resistance is treated as psychological data, not strategic evidence. You operate on the full landscape. The best move wins regardless of history.</p>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>Exceptional founders are difficult to manipulate because they cannot be emotionally cornered. Competitors often assume: if we embarrass them publicly, they'll react; if we provoke them, they'll withdraw; if we insult them, they'll refuse the partnership. Weaponized Neutrality removes those assumptions. The founder becomes strategically unpredictable because emotional predictability disappears.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>The greatest strategic advantage is not making better decisions. It is refusing to eliminate good decisions for emotional reasons.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       III · TOOLKIT APPLICATION
+  ════════════════════════════════════ -->
+  <section class="section-block" id="toolkit">
+
+    <div class="section-eyebrow">
+      <span class="section-num">III</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Toolkit Application</span>
+    </div>
+
+    <h2 class="section-title">The Decision<br><em>Driver Test</em></h2>
+    <p class="section-subtitle">Leadership Emotional Governance Toolkit — Diagnostic Tool 4 and Governance Protocol. Operationalizing Weaponized Neutrality: creating a pause between reaction and action so that strategic value, not emotional history, determines the outcome.</p>
+
+    <div class="body-text">
+      <p>Weaponized Neutrality is not the ability to hide emotion. It is the ability to make the same decision whether the person in front of you is your closest ally or your greatest rival. Most leaders believe they are making strategic decisions. In reality, they are often making emotional corrections.</p>
+    </div>
+
+    <div class="callout-inline">
+      <svg class="callout-inline-icon" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <circle cx="14" cy="14" r="12" stroke="#d4a843" stroke-width="1" opacity="0.5"/>
+        <line x1="14" y1="8" x2="14" y2="16" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="14" cy="20" r="1.2" fill="#d4a843" opacity="0.7"/>
+      </svg>
+      <p><strong>The diagnostic question:</strong> Is this decision being driven by measurable business evidence — or by emotional discomfort? That distinction determines whether the company becomes stronger, or simply more comfortable.</p>
+    </div>
+
+    <!-- Decision Driver Test table -->
+    <div class="driver-test">
+      <div class="driver-test-section">
+        <div class="driver-test-header">Strategic Drivers — these support the decision on objective grounds</div>
+        <div class="driver-test-row">
+          <div class="driver-checkbox"></div>
+          <span class="driver-text">Their output is measurably below the performance standard required</span>
+        </div>
+        <div class="driver-test-row">
+          <div class="driver-checkbox"></div>
+          <span class="driver-text">Their behavior has had documented negative operational impact</span>
+        </div>
+        <div class="driver-test-row">
+          <div class="driver-checkbox"></div>
+          <span class="driver-text">The role itself is no longer strategically necessary</span>
+        </div>
+        <div class="driver-test-row">
+          <div class="driver-checkbox"></div>
+          <span class="driver-text">Their skills demonstrably do not match the company's current direction</span>
+        </div>
+        <div class="driver-test-row">
+          <div class="driver-checkbox"></div>
+          <span class="driver-text">They have been given clear feedback and have not changed</span>
+        </div>
+      </div>
+      <div class="driver-test-section">
+        <div class="driver-test-header">Emotional Drivers — if only these are checked, pause before acting</div>
+        <div class="driver-test-row">
+          <div class="driver-checkbox"></div>
+          <span class="driver-text">They challenge my authority or question my decisions</span>
+        </div>
+        <div class="driver-test-row">
+          <div class="driver-checkbox"></div>
+          <span class="driver-text">I feel uncomfortable or diminished in their presence</span>
+        </div>
+        <div class="driver-test-row">
+          <div class="driver-checkbox"></div>
+          <span class="driver-text">They have more support from the team than I am comfortable with</span>
+        </div>
+        <div class="driver-test-row">
+          <div class="driver-checkbox"></div>
+          <span class="driver-text">I feel relieved when they are absent from meetings</span>
+        </div>
+        <div class="driver-test-row">
+          <div class="driver-checkbox"></div>
+          <span class="driver-text">They have a communication style that I find personally difficult</span>
+        </div>
+      </div>
+    </div>
+
+    <ol class="step-list">
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Separate Strategic Drivers from Emotional Drivers</div>
+          <p class="step-desc">Complete the Decision Driver Test above before any major leadership decision. List every reason supporting the decision, then divide them into strategic and emotional categories. <span class="step-highlight">Strategy becomes visible only after emotion has been isolated.</span></p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Pause If Emotion Is Leading</div>
+          <p class="step-desc">If reasons are primarily emotional, do not make the decision yet. Create distance from the emotional activation — not from the person. <span class="step-highlight">Time is often the simplest governance mechanism.</span> A calmer nervous system produces clearer strategy.</p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Test Your Neutrality</div>
+          <p class="step-desc">Ask: <span class="step-highlight">"If this same recommendation came from someone I deeply respected instead of this person — would my answer change?"</span> If yes, the person has become larger than the problem. Neutrality has not yet been achieved.</p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="step-title">Install Governance Instead of Willpower</div>
+          <p class="step-desc">Document: recurring emotional triggers, the organizational systems they may already influence, the voices unintentionally filtered, one governance change to implement this month, and one person authorized to give completely unfiltered feedback. <span class="step-highlight">This transforms neutrality from a personality trait into an executive operating system.</span></p>
+        </div>
+      </li>
+
+    </ol>
+
+    <div class="insight-box">
+      <div class="insight-label">The Reflection That Changes the Frame</div>
+      <div class="insight-text">Can you negotiate with someone you dislike, hire someone who once challenged you, or acquire someone who once opposed you — if it is objectively the right strategic move? If the answer is yes, your decisions are no longer reactions. They are positioning.</div>
+    </div>
+
+    <div class="pull-quote">
+      <p>The strongest negotiator is not the one who wins against emotion — but the one whose strategy no longer depends on it.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       IV · FIELD DIAGNOSIS
+  ════════════════════════════════════ -->
+  <section class="section-block" id="field-diagnosis">
+
+    <div class="section-eyebrow">
+      <span class="section-num">IV</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Field Diagnosis</span>
+    </div>
+
+    <h2 class="section-title">Bob Iger &amp; Pixar —<br><em>Neutrality Becoming Leverage</em></h2>
+    <p class="section-subtitle">Before the acquisition, the Disney–Pixar relationship had deteriorated badly. Iger did not inherit a neutral relationship. He inherited mistrust — and chose to ask a different question.</p>
+
+    <div class="body-text">
+      <p>Pixar's co-founder had publicly criticized Disney's creative direction. Licensing negotiations had become adversarial. Many expected the relationship to end rather than deepen. When Bob Iger became CEO, the emotional arithmetic of the situation pointed clearly away from acquisition.</p>
+      <p>He asked a different question: what creates the most long-term value?</p>
+    </div>
+
+    <div class="diagnosis-grid">
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">What a Reactive Leader Would Have Calculated</div>
+        <p>They embarrassed us publicly. They're difficult. We shouldn't reward their criticism. Let's build our own alternative. These are emotionally coherent calculations. Each can be explained convincingly. Each would have been strategically costly.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">What Iger Actually Did — Strategic Indifference to Ego</div>
+        <p>Disney acquired Pixar. Jobs accepted becoming Disney's largest individual shareholder. Lasseter and Catmull were placed in creative leadership roles inside Disney. No symbolic revenge. No ego restoration. No emotional settling of scores. Only strategic integration built on the question: what creates the most value?</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Hidden Psychological Pattern — History as Information, Not Instruction</div>
+        <p>Past conflict was acknowledged but stripped of governing authority. That created something competitors rarely expect: behavior that cannot be predicted through emotional history. Most executives negotiate from memory. Weaponized Neutrality negotiates from value.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Framework Diagnosis — Neutrality Creating Leverage</div>
+        <p>Disney gained Pixar's creative capability, Jobs as a strategic partner, long-term revitalization of Disney Animation, and a stronger competitive position for decades. Neutrality did not simply protect strategy. It created leverage. The inability to be emotionally manipulated became a competitive advantage.</p>
+      </div>
+
+    </div>
+
+    <div class="pull-quote">
+      <p>If your rival knows exactly how you'll react to praise, criticism, betrayal, or conflict, they already influence your strategy. Weaponized Neutrality removes that influence. Your decisions become increasingly difficult to manipulate because they are anchored to value, not emotion.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">The Direct Truth</div>
+      <div class="insight-text">Maturity is not the absence of anger. It is the refusal to let anger vote on your future. Weaponized Neutrality is what happens when that refusal becomes automatic. The competitor who cannot be moved — not because they feel nothing, but because what they feel no longer determines what they do — holds a structural advantage that compounds over time.</div>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       V · ASHES TO ARRIVAL
+  ════════════════════════════════════ -->
+  <section class="section-block ashes-section" id="ashes">
+
+    <div class="section-eyebrow">
+      <span class="section-num">V</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Ashes to Arrival · Episode 10</span>
+    </div>
+
+    <h2 class="section-title">The Garage<br><em>and the Boardroom</em></h2>
+    <p class="section-subtitle">Kiran Mazumdar-Shaw — on the distinction between seeking permission and creating proof, and what happens when a person stops asking whether they have a place and starts building one.</p>
+
+    <div class="body-text">
+      <p>One of the quietest forms of rejection is not being told that you are incapable. It is being told that there is simply no place for someone like you. Kiran Mazumdar-Shaw became India's first woman trained as a master brewer — only to discover that expertise alone could not overcome expectation. Breweries did not question her knowledge as much as they questioned the possibility of a woman occupying that role.</p>
+    </div>
+
+    <div class="ashes-section">
+      <div class="invisible-grief">
+        <p>The loneliness of being underestimated is not the loneliness of isolation. It is the loneliness of being seen through assumptions before anyone has taken the time to see your ability. That experience slowly changes people. Some begin doubting themselves. Others spend years trying to earn the respect they should never have had to ask for. A few choose another response entirely. They stop trying to persuade. They begin creating.</p>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>She started Biocon in her garage in 1978 with a capital of ₹10,000 and a vision that the institutions around her could not yet imagine for someone like her. The garage was not a romantic choice. It was the only space available when the existing systems had no room. That constraint became founding logic: if the world will not create a place for you, build one that does not require permission.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">The Distinction That Creates Everything</div>
+      <div class="insight-text">There is a subtle difference between proving yourself and defining yourself. When identity depends entirely on external validation, every rejection becomes deeply personal — every unanswered email feels like evidence, every "no" begins to reshape how we see ourselves. But identity becomes remarkably stable when it is rooted in purpose rather than permission. Sometimes identity is not discovered through choice. It is revealed through constraint.</div>
+    </div>
+
+    <div class="body-text">
+      <p>This connects directly to Asymmetric Optionality — but from a different angle. In the framework, neutrality preserves the strategic options that emotion would close. In Kiran Mazumdar-Shaw's story, the closed options are not emotional — they are structural. The institutions genuinely had no category for her. Weaponized Neutrality here was not the suppression of anger. It was the refusal to accept the institution's limited imagination as a map of what was possible.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>She did not wait until the world believed she belonged. She built a future that eventually made belief unavoidable.</p>
+    </div>
+
+    <div class="body-text">
+      <p>Every industry develops invisible assumptions — who looks like a leader, who sounds credible, whose ideas receive immediate attention, whose mistakes are forgiven. These assumptions become part of the system's operating logic, often without anyone consciously noticing them. Most people attempt to succeed within those rules. A smaller number reshape the rules themselves.</p>
+      <p>That is what makes entrepreneurial creation strategically significant. It is not only the act of starting a business. It is the act of creating a new arena where value is measured differently. The moment someone begins building independently, they stop waiting for existing systems to decide whether they deserve a future.</p>
+    </div>
+
+    <div class="body-text">
+      <p>We often delay meaningful work while waiting for ideal conditions — more experience, more funding, more certainty, a better network, the perfect office. Behind each delay is a quiet assumption that legitimacy arrives before action. Reality usually moves in the opposite direction. Legitimacy is often a consequence of sustained work, not its prerequisite.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">One Powerful Observation</div>
+      <div class="insight-text">The world did not invest in her confidence. It invested in the confidence she had already invested in herself. The boardroom may symbolize arrival. But the garage symbolizes authorship. One is where people recognise your work. The other is where your work quietly begins to recognise you.</div>
+    </div>
+
+    <div class="body-text">
+      <p>The most important structures we ever build are not companies, careers, or institutions. They are the moments when we stop asking whether we have permission to begin — and start becoming the kind of person who no longer needs it.</p>
+      <p>That is the deeper truth connecting this episode to the issue's theme. Iger acquired Pixar because emotion had lost governing authority over strategy. Kiran Mazumdar-Shaw built Biocon because the institution's imagination had lost governing authority over her identity. Different scales, different domains — the same refusal to let someone else's limited picture of reality determine the boundaries of what was possible.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>Permission depends on someone else's imagination.<br>Proof is built through your own.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       CLOSING REFLECTION
+  ════════════════════════════════════ -->
+  <section class="closing-block" id="closing">
+
+    <h2 class="section-title" style="font-size:clamp(28px,4vw,40px);margin-bottom:24px;">Closing <em>Reflection</em></h2>
+
+    <div class="closing-quote">
+      When emotional independence compounds,<br>it becomes strategic leverage.
+    </div>
+
+    <div style="max-width:560px;margin:0 auto 48px;font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);line-height:1.9;">
+      <p>Strategic Neutrality, explored in Issue 06, restored the ability to stay in the room. This issue explored what happens when that ability matures: the individual becomes increasingly difficult to manipulate, because their decisions are no longer anchored to emotional memory.</p>
+      <p>Bob Iger's acquisition of Pixar demonstrates the external expression — neutrality enabling a decision that emotional arithmetic would have blocked. Kiran Mazumdar-Shaw demonstrates the internal expression — neutrality enabling a self-concept that institutional resistance could not narrow.</p>
+      <p>In both cases, the advantage was the same. Not superior intelligence or superior resources. A refusal to let emotion quietly erase possibilities before wisdom had the chance to evaluate them.</p>
+    </div>
+
+    <div class="closing-byline">Mind Anchor · Anchored Intelligence · Issue 07</div>
+
+  </section>
+
+</div><!-- /issue-wrap -->
+</main>
+
+
+<!-- ═══════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+
+    <svg class="footer-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="#d4a843"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="#d4a843"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="#d4a843" opacity="0.7"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="#d4a843" opacity="0.7"/>
+    </svg>
+
+    <div class="footer-name">Mind Anchor</div>
+    <div class="footer-sub">Anchored Intelligence — by Jai</div>
+
+    <div class="footer-rule"></div>
+
+    <div class="footer-meta">
+      Issue 07 · Weaponized Neutrality<br>
+      Invisible patterns shaping people, pressure, and performance.<br><br>
+      01 · Avoidance Reflex &ensp;·&ensp; 02 · Proximity Tax &ensp;·&ensp; 03 · Sovereignty Collapse &ensp;·&ensp; 04 · Shadow Governance<br>
+      05 · Righteousness Loop &ensp;·&ensp; 06 · Strategic Neutrality &ensp;·&ensp; 07 · Weaponized Neutrality<br><br>
+      © Mind Anchor · All rights reserved<br><br>
+      When emotional independence compounds,<br>
+      it becomes strategic leverage.
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
