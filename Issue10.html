@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchored Intelligence — Issue 10 | Mind Anchor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ─── CSS Variables ─── */
+:root {
+  --navy-deepest: #040d1f;
+  --navy-deep:    #070f24;
+  --navy-mid:     #0c1735;
+  --navy-light:   #112050;
+  --gold-bright:  #d4a843;
+  --gold-mid:     #b8901f;
+  --gold-soft:    #c8a84b;
+  --gold-muted:   #8a6a1a;
+  --gold-pale:    #f0d080;
+  --gold-whisper:  rgba(212,168,67,0.08);
+  --gold-whisper2: rgba(212,168,67,0.15);
+  --cream:      #f5edd8;
+  --cream-mid:  #e8d9b8;
+  --text-primary:   #e8d9b8;
+  --text-secondary: rgba(232,217,184,0.72);
+  --text-muted:     rgba(232,217,184,0.45);
+  --divider:        rgba(212,168,67,0.2);
+  --divider-strong: rgba(212,168,67,0.45);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background-color:var(--navy-deepest);
+  color:var(--text-primary);
+  font-family:'EB Garamond','Cormorant Garamond',Georgia,serif;
+  font-size:19px;line-height:1.85;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;opacity:0.6;
+}
+
+/* ─── Layout ─── */
+.issue-wrap{max-width:760px;margin:0 auto;padding:0 32px;}
+
+/* ─── Ribbon ─── */
+.issue-ribbon{
+  background:linear-gradient(90deg,var(--gold-mid),var(--gold-bright),var(--gold-soft),var(--gold-mid));
+  height:3px;width:100%;
+}
+
+/* ─── Masthead ─── */
+.masthead{
+  background:var(--navy-deep);
+  border-bottom:1px solid var(--divider);
+  padding:60px 0 56px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.masthead::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 75% 50% at 50% 0%,rgba(212,168,67,0.09) 0%,transparent 70%);
+  pointer-events:none;
+}
+.masthead::after{
+  content:'';position:absolute;
+  bottom:0;left:18%;right:18%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,168,67,0.38),transparent);
+}
+.masthead-inner{max-width:760px;margin:0 auto;padding:0 32px;position:relative;z-index:2;}
+
+.peacock-emblem{width:64px;height:64px;margin:0 auto 28px;opacity:0.92;animation:peacock-glow 4s ease-in-out infinite;}
+@keyframes peacock-glow{
+  0%,100%{filter:drop-shadow(0 0 6px rgba(212,168,67,0.3));}
+  50%     {filter:drop-shadow(0 0 16px rgba(212,168,67,0.65));}
+}
+
+.publication-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.32em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:18px;}
+
+.issue-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  margin:0 auto 32px;
+  border:1px solid var(--divider-strong);padding:6px 18px;
+  font-family:'Cinzel',serif;font-size:9px;
+  letter-spacing:0.38em;color:var(--gold-bright);
+  text-transform:uppercase;background:rgba(212,168,67,0.05);
+}
+.issue-badge span{opacity:0.38;}
+
+.masthead-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(42px,7.5vw,68px);font-weight:300;
+  letter-spacing:0.04em;color:var(--cream);
+  line-height:1.05;margin-bottom:10px;
+}
+.masthead-title em{font-style:italic;color:var(--gold-soft);}
+
+.masthead-issue-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:clamp(17px,2.5vw,22px);
+  color:var(--text-muted);letter-spacing:0.04em;
+  margin-bottom:20px;
+}
+
+.masthead-tagline{font-family:'EB Garamond',serif;font-style:italic;font-size:16px;color:var(--text-secondary);letter-spacing:0.06em;margin-bottom:32px;}
+
+.masthead-meta{display:flex;align-items:center;justify-content:center;gap:28px;font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;}
+.masthead-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--gold-muted);opacity:0.5;}
+
+/* ─── Peacock dividers ─── */
+.peacock-divider{display:flex;align-items:center;justify-content:center;gap:20px;margin:0;padding:20px 0;}
+.peacock-divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--divider),transparent);}
+.feather-eye{width:22px;height:22px;opacity:0.7;}
+
+/* ─── ToC ─── */
+.toc-section{
+  background:linear-gradient(135deg,rgba(12,23,53,0.9) 0%,rgba(7,15,36,0.95) 100%);
+  border:1px solid var(--divider);border-radius:2px;
+  padding:44px 52px;margin:48px 0;position:relative;overflow:hidden;
+}
+.toc-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-soft),transparent);}
+.toc-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:14px;}
+.toc-label::after{content:'';flex:1;height:1px;background:var(--divider);}
+.toc-series-line{font-family:'EB Garamond',serif;font-style:italic;font-size:13px;color:var(--text-muted);margin-bottom:24px;letter-spacing:0.02em;padding-bottom:20px;border-bottom:1px solid rgba(212,168,67,0.1);}
+.toc-series-line a{color:var(--gold-muted);text-decoration:none;transition:color 0.3s;}
+.toc-series-line a:hover{color:var(--gold-soft);}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.toc-item{border-bottom:1px solid rgba(212,168,67,0.08);padding:15px 0;display:flex;align-items:baseline;gap:0;transition:all 0.3s ease;}
+.toc-item:last-child{border-bottom:none;padding-bottom:0;}
+.toc-item:hover .toc-item-title{color:var(--gold-soft);}
+.toc-item:hover .toc-item-num{color:var(--gold-bright);}
+.toc-item-num{font-family:'Cinzel',serif;font-size:10px;color:var(--gold-muted);letter-spacing:0.15em;min-width:32px;transition:color 0.3s;}
+.toc-item-dots{flex:1;border-bottom:1px dotted rgba(212,168,67,0.2);margin:0 16px;position:relative;top:-4px;}
+.toc-item-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--text-primary);text-decoration:none;letter-spacing:0.02em;transition:color 0.3s;flex-shrink:0;max-width:68%;text-align:right;}
+.toc-item-sub{font-style:italic;font-size:13px;color:var(--text-muted);display:block;margin-top:3px;text-align:right;}
+
+/* ─── Section blocks ─── */
+.section-block{padding:80px 0;border-bottom:1px solid rgba(212,168,67,0.1);}
+.section-block:last-of-type{border-bottom:none;}
+.section-eyebrow{display:flex;align-items:center;gap:16px;margin-bottom:40px;}
+.section-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;color:var(--gold-bright);text-transform:uppercase;}
+.section-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--divider),transparent);}
+.section-tag{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-muted);text-transform:uppercase;border:1px solid var(--divider);padding:4px 10px;white-space:nowrap;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5.5vw,48px);font-weight:300;line-height:1.12;color:var(--cream);margin-bottom:24px;letter-spacing:0.01em;}
+.section-title em{font-style:italic;color:var(--gold-soft);}
+.section-subtitle{font-family:'EB Garamond',serif;font-style:italic;font-size:17.5px;color:var(--text-secondary);margin-bottom:44px;padding-bottom:36px;border-bottom:1px solid rgba(212,168,67,0.12);letter-spacing:0.03em;line-height:1.6;}
+
+/* ─── Body text ─── */
+.body-text{font-family:'EB Garamond',serif;font-size:20px;line-height:1.95;color:var(--text-secondary);margin-bottom:32px;}
+.body-text+.body-text{margin-top:-10px;}
+p{margin-bottom:28px;}p:last-child{margin-bottom:0;}
+
+/* ─── Lead line ─── */
+.lead-line{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(23px,3.8vw,32px);font-weight:300;
+  font-style:italic;color:var(--cream);line-height:1.38;
+  margin-bottom:48px;border-left:2px solid var(--gold-soft);
+  padding-left:32px;letter-spacing:0.01em;
+}
+
+/* ─── Pull quote ─── */
+.pull-quote{
+  margin:60px -8px;padding:44px 52px;
+  border-left:2px solid var(--gold-soft);
+  background:var(--gold-whisper);position:relative;
+}
+.pull-quote::before{
+  content:'\201C';position:absolute;
+  top:-12px;left:44px;
+  font-family:'Cormorant Garamond',serif;font-size:88px;
+  color:var(--gold-soft);opacity:0.28;line-height:1;
+}
+.pull-quote p{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(21px,3.5vw,28px);line-height:1.5;
+  color:var(--cream);letter-spacing:0.02em;margin:0;
+}
+
+/* ─── Insight box ─── */
+.insight-box{
+  background:linear-gradient(135deg,rgba(17,32,80,0.6),rgba(12,23,53,0.8));
+  border:1px solid var(--divider);border-top:2px solid var(--gold-soft);
+  padding:36px 40px;margin:48px 0;
+}
+.insight-label{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:16px;}
+.insight-text{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.5vw,21px);line-height:1.65;color:var(--cream);font-weight:400;}
+
+/* ─── Diagnosis cards ─── */
+.diagnosis-grid{display:grid;grid-template-columns:1fr;gap:20px;margin:44px 0;}
+.diagnosis-card{background:rgba(7,15,36,0.7);border:1px solid var(--divider);border-left:3px solid var(--gold-mid);padding:28px 32px;}
+.diagnosis-card-label{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.32em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:12px;}
+.diagnosis-card p{font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);margin:0;line-height:1.8;}
+
+/* ─── Fragment list ─── */
+.fragment-list{list-style:none;margin:32px 0;padding:0;}
+.fragment-list li{font-family:'EB Garamond',serif;font-size:18px;color:var(--text-secondary);padding:7px 0 7px 24px;position:relative;letter-spacing:0.02em;}
+.fragment-list li::before{content:'—';position:absolute;left:0;color:var(--gold-muted);font-size:14px;}
+
+/* ─── Ashes section ─── */
+.ashes-section .invisible-grief{padding:40px 0;margin:40px 0;border-top:1px solid rgba(212,168,67,0.12);border-bottom:1px solid rgba(212,168,67,0.12);}
+.ashes-section .invisible-grief p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,3vw,25px);color:var(--text-secondary);line-height:1.65;text-align:center;max-width:580px;margin:0 auto;}
+
+/* ─── Signal line ─── */
+.signal-line{text-align:center;padding:56px 0;}
+.signal-line p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,4vw,30px);color:var(--gold-soft);letter-spacing:0.03em;line-height:1.5;max-width:580px;margin:0 auto;}
+
+/* ─── Closing block ─── */
+.closing-block{
+  background:linear-gradient(180deg,transparent 0%,rgba(212,168,67,0.04) 50%,transparent 100%);
+  padding:88px 0;text-align:center;border-top:1px solid var(--divider);
+}
+.closing-quote{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(21px,3.2vw,28px);color:var(--cream);
+  line-height:1.55;margin:0 auto 44px;max-width:600px;
+}
+.closing-byline{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;}
+
+/* ─── CONTINUE YOUR JOURNEY ─── */
+.journey-section{
+  background:var(--navy-deep);
+  border-top:1px solid var(--divider);
+  padding:88px 0 80px;
+}
+.journey-inner{max-width:760px;margin:0 auto;padding:0 32px;}
+
+.journey-header{
+  text-align:center;
+  margin-bottom:64px;
+}
+.journey-eyebrow{
+  font-family:'Cinzel',serif;font-size:9px;
+  letter-spacing:0.38em;color:var(--gold-muted);
+  text-transform:uppercase;margin-bottom:20px;
+  display:flex;align-items:center;justify-content:center;gap:16px;
+}
+.journey-eyebrow::before,.journey-eyebrow::after{
+  content:'';display:block;
+  width:48px;height:1px;background:var(--divider);
+}
+.journey-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(30px,5vw,44px);font-weight:300;
+  color:var(--cream);line-height:1.15;
+  margin-bottom:16px;letter-spacing:0.01em;
+}
+.journey-title em{font-style:italic;color:var(--gold-soft);}
+.journey-intro{
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:17.5px;color:var(--text-secondary);
+  max-width:520px;margin:0 auto;line-height:1.7;
+}
+
+/* Journey pathway grid */
+.journey-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2px;
+  border:1px solid var(--divider);
+}
+.journey-card{
+  padding:40px 36px;
+  background:rgba(7,15,36,0.6);
+  border-bottom:1px solid var(--divider);
+  position:relative;
+  transition:background 0.3s;
+}
+.journey-card:hover{background:rgba(12,23,53,0.7);}
+.journey-card:nth-child(odd){border-right:1px solid var(--divider);}
+.journey-card:nth-last-child(-n+2){border-bottom:none;}
+
+.journey-card-num{
+  font-family:'Cinzel',serif;font-size:8.5px;
+  letter-spacing:0.3em;color:var(--gold-muted);
+  text-transform:uppercase;margin-bottom:16px;display:block;
+}
+.journey-card-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(18px,2.5vw,22px);font-weight:400;
+  color:var(--cream);margin-bottom:12px;
+  letter-spacing:0.01em;line-height:1.25;
+}
+.journey-card-desc{
+  font-family:'EB Garamond',serif;
+  font-size:15.5px;color:var(--text-muted);
+  line-height:1.7;margin-bottom:24px;
+}
+.journey-card-link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Cinzel',serif;font-size:8.5px;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--gold-soft);text-decoration:none;
+  border-bottom:1px solid var(--divider);
+  padding-bottom:2px;
+  transition:color 0.3s,border-color 0.3s;
+}
+.journey-card-link:hover{color:var(--gold-bright);border-color:var(--gold-bright);}
+.journey-card-link-arrow{font-size:12px;transition:transform 0.3s;}
+.journey-card-link:hover .journey-card-link-arrow{transform:translateX(3px);}
+
+/* Contact card — email display */
+.journey-email{
+  display:block;
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:16px;color:var(--gold-soft);
+  text-decoration:none;margin-top:8px;
+  letter-spacing:0.02em;
+  transition:color 0.3s;
+}
+.journey-email:hover{color:var(--gold-bright);}
+
+/* ─── Footer ─── */
+.footer{background:var(--navy-deepest);border-top:1px solid var(--divider);padding:56px 0;text-align:center;}
+.footer-inner{max-width:760px;margin:0 auto;padding:0 32px;}
+.footer-emblem{width:48px;height:48px;margin:0 auto 24px;opacity:0.55;}
+.footer-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.3em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:8px;}
+.footer-sub{font-family:'EB Garamond',serif;font-style:italic;font-size:14px;color:var(--text-muted);margin-bottom:32px;}
+.footer-rule{width:80px;height:1px;background:var(--divider);margin:28px auto;}
+.footer-meta{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;line-height:2.2;}
+
+/* ─── Animation ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+.masthead-inner>*{animation:fadeUp 0.8s ease both;}
+.peacock-emblem{animation-delay:0.1s;}.issue-badge{animation-delay:0.2s;}
+.publication-label{animation-delay:0.25s;}.masthead-title{animation-delay:0.36s;}
+.masthead-issue-subtitle{animation-delay:0.48s;}
+.masthead-tagline{animation-delay:0.54s;}.masthead-meta{animation-delay:0.66s;}
+
+/* ─── Responsive ─── */
+@media(max-width:640px){
+  .issue-wrap,.journey-inner{padding:0 20px;}
+  .toc-section{padding:36px 24px;}
+  .pull-quote{padding:30px 24px;margin:44px 0;}
+  .insight-box{padding:28px 24px;}
+  .toc-item-title{max-width:55%;font-size:15px;}
+  .body-text{font-size:18px;}
+  .journey-grid{grid-template-columns:1fr;}
+  .journey-card{border-right:none !important;}
+  .journey-card:nth-last-child(-n+2){border-bottom:1px solid var(--divider);}
+  .journey-card:last-child{border-bottom:none;}
+  .diagnosis-card{padding:22px 22px;}
+}
+::selection{background:rgba(212,168,67,0.25);color:var(--cream);}
+
+</style>
+</head>
+<body>
+
+<div class="issue-ribbon"></div>
+
+<!-- ═══════════════════════
+     MASTHEAD
+═══════════════════════ -->
+<header class="masthead">
+  <div class="masthead-inner">
+
+    <svg class="peacock-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="url(#gG10)"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="url(#gG10)"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="url(#gG10)" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="url(#gG10)" opacity="0.95"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="url(#gG10)" opacity="0.95"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="url(#gG10)" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="url(#gG10)"/>
+      <circle cx="50" cy="30" r="5" fill="url(#gG10)"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="url(#gG10)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="url(#gG10)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="url(#gG10)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="url(#gG10)"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="url(#gG10)"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="url(#gG10)"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="url(#gG10)" opacity="0.7"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="url(#gG10)" opacity="0.8"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="url(#gG10)" opacity="0.7"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="url(#gG10)" opacity="0.8"/>
+      <ellipse cx="30" cy="90" rx="3" ry="3.5" fill="url(#gG10)" opacity="0.5"/>
+      <ellipse cx="66" cy="90" rx="3" ry="3.5" fill="url(#gG10)" opacity="0.5"/>
+      <defs>
+        <linearGradient id="gG10" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f0d080"/>
+          <stop offset="50%" stop-color="#d4a843"/>
+          <stop offset="100%" stop-color="#b8901f"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="issue-badge">
+      <span>Issue 01–09 ✦</span> Issue 10 · The Permanence Illusion
+    </div>
+
+    <div class="publication-label">Mind Anchor · Anchored Intelligence</div>
+    <h1 class="masthead-title"><em>Anchored</em> Intelligence</h1>
+    <p class="masthead-issue-subtitle">Why We Keep Asking Moments to Explain Entire Lives</p>
+    <p class="masthead-tagline">Invisible patterns shaping people, pressure, and performance.</p>
+
+    <div class="masthead-meta">
+      <span>Issue 10</span>
+      <span class="masthead-meta-dot"></span>
+      <span>The Permanence Illusion</span>
+      <span class="masthead-meta-dot"></span>
+      <span>Mind Anchor · Jai</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════
+     MAIN
+═══════════════════════ -->
+<main>
+<div class="issue-wrap">
+
+  <!-- ─── ToC ─── -->
+  <nav class="toc-section" aria-label="Table of Contents" style="margin-top:52px;">
+    <div class="toc-label">Contents — Issue 10</div>
+    <div class="toc-series-line">
+      <a href="#">← 09: The Hidden Contract</a> &ensp;·&ensp;
+      <a href="#">← 08: Emotional Governance Infrastructure</a> &ensp;·&ensp;
+      <a href="#">← 07: Weaponized Neutrality</a>
+    </div>
+    <ul class="toc-list">
+      <li class="toc-item">
+        <span class="toc-item-num">I</span>
+        <span class="toc-item-dots"></span>
+        <a href="#opening-signal" class="toc-item-title">
+          Opening Signal
+          <span class="toc-item-sub">The Stories We Ask Moments to Tell</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">II</span>
+        <span class="toc-item-dots"></span>
+        <a href="#field-diagnosis" class="toc-item-title">
+          Field Diagnosis
+          <span class="toc-item-sub">The Man Who Won More Than Anyone Else — Michael Phelps</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">III</span>
+        <span class="toc-item-dots"></span>
+        <a href="#ashes" class="toc-item-title">
+          Ashes to Arrival · Episode 12
+          <span class="toc-item-sub">The Things We Carry — Charlize Theron</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">IV</span>
+        <span class="toc-item-dots"></span>
+        <a href="#journey" class="toc-item-title">
+          Continue Your Journey
+          <span class="toc-item-sub">Four pathways from here</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg width="28" height="28" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:0.55">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════
+       I · OPENING SIGNAL
+  ═══════════════════════ -->
+  <section class="section-block" id="opening-signal">
+
+    <div class="section-eyebrow">
+      <span class="section-num">I</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Opening Signal</span>
+    </div>
+
+    <h2 class="section-title">The Stories We Ask<br><em>Moments to Tell</em></h2>
+    <p class="section-subtitle">There are moments in every life that arrive carrying more weight than they should. At first, they are simply experiences. Then something quieter happens. The mind begins asking them questions they were never designed to answer.</p>
+
+    <p class="lead-line">Perhaps the most consequential decisions we ever make are not about what happened to us — but about what we decided it meant.</p>
+
+    <div class="body-text">
+      <p>A victory. A rejection. A loss. A beginning. The moment passes. The interpretation remains — quietly governing identity, ambition, resilience, and memory long after the experience itself has ended.</p>
+      <p>This may be one of the least discussed aspects of being human: we are constantly negotiating with permanence. We want success to reassure us that peace is finally possible. We want suffering to explain why life feels different now. We search our experiences for conclusions because conclusions feel safer than uncertainty.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>The mind is constantly trying to turn moments into meanings and meanings into identities.</p>
+    </div>
+
+    <div class="body-text">
+      <p>Yet life rarely offers permanence so generously. The medal does not promise lasting settledness. The wound does not promise lasting limitation. They simply arrive, leave their mark, and continue moving through time. Human beings, however, have a habit of remaining behind.</p>
+      <p>Perhaps that is why some people spend decades pursuing another achievement, while others spend decades explaining themselves through a painful chapter that ended long ago. Both are attempting to answer the same question: what does this moment allow me to believe about the rest of my life?</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Core Invisible Pattern — Issue 10</div>
+      <div class="insight-text">Psychological Permanence Attribution — the tendency to assign enduring meaning and authority to temporary experiences. We repeatedly mistake temporary states for permanent truths: relief becomes evidence of future peace, pain becomes evidence of permanent identity, success becomes evidence of arrival, suffering becomes evidence of disqualification. This issue explores the cost of confusing experiences with conclusions.</div>
+    </div>
+
+    <div class="body-text">
+      <p>The mind is uncomfortable with uncertainty. It prefers permanence. As a result, it continuously converts temporary experiences into enduring narratives: <em style="color:var(--gold-soft);">"Because this happened, this must be true."</em> That mechanism quietly governs how we understand ourselves — and what we believe is still possible.</p>
+      <p>There is a meaningful difference between carrying an experience and organizing an identity around it. And much of adulthood appears to be learning where that line actually exists.</p>
+    </div>
+
+    <ul class="fragment-list">
+      <li>A victory asks to become an identity.</li>
+      <li>A wound asks to become a biography.</li>
+      <li>A success asks to become a destination.</li>
+      <li>A painful chapter asks to become the entire story.</li>
+      <li>Most people never notice the negotiation taking place.</li>
+    </ul>
+
+    <div class="body-text">
+      <p>Not every achievement is a destination. Not every wound is a definition. And understanding the difference may quietly change an entire life.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>Human beings have a habit of asking temporary experiences<br>to answer permanent questions.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════
+       II · FIELD DIAGNOSIS
+  ═══════════════════════ -->
+  <section class="section-block" id="field-diagnosis">
+
+    <div class="section-eyebrow">
+      <span class="section-num">II</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Field Diagnosis</span>
+    </div>
+
+    <h2 class="section-title">The Man Who Won<br><em>More Than Anyone Else</em></h2>
+    <p class="section-subtitle">Michael Phelps — not as a story about the hidden cost of greatness, but as evidence that extraordinary success can become the strongest argument for an incorrect conclusion about what success is designed to provide.</p>
+
+    <div class="body-text">
+      <p>Most people imagine the Arrival Myth as a problem for those who have not yet succeeded. They assume the pattern disappears at sufficient scale. Michael Phelps won more Olympic medals than any human being in history. If achievement could permanently settle the human experience, his story should have ended differently.</p>
+      <p>And that is precisely why it matters.</p>
+    </div>
+
+    <div class="diagnosis-grid">
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Surface Narrative</div>
+        <p>Over multiple Olympic Games, Michael Phelps accumulated an unprecedented number of medals and became arguably the greatest Olympian in history. Yet after major victories and retirements, he repeatedly spoke publicly about experiencing depression, emptiness, and difficulty adjusting to life outside elite competition. The public narrative became: athlete mental health, burnout, the hidden cost of greatness.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">The Invisible Psychological Pattern — Misinterpretation of Relief as Proof</div>
+        <p>Achievement produces genuine emotional reward. The problem is attribution. Relief becomes interpreted as "I am approaching permanent peace" rather than "I am experiencing a temporary emotional response to progress." Every achievement temporarily validates the model. They simply deliver smaller dividends than advertised — and the mind responds by increasing the target size rather than questioning the contract.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">The Sequence That Survives</div>
+        <p>Pursue. Achieve. Feel relief. Lose relief. Increase target size. The model survives because it keeps paying dividends. Each achievement says: "See? It worked." The mind rarely asks: "Worked at doing what?" Once relief becomes proof, ambition intensifies, milestones expand, expectations rise, and identity fuses with achievement. The person is no longer pursuing excellence. They are pursuing permanence.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Mind Anchor Diagnosis</div>
+        <p>Michael Phelps did not disprove the Arrival Myth. He demonstrated its persistence. The medals delivered exactly what achievement promises: pride, relief, satisfaction, meaning. They simply never promised permanence. The problem was never that success failed. The problem was the contract that quietly asked success to become something it could never be.</p>
+      </div>
+
+    </div>
+
+    <div class="pull-quote">
+      <p>Your success may be the strongest evidence keeping the model alive. Every achievement says: "See? It worked." The mind rarely asks: "Worked at doing what?"</p>
+    </div>
+
+    <div class="body-text">
+      <p>Achievement is remarkably effective at producing temporary relief. That is why the model survives. You work toward something for years. You reach it. You feel lighter. More complete. More settled. For a moment, the promise appears to have been fulfilled. Then something subtle happens. The feeling recedes. The mind does not conclude "perhaps I misunderstood the function of achievement." It concludes "perhaps I misunderstood the size of the achievement required."</p>
+      <p>And so the contract quietly renews itself. Bigger title. Larger company. More money. Another medal. A final milestone. The destination moves. The model remains.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">What Changes When the Pattern Is Recognized</div>
+      <div class="insight-text">Achievement can produce satisfaction. It can produce meaning. It can produce pride. It can even temporarily produce peace. What it has never consistently demonstrated is permanence. Once you recognize that distinction, ambition no longer has to carry the impossible burden of becoming your emotional infrastructure. You can pursue extraordinary things without asking them to finally make you okay.</div>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════
+       III · ASHES TO ARRIVAL
+  ═══════════════════════ -->
+  <section class="section-block ashes-section" id="ashes">
+
+    <div class="section-eyebrow">
+      <span class="section-num">III</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Ashes to Arrival · Episode 12</span>
+    </div>
+
+    <h2 class="section-title">The Things<br><em>We Carry</em></h2>
+    <p class="section-subtitle">Charlize Theron — on the meaningful difference between what happened to us and what we decide it means, and why healing was never about becoming untouched.</p>
+
+    <div class="body-text">
+      <p>Human beings spend much of their lives asking a question they rarely say aloud: <em style="color:var(--gold-soft);">"Will what happened to me become who I am?"</em></p>
+      <p>Trauma creates a profound confusion between experience and identity. Something painful happens, and over time, people stop saying "this happened to me." They begin saying "this is me." That transition changes lives. Some people spend decades trying to escape their past. Others slowly discover a quieter truth: the past is carried. It is not obeyed.</p>
+    </div>
+
+    <div class="ashes-section">
+      <div class="invisible-grief">
+        <p>Trauma leaves many people feeling exiled from ordinary life. It creates the quiet belief that everyone else received a different beginning — a cleaner beginning, a safer beginning, an easier beginning. People do not suffer only because painful things happened. They suffer because they fear those things permanently separated them from who they could have been.</p>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>Charlize Theron's life is not ultimately a story about trauma or success. It is a story about refusing to grant pain authorship over identity. Almost everyone carries a chapter they did not choose. A difficult childhood. A loss that arrived too early. A dream that ended unexpectedly. A version of life that never happened. The specifics change. The question remains: can a person honor their pain without becoming entirely defined by it?</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>Pain remembers where it came from. Wisdom remembers where it led.</p>
+    </div>
+
+    <div class="body-text">
+      <p>Modern culture tends to offer two incomplete responses to suffering: ignore it, or become it. Very few people are taught a third option — carry it with dignity. There is a profound tension between what happened to us and what we believe it means. Most people spend years trying to resolve that tension through achievement or healing, never realizing they are asking temporary experiences to answer permanent questions.</p>
+      <p>People who believe their past defines them tend to make defensive decisions. They avoid risk. Avoid visibility. Avoid possibility. People who understand that their past informs — but does not define — them make different choices. They act despite uncertainty. They allow themselves to begin again. They stop waiting to feel untouched before participating fully in life.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">What This Story Quietly Teaches</div>
+      <div class="insight-text">Charlize Theron's story quietly teaches that pain is neither destiny nor detour. It is terrain. Some terrain is beautiful. Some is unforgiving. Yet all of it becomes part of the landscape through which a life travels. The objective is not to erase the landscape. It is to continue walking. The most important chapter in a person's life is often the one written after they stop asking their past for permission to continue.</div>
+    </div>
+
+    <div class="body-text">
+      <p>There is an invisible transformation that occurs after repeated pain. Initially, people hope circumstances will change. Eventually, they realise something deeper. The real work is not convincing the world. It is becoming someone whose direction no longer depends on the past's permission to move forward.</p>
+      <p>At some point, healing stops asking "how do I become who I was before?" and begins asking "who am I becoming now?" That question changes everything. Because there is no returning. Only becoming.</p>
+      <p>Perhaps healing was never about becoming untouched. Perhaps it was about discovering that a life can remain beautiful even after it has been broken. Years from now, most people will not remember the specifics of what happened to us. But we will remember who we became while carrying it.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>Your past deserves honesty.<br>It does not deserve authorship.<br>And there is a meaningful difference between the two.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════
+       CLOSING REFLECTION
+  ═══════════════════════ -->
+  <section class="closing-block" id="closing">
+
+    <h2 class="section-title" style="font-size:clamp(28px,4vw,40px);margin-bottom:24px;">Closing <em>Reflection</em></h2>
+
+    <div class="closing-quote">
+      Life changes more often than we do.<br>Perhaps maturity is learning to change with it.
+    </div>
+
+    <div style="max-width:580px;margin:0 auto 52px;font-family:'EB Garamond',serif;font-size:17.5px;color:var(--text-secondary);line-height:1.9;">
+      <p>Two stories. Two directions. One mechanism. Michael Phelps shows what happens when we ask triumph to promise more than temporary satisfaction. Charlize Theron shows what happens when we ask pain to define more than a chapter. In both cases, the error is the same: assigning temporary experiences the authority to answer permanent questions about who we are and what we deserve.</p>
+      <p>The invisible pattern beneath both is not ambition or resilience or trauma. It is the quiet human tendency to reach for permanence inside experiences that were never designed to provide it. Recognizing that tendency does not diminish experience. It liberates it — allowing moments to be fully inhabited without being asked to carry more than they can hold.</p>
+    </div>
+
+    <div class="closing-byline">Mind Anchor · Anchored Intelligence · Issue 10</div>
+
+  </section>
+
+</div><!-- /issue-wrap -->
+</main>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     CONTINUE YOUR JOURNEY — permanent section from Issue 10
+════════════════════════════════════════════════════════ -->
+<section class="journey-section" id="journey" aria-label="Continue Your Journey">
+  <div class="journey-inner">
+
+    <div class="journey-header">
+      <div class="journey-eyebrow">Continue Your Journey</div>
+      <h2 class="journey-title">Learning doesn't end<br>with <em>one framework.</em></h2>
+      <p class="journey-intro">You've reached the end of this week's essay. Where you go next depends on what you need.</p>
+    </div>
+
+    <div class="journey-grid">
+
+      <!-- 1 — Continue Learning -->
+      <div class="journey-card">
+        <span class="journey-card-num">01 &ensp;·&ensp; Continue Learning</span>
+        <div class="journey-card-title">The Complete Knowledge Library</div>
+        <p class="journey-card-desc">Explore the supporting Micro Article for this week's issue — a focused companion piece that deepens one specific dimension of today's reflection. The natural continuation of what you just read.</p>
+        <a href="https://mindanchor-jai.github.io/Articles/The%20Arrival%20Myth/Article2.html"
+           class="journey-card-link"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Explore the Knowledge Library">
+          Explore the Article <span class="journey-card-link-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- 2 — Reflect Independently -->
+      <div class="journey-card">
+        <span class="journey-card-num">02 &ensp;·&ensp; Reflect Independently</span>
+        <div class="journey-card-title">Week 10 Workbook</div>
+        <p class="journey-card-desc">A guided workbook designed to help you revisit the experiences that shaped you — and the conclusions that quietly shaped everything that came after. Private reflection at your own pace.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdTEBsOpDNNM4ZRrK-ksrTqXdXwCkYylN-y3OvYe-m8rZSuHQ/viewform"
+           class="journey-card-link"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Open the Week 10 Workbook">
+          Open the Workbook <span class="journey-card-link-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- 3 — Contact Mind Anchor -->
+      <div class="journey-card">
+        <span class="journey-card-num">03 &ensp;·&ensp; Contact Mind Anchor</span>
+        <div class="journey-card-title">Institutional Communication</div>
+        <p class="journey-card-desc">For speaking engagements, partnerships, collaborations, media enquiries, or general institutional communication.</p>
+        <a href="mailto:mind.anchor@zohomail.in"
+           class="journey-email"
+           aria-label="Email Mind Anchor">
+          mind.anchor@zohomail.in
+        </a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWTTbHcbT40PYG-wqRX7cyqprlqXYnOEpkrJ4YVeC84s-UMw/viewform"
+           class="journey-card-link"
+           target="_blank" rel="noopener noreferrer"
+           style="margin-top:16px;display:inline-flex;"
+           aria-label="Open the Contact Form">
+          Open Contact Form <span class="journey-card-link-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- 4 — Strategic Inquiry -->
+      <div class="journey-card">
+        <span class="journey-card-num">04 &ensp;·&ensp; Strategic Inquiry</span>
+        <div class="journey-card-title">Structured Professional Engagement</div>
+        <p class="journey-card-desc">If independent observation is no longer sufficient for the complexity of your situation, a Strategic Inquiry offers structured professional diagnosis. This is not for everyone — and it is not designed to be.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqQ2gbSued-LvhwPuQY_fah-yzdZsiE14xI4Kmlw6rd5WcjA/viewform"
+           class="journey-card-link"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Begin a Strategic Inquiry">
+          Begin an Inquiry <span class="journey-card-link-arrow">→</span>
+        </a>
+      </div>
+
+    </div><!-- /journey-grid -->
+
+  </div><!-- /journey-inner -->
+</section>
+
+
+<!-- ═══════════════════════
+     FOOTER
+═══════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+
+    <svg class="footer-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="#d4a843"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="#d4a843"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="#d4a843" opacity="0.7"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="#d4a843" opacity="0.7"/>
+    </svg>
+
+    <div class="footer-name">Mind Anchor</div>
+    <div class="footer-sub">Anchored Intelligence — by Jai</div>
+
+    <div class="footer-rule"></div>
+
+    <div class="footer-meta">
+      Issue 10 · The Permanence Illusion<br>
+      Invisible patterns shaping people, pressure, and performance.<br><br>
+      09 · The Hidden Contract &ensp;·&ensp; 08 · Emotional Governance Infrastructure<br>
+      07 · Weaponized Neutrality &ensp;·&ensp; 06 · Strategic Neutrality &ensp;·&ensp; 05 · Righteousness Loop<br><br>
+      © Mind Anchor · All rights reserved<br><br>
+      Life changes more often than we do.<br>
+      Perhaps maturity is learning to change with it.
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
