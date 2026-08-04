@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchored Intelligence — Issue 13 | Mind Anchor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ─── CSS Variables ─── */
+:root {
+  --navy-deepest: #040d1f;
+  --navy-deep:    #070f24;
+  --navy-mid:     #0c1735;
+  --navy-light:   #112050;
+  --gold-bright:  #d4a843;
+  --gold-mid:     #b8901f;
+  --gold-soft:    #c8a84b;
+  --gold-muted:   #8a6a1a;
+  --gold-pale:    #f0d080;
+  --gold-whisper:  rgba(212,168,67,0.08);
+  --gold-whisper2: rgba(212,168,67,0.15);
+  --cream:      #f5edd8;
+  --cream-mid:  #e8d9b8;
+  --text-primary:   #e8d9b8;
+  --text-secondary: rgba(232,217,184,0.72);
+  --text-muted:     rgba(232,217,184,0.45);
+  --divider:        rgba(212,168,67,0.2);
+  --divider-strong: rgba(212,168,67,0.45);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background-color:var(--navy-deepest);
+  color:var(--text-primary);
+  font-family:'EB Garamond','Cormorant Garamond',Georgia,serif;
+  font-size:19px;line-height:1.85;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;opacity:0.6;
+}
+
+.issue-wrap{max-width:760px;margin:0 auto;padding:0 32px;}
+
+/* ─── Ribbon ─── */
+.issue-ribbon{background:linear-gradient(90deg,var(--gold-mid),var(--gold-bright),var(--gold-soft),var(--gold-mid));height:3px;width:100%;}
+
+/* ─── Masthead ─── */
+.masthead{background:var(--navy-deep);border-bottom:1px solid var(--divider);padding:60px 0 56px;text-align:center;position:relative;overflow:hidden;}
+.masthead::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 75% 50% at 50% 0%,rgba(212,168,67,0.09) 0%,transparent 70%);pointer-events:none;}
+.masthead::after{content:'';position:absolute;bottom:0;left:18%;right:18%;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,0.38),transparent);}
+.masthead-inner{max-width:760px;margin:0 auto;padding:0 32px;position:relative;z-index:2;}
+.peacock-emblem{width:64px;height:64px;margin:0 auto 28px;opacity:0.92;animation:peacock-glow 4s ease-in-out infinite;}
+@keyframes peacock-glow{0%,100%{filter:drop-shadow(0 0 6px rgba(212,168,67,0.3));}50%{filter:drop-shadow(0 0 16px rgba(212,168,67,0.65));}}
+.publication-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.32em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:18px;}
+.issue-badge{display:inline-flex;align-items:center;gap:10px;margin:0 auto 32px;border:1px solid var(--divider-strong);padding:6px 18px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-bright);text-transform:uppercase;background:rgba(212,168,67,0.05);}
+.issue-badge span{opacity:0.38;}
+.masthead-title{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,7.5vw,68px);font-weight:300;letter-spacing:0.04em;color:var(--cream);line-height:1.05;margin-bottom:10px;}
+.masthead-title em{font-style:italic;color:var(--gold-soft);}
+.masthead-issue-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(17px,2.5vw,22px);color:var(--text-muted);letter-spacing:0.04em;margin-bottom:20px;}
+.masthead-tagline{font-family:'EB Garamond',serif;font-style:italic;font-size:16px;color:var(--text-secondary);letter-spacing:0.06em;margin-bottom:32px;}
+.masthead-meta{display:flex;align-items:center;justify-content:center;gap:28px;font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;}
+.masthead-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--gold-muted);opacity:0.5;}
+
+/* ─── Peacock dividers ─── */
+.peacock-divider{display:flex;align-items:center;justify-content:center;gap:20px;margin:0;padding:20px 0;}
+.peacock-divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--divider),transparent);}
+.feather-eye{width:22px;height:22px;opacity:0.7;}
+
+/* ─── ToC ─── */
+.toc-section{background:linear-gradient(135deg,rgba(12,23,53,0.9) 0%,rgba(7,15,36,0.95) 100%);border:1px solid var(--divider);border-radius:2px;padding:44px 52px;margin:48px 0;position:relative;overflow:hidden;}
+.toc-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-soft),transparent);}
+.toc-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:14px;}
+.toc-label::after{content:'';flex:1;height:1px;background:var(--divider);}
+.toc-series-line{font-family:'EB Garamond',serif;font-style:italic;font-size:13px;color:var(--text-muted);margin-bottom:24px;letter-spacing:0.02em;padding-bottom:20px;border-bottom:1px solid rgba(212,168,67,0.1);}
+.toc-series-line a{color:var(--gold-muted);text-decoration:none;transition:color 0.3s;}
+.toc-series-line a:hover{color:var(--gold-soft);}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.toc-item{border-bottom:1px solid rgba(212,168,67,0.08);padding:15px 0;display:flex;align-items:baseline;gap:0;transition:all 0.3s ease;}
+.toc-item:last-child{border-bottom:none;padding-bottom:0;}
+.toc-item:hover .toc-item-title{color:var(--gold-soft);}
+.toc-item:hover .toc-item-num{color:var(--gold-bright);}
+.toc-item-num{font-family:'Cinzel',serif;font-size:10px;color:var(--gold-muted);letter-spacing:0.15em;min-width:32px;transition:color 0.3s;}
+.toc-item-dots{flex:1;border-bottom:1px dotted rgba(212,168,67,0.2);margin:0 16px;position:relative;top:-4px;}
+.toc-item-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--text-primary);text-decoration:none;letter-spacing:0.02em;transition:color 0.3s;flex-shrink:0;max-width:68%;text-align:right;}
+.toc-item-sub{font-style:italic;font-size:13px;color:var(--text-muted);display:block;margin-top:3px;text-align:right;}
+
+/* ─── Section blocks ─── */
+.section-block{padding:80px 0;border-bottom:1px solid rgba(212,168,67,0.1);}
+.section-block:last-of-type{border-bottom:none;}
+.section-eyebrow{display:flex;align-items:center;gap:16px;margin-bottom:40px;}
+.section-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;color:var(--gold-bright);text-transform:uppercase;}
+.section-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--divider),transparent);}
+.section-tag{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-muted);text-transform:uppercase;border:1px solid var(--divider);padding:4px 10px;white-space:nowrap;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5.5vw,48px);font-weight:300;line-height:1.12;color:var(--cream);margin-bottom:24px;letter-spacing:0.01em;}
+.section-title em{font-style:italic;color:var(--gold-soft);}
+.section-subtitle{font-family:'EB Garamond',serif;font-style:italic;font-size:17.5px;color:var(--text-secondary);margin-bottom:44px;padding-bottom:36px;border-bottom:1px solid rgba(212,168,67,0.12);letter-spacing:0.03em;line-height:1.6;}
+
+/* ─── Body text ─── */
+.body-text{font-family:'EB Garamond',serif;font-size:20px;line-height:1.95;color:var(--text-secondary);margin-bottom:32px;}
+.body-text+.body-text{margin-top:-10px;}
+p{margin-bottom:28px;}p:last-child{margin-bottom:0;}
+
+/* ─── Lead line ─── */
+.lead-line{font-family:'Cormorant Garamond',serif;font-size:clamp(23px,3.8vw,32px);font-weight:300;font-style:italic;color:var(--cream);line-height:1.38;margin-bottom:48px;border-left:2px solid var(--gold-soft);padding-left:32px;letter-spacing:0.01em;}
+
+/* ─── Pull quote ─── */
+.pull-quote{margin:60px -8px;padding:44px 52px;border-left:2px solid var(--gold-soft);background:var(--gold-whisper);position:relative;}
+.pull-quote::before{content:'\201C';position:absolute;top:-12px;left:44px;font-family:'Cormorant Garamond',serif;font-size:88px;color:var(--gold-soft);opacity:0.28;line-height:1;}
+.pull-quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(21px,3.5vw,28px);line-height:1.5;color:var(--cream);letter-spacing:0.02em;margin:0;}
+
+/* ─── Insight box ─── */
+.insight-box{background:linear-gradient(135deg,rgba(17,32,80,0.6),rgba(12,23,53,0.8));border:1px solid var(--divider);border-top:2px solid var(--gold-soft);padding:36px 40px;margin:48px 0;}
+.insight-label{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:16px;}
+.insight-text{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.5vw,21px);line-height:1.65;color:var(--cream);font-weight:400;}
+
+/* ─── Diagnosis cards ─── */
+.diagnosis-grid{display:grid;grid-template-columns:1fr;gap:20px;margin:44px 0;}
+.diagnosis-card{background:rgba(7,15,36,0.7);border:1px solid var(--divider);border-left:3px solid var(--gold-mid);padding:28px 32px;}
+.diagnosis-card-label{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.32em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:12px;}
+.diagnosis-card p{font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);margin:0;line-height:1.8;}
+
+/* ─── PREPARATION MODE TABLE — Issue 13 hero visual ─── */
+.prep-table{margin:56px 0;border:1px solid var(--divider);position:relative;overflow:hidden;}
+.prep-table::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-soft),transparent);}
+.prep-table-header{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  background:rgba(212,168,67,0.05);
+  border-bottom:1px solid var(--divider);
+}
+.prep-table-header-cell{
+  font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.28em;
+  color:var(--gold-muted);text-transform:uppercase;
+  padding:14px 20px;
+}
+.prep-table-header-cell:not(:last-child){border-right:1px solid var(--divider);}
+.prep-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  border-bottom:1px solid rgba(212,168,67,0.07);
+}
+.prep-row:last-child{border-bottom:none;}
+.prep-row.prep-row-highlight{background:rgba(212,168,67,0.05);}
+.prep-cell{
+  padding:18px 20px;
+  font-family:'EB Garamond',serif;font-size:16px;
+  color:var(--text-secondary);line-height:1.6;
+}
+.prep-cell:not(:last-child){border-right:1px solid rgba(212,168,67,0.07);}
+.prep-cell.prep-mode{color:var(--cream);font-style:italic;}
+.prep-cell.prep-result{color:var(--gold-soft);font-style:italic;}
+
+/* ─── Fragment list ─── */
+.fragment-list{list-style:none;margin:32px 0;padding:0;}
+.fragment-list li{font-family:'EB Garamond',serif;font-size:18px;color:var(--text-secondary);padding:7px 0 7px 24px;position:relative;letter-spacing:0.02em;}
+.fragment-list li::before{content:'—';position:absolute;left:0;color:var(--gold-muted);font-size:14px;}
+
+/* ─── Ashes invisible grief ─── */
+.ashes-section .invisible-grief{padding:40px 0;margin:40px 0;border-top:1px solid rgba(212,168,67,0.12);border-bottom:1px solid rgba(212,168,67,0.12);}
+.ashes-section .invisible-grief p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,3vw,25px);color:var(--text-secondary);line-height:1.65;text-align:center;max-width:580px;margin:0 auto;}
+
+/* ─── Signal line ─── */
+.signal-line{text-align:center;padding:56px 0;}
+.signal-line p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,4vw,30px);color:var(--gold-soft);letter-spacing:0.03em;line-height:1.5;max-width:580px;margin:0 auto;}
+
+/* ─── Closing block ─── */
+.closing-block{background:linear-gradient(180deg,transparent 0%,rgba(212,168,67,0.04) 50%,transparent 100%);padding:88px 0;text-align:center;border-top:1px solid var(--divider);}
+.closing-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(21px,3.2vw,28px);color:var(--cream);line-height:1.55;margin:0 auto 44px;max-width:600px;}
+.closing-byline{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;}
+
+/* ─── CONTINUE YOUR JOURNEY ─── */
+.journey-section{background:var(--navy-deep);border-top:1px solid var(--divider);padding:88px 0 80px;}
+.journey-inner{max-width:760px;margin:0 auto;padding:0 32px;}
+.journey-header{text-align:center;margin-bottom:64px;}
+.journey-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:16px;}
+.journey-eyebrow::before,.journey-eyebrow::after{content:'';display:block;width:48px;height:1px;background:var(--divider);}
+.journey-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,44px);font-weight:300;color:var(--cream);line-height:1.15;margin-bottom:16px;letter-spacing:0.01em;}
+.journey-title em{font-style:italic;color:var(--gold-soft);}
+.journey-intro{font-family:'EB Garamond',serif;font-style:italic;font-size:17.5px;color:var(--text-secondary);max-width:520px;margin:0 auto;line-height:1.7;}
+.journey-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;border:1px solid var(--divider);}
+.journey-card{padding:40px 36px;background:rgba(7,15,36,0.6);border-bottom:1px solid var(--divider);transition:background 0.3s;}
+.journey-card:hover{background:rgba(12,23,53,0.7);}
+.journey-card:nth-child(odd){border-right:1px solid var(--divider);}
+.journey-card:nth-last-child(-n+2){border-bottom:none;}
+.journey-card-num{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.3em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:16px;display:block;}
+.journey-card-title{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,22px);font-weight:400;color:var(--cream);margin-bottom:12px;letter-spacing:0.01em;line-height:1.25;}
+.journey-card-desc{font-family:'EB Garamond',serif;font-size:15.5px;color:var(--text-muted);line-height:1.7;margin-bottom:24px;}
+.journey-card-link{display:inline-flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold-soft);text-decoration:none;border-bottom:1px solid var(--divider);padding-bottom:2px;transition:color 0.3s,border-color 0.3s;}
+.journey-card-link:hover{color:var(--gold-bright);border-color:var(--gold-bright);}
+.journey-card-link-arrow{font-size:12px;transition:transform 0.3s;}
+.journey-card-link:hover .journey-card-link-arrow{transform:translateX(3px);}
+.journey-email{display:block;font-family:'EB Garamond',serif;font-style:italic;font-size:16px;color:var(--gold-soft);text-decoration:none;margin-top:8px;letter-spacing:0.02em;transition:color 0.3s;}
+.journey-email:hover{color:var(--gold-bright);}
+
+/* ─── Footer ─── */
+.footer{background:var(--navy-deepest);border-top:1px solid var(--divider);padding:56px 0;text-align:center;}
+.footer-inner{max-width:760px;margin:0 auto;padding:0 32px;}
+.footer-emblem{width:48px;height:48px;margin:0 auto 24px;opacity:0.55;}
+.footer-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.3em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:8px;}
+.footer-sub{font-family:'EB Garamond',serif;font-style:italic;font-size:14px;color:var(--text-muted);margin-bottom:32px;}
+.footer-rule{width:80px;height:1px;background:var(--divider);margin:28px auto;}
+.footer-meta{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;line-height:2.2;}
+
+/* ─── Animation ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+.masthead-inner>*{animation:fadeUp 0.8s ease both;}
+.peacock-emblem{animation-delay:0.1s;}.issue-badge{animation-delay:0.2s;}
+.publication-label{animation-delay:0.25s;}.masthead-title{animation-delay:0.36s;}
+.masthead-issue-subtitle{animation-delay:0.48s;}.masthead-tagline{animation-delay:0.54s;}.masthead-meta{animation-delay:0.66s;}
+
+/* ─── Responsive ─── */
+@media(max-width:640px){
+  .issue-wrap,.journey-inner{padding:0 20px;}
+  .toc-section{padding:36px 24px;}
+  .pull-quote{padding:30px 24px;margin:44px 0;}
+  .insight-box{padding:28px 24px;}
+  .toc-item-title{max-width:55%;font-size:15px;}
+  .body-text{font-size:18px;}
+  .journey-grid{grid-template-columns:1fr;}
+  .journey-card{border-right:none !important;}
+  .journey-card:nth-last-child(-n+2){border-bottom:1px solid var(--divider);}
+  .journey-card:last-child{border-bottom:none;}
+  .diagnosis-card{padding:22px 22px;}
+  .prep-table-header,.prep-row{grid-template-columns:1fr;}
+  .prep-table-header-cell:not(:last-child),.prep-cell:not(:last-child){border-right:none;border-bottom:1px solid rgba(212,168,67,0.07);}
+}
+::selection{background:rgba(212,168,67,0.25);color:var(--cream);}
+
+</style>
+</head>
+<body>
+
+<div class="issue-ribbon"></div>
+
+<!-- ═══════════════════════
+     MASTHEAD
+═══════════════════════ -->
+<header class="masthead">
+  <div class="masthead-inner">
+
+    <svg class="peacock-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="url(#gG13)"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="url(#gG13)"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="url(#gG13)" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="url(#gG13)" opacity="0.95"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="url(#gG13)" opacity="0.95"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="url(#gG13)" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="url(#gG13)"/>
+      <circle cx="50" cy="30" r="5" fill="url(#gG13)"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="url(#gG13)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="url(#gG13)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="url(#gG13)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="url(#gG13)"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="url(#gG13)"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="url(#gG13)"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="url(#gG13)" opacity="0.7"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="url(#gG13)" opacity="0.8"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="url(#gG13)" opacity="0.7"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="url(#gG13)" opacity="0.8"/>
+      <ellipse cx="30" cy="90" rx="3" ry="3.5" fill="url(#gG13)" opacity="0.5"/>
+      <ellipse cx="66" cy="90" rx="3" ry="3.5" fill="url(#gG13)" opacity="0.5"/>
+      <defs>
+        <linearGradient id="gG13" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f0d080"/>
+          <stop offset="50%" stop-color="#d4a843"/>
+          <stop offset="100%" stop-color="#b8901f"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="issue-badge">
+      <span>Issue 01–12 ✦</span> Issue 13 · What Preparation Produces
+    </div>
+
+    <div class="publication-label">Mind Anchor · Anchored Intelligence</div>
+    <h1 class="masthead-title"><em>Anchored</em> Intelligence</h1>
+    <p class="masthead-issue-subtitle">On the Connection Between Capability and Character</p>
+    <p class="masthead-tagline">Invisible patterns shaping people, pressure, and performance.</p>
+
+    <div class="masthead-meta">
+      <span>Issue 13</span>
+      <span class="masthead-meta-dot"></span>
+      <span>What Preparation Produces</span>
+      <span class="masthead-meta-dot"></span>
+      <span>Mind Anchor · Jai</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="issue-wrap">
+
+  <!-- ─── ToC ─── -->
+  <nav class="toc-section" aria-label="Table of Contents" style="margin-top:52px;">
+    <div class="toc-label">Contents — Issue 13</div>
+    <div class="toc-series-line">
+      <a href="#">← 12: The Floor Beneath Everything</a> &ensp;·&ensp;
+      <a href="#">← 11: Invisible Architecture</a> &ensp;·&ensp;
+      <a href="#">← 10: The Permanence Illusion</a>
+    </div>
+    <ul class="toc-list">
+      <li class="toc-item">
+        <span class="toc-item-num">I</span>
+        <span class="toc-item-dots"></span>
+        <a href="#opening-signal" class="toc-item-title">
+          Opening Signal
+          <span class="toc-item-sub">The Space Between Capability and Character</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">II</span>
+        <span class="toc-item-dots"></span>
+        <a href="#field-diagnosis" class="toc-item-title">
+          Field Diagnosis
+          <span class="toc-item-sub">The Patterns That Prepared People Repeatedly Build</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">III</span>
+        <span class="toc-item-dots"></span>
+        <a href="#ashes" class="toc-item-title">
+          Ashes to Arrival · Episode 15
+          <span class="toc-item-sub">The Grace of Knowing — Roger Federer</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">IV</span>
+        <span class="toc-item-dots"></span>
+        <a href="#journey" class="toc-item-title">
+          Continue Your Journey
+          <span class="toc-item-sub">Four pathways from here</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg width="28" height="28" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:0.55">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════
+       I · OPENING SIGNAL
+  ═══════════════════════ -->
+  <section class="section-block" id="opening-signal">
+
+    <div class="section-eyebrow">
+      <span class="section-num">I</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Opening Signal</span>
+    </div>
+
+    <h2 class="section-title">The Space Between<br><em>Capability and Character</em></h2>
+    <p class="section-subtitle">People tend to think of preparation as the activity that builds capability. It also does something quieter — and perhaps more consequential. It builds character. The two processes are happening simultaneously, through the same repetitions, across the same years.</p>
+
+    <p class="lead-line">Preparation is usually discussed as something that improves performance. Rarely is it examined as something that forms the person performing.</p>
+
+    <div class="body-text">
+      <p>There is a version of preparation most people understand. You practice a skill. The skill improves. Over time, the improvement compounds until it becomes capability. That description is accurate. It is also incomplete.</p>
+      <p>Because alongside the skill, something else is being built. Not through deliberate instruction, not through conscious design, but through the accumulated experience of preparing honestly — returning to the work when it feels unrewarding, continuing when the progress becomes invisible, showing up again when the previous attempt produced no evident result.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Core Invisible Pattern — Issue 13</div>
+      <div class="insight-text">Preparation builds two things simultaneously: capability, which is visible in performance, and character, which is visible in how a person relates to their own excellence, their own limits, and eventually, their own ending. The second product of preparation is almost never discussed — and may be more important than the first.</div>
+    </div>
+
+    <div class="body-text">
+      <p>Preparation, when honest, produces a specific kind of person. Not simply someone who can do the thing well. Someone who has developed a particular relationship with difficulty, uncertainty, and the gap between aspiration and current reality. That relationship is character. And it is built through the same hours as capability — but it outlasts capability. Long after a person's peak performance has passed, what preparation built in them remains.</p>
+    </div>
+
+    <!-- Preparation Mode Table -->
+    <div class="prep-table">
+      <div class="prep-table-header">
+        <div class="prep-table-header-cell">Mode of Preparation</div>
+        <div class="prep-table-header-cell">Capability Produced</div>
+        <div class="prep-table-header-cell">Character Produced</div>
+      </div>
+      <div class="prep-row">
+        <div class="prep-cell prep-mode">Honest repetition without external validation</div>
+        <div class="prep-cell">Skill that functions independently of encouragement</div>
+        <div class="prep-cell prep-result">Identity that does not require applause to continue</div>
+      </div>
+      <div class="prep-row">
+        <div class="prep-cell prep-mode">Returning after visible failure</div>
+        <div class="prep-cell">Recovery as practised behaviour rather than hope</div>
+        <div class="prep-cell prep-result">Failure interpreted as information, not verdict</div>
+      </div>
+      <div class="prep-row">
+        <div class="prep-cell prep-mode">Preparing for conditions you cannot fully control</div>
+        <div class="prep-cell">Adaptability under pressure</div>
+        <div class="prep-cell prep-result">Relationship with uncertainty that does not require resolution before action</div>
+      </div>
+      <div class="prep-row prep-row-highlight">
+        <div class="prep-cell prep-mode">Long preparation that exceeds the eventual moment</div>
+        <div class="prep-cell">Depth that exceeds what the moment demands</div>
+        <div class="prep-cell prep-result">The grace to end without emptiness — because the work was never only about the outcome</div>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      <p>The last row is the one that takes longest to understand. And the one that Federer's story makes impossible to miss.</p>
+    </div>
+
+    <div class="body-text">
+      <p>The deepest products of preparation are not always visible in performance. Sometimes they become visible only in the ending — in whether a person can close a chapter without collapse, celebrate an era without needing it to continue, and pass what was built forward without requiring recognition for the passing.</p>
+      <p>That capacity is not a personality trait. It is a product of preparation so thorough that the work stopped being about the individual self long before the individual self stopped performing.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>Capability is what preparation produces in public.<br>Character is what preparation produces in private.<br>The second outlasts the first by decades.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════
+       II · FIELD DIAGNOSIS
+  ═══════════════════════ -->
+  <section class="section-block" id="field-diagnosis">
+
+    <div class="section-eyebrow">
+      <span class="section-num">II</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Field Diagnosis</span>
+    </div>
+
+    <h2 class="section-title">The Patterns That Prepared<br><em>People Repeatedly Build</em></h2>
+    <p class="section-subtitle">After examining the lives of consistently well-prepared people across fields — the patterns that emerge are not only about skill or discipline. They describe a specific relationship with the self, with time, and with the work itself.</p>
+
+    <div class="body-text">
+      <p>The central insight from examining preparation at depth is this: consistently prepared people are not simply more disciplined than others. They have a different relationship with time. They treat today's effort as infrastructure for a future self they take seriously — and they do this without requiring certainty about when or whether that investment will arrive.</p>
+    </div>
+
+    <div class="diagnosis-grid">
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Pattern 01 — They Prepare for Conditions They Cannot Guarantee</div>
+        <p>Most people prepare for the best version of the situation. Prepared people prepare for the realistic version. They account for imperfect conditions, unfavorable moments, and the possibility that the context will not cooperate. This produces something beyond adaptability — it produces freedom from the need for the circumstances to be ideal before performing.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Pattern 02 — They Do Not Wait for Motivation to Begin</div>
+        <p>The mythology of preparation often focuses on inspiration — the surge of energy that makes beginning easy. Consistently prepared people have largely decoupled beginning from feeling. They have practised showing up in the absence of motivation so many times that beginning has become structural rather than emotional. The feeling is irrelevant to the action.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Pattern 03 — They Have a Different Relationship with Failure</div>
+        <p>Not immunity. Not indifference. A different interpretation. Failed attempts are not evidence of inadequacy. They are information about the distance remaining between current capability and the required standard. This reinterpretation is not natural — it is built through repeated encounters with failure during practice, where the consequence of failure is tolerable enough to study it.</p>
+      </div>
+
+      <div class="diagnosis-card">
+        <div class="diagnosis-card-label">Pattern 04 — They Prepare Beyond What the Moment Requires</div>
+        <p>The most interesting pattern: people with deep preparation consistently prepare further than the immediate situation demands. Not as a strategy, but as a habit of taking the work seriously for its own sake. This excess preparation — the rehearsal beyond what is needed — is what produces depth. And depth is what remains after the performance has ended.</p>
+      </div>
+
+    </div>
+
+    <div class="pull-quote">
+      <p>The most important discovery is the fourth pattern. What prepared people build beyond the moment is not surplus. It is character. It is what the work eventually becomes when the performer steps away from it.</p>
+    </div>
+
+    <div class="body-text">
+      <p>This connects directly to the Arrival Myth series. Most people prepare in anticipation of an arrival — a moment when the preparation will have been sufficient, when the work will have been validated, when the effort will finally produce the feeling they have been waiting for. Consistently prepared people, examined over time, appear to operate differently. They have largely stopped waiting for the preparation to justify itself. The preparation has become its own form of occupation — serious, absorbing, and independent of whether anyone is watching or whether any specific performance is upcoming.</p>
+      <p>That shift — from preparing for an outcome to inhabiting preparation as a practice — is one of the quieter transformations in any performer's development. And it is the foundation on which everything in this issue's Ashes to Arrival story was built.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">The Diagnostic Question</div>
+      <div class="insight-text">Would your preparation change if you knew the performance would never be publicly evaluated? If the answer is yes — the preparation is oriented toward outcome, which is understandable and often effective. If the answer is no — the preparation has become something deeper: a relationship with the work itself that no longer depends on external confirmation to sustain it.</div>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════
+       III · ASHES TO ARRIVAL
+  ═══════════════════════ -->
+  <section class="section-block ashes-section" id="ashes">
+
+    <div class="section-eyebrow">
+      <span class="section-num">III</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Ashes to Arrival · Episode 15</span>
+    </div>
+
+    <h2 class="section-title">The Grace of<br><em>Knowing</em></h2>
+    <p class="section-subtitle">Roger Federer — on excellence without urgency, the relationship between preparation and dignity, and what it looks like when a person ends a career from fullness rather than depletion.</p>
+
+    <div class="body-text">
+      <p>There are many ways to end. Some people are pushed out by declining performance, overtaken by circumstances, removed by decision, or simply eroded until what remains is a shadow of what the world once watched. Those endings are common. They carry a particular sadness — not of failure, but of a longer continuance than the work could sustain.</p>
+      <p>And then there is a different kind of ending. One that arrives while something remains — while the capacity to continue has not entirely disappeared, while the name still carries weight, while the world would perhaps have accepted more. That kind of ending is rare. And it reveals something the first kind cannot.</p>
+    </div>
+
+    <div class="ashes-section">
+      <div class="invisible-grief">
+        <p>There is a grief that belongs to people who love what they do — the knowledge that one day the thing they have built their life around will no longer be possible. Most performers carry this grief while performing. The best ones carry it without letting it determine when or how they end.</p>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>Federer's retirement at the 2022 Laver Cup was notable not primarily for what it was, but for what it was not. It was not a collapse. Not a disqualification by age or injury beyond what he was willing to manage. Not an exit forced by circumstance or demanded by declining relevance. It was a choice made while something genuine remained — and that choice, more than any Grand Slam title, demonstrated what decades of preparation had actually built.</p>
+      <p>Because the grace to end well is not a personality trait. It is not charisma, or natural elegance, or fortunate circumstance. It is the product of a relationship with excellence that was never entirely transactional. People who prepare primarily for outcomes find ending very difficult. Because ending means the outcomes stop. When the outcomes are the reason, their absence is experienced as loss of self. But people who have developed a relationship with the work itself — who have prepared beyond what the moment required, over more years than the outcomes demanded — develop a different relationship with ending. They can close a chapter because they were never only in the chapter for the outcomes it produced.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>Federer did not end a career. He completed a practice. Those are meaningfully different things — and the difference is everything.</p>
+    </div>
+
+    <div class="body-text">
+      <p>This connects to what the field diagnosis identified as the fourth pattern: preparing beyond what the moment requires. Federer's preparation across decades was always, by any visible measure, excessive. More hours, more detail, more refinement of things that most observers would never notice. That excess was not vanity or perfectionism. It was the natural expression of someone whose relationship with the work had become intrinsic — someone who prepared the way because that was simply the way they were in relationship to the craft.</p>
+      <p>And what that excess built, over decades, was the capacity to end with dignity. Not because Federer knew he would end this way. But because someone who has genuinely given a career what it required — beyond what was demanded, beyond what was recognized, beyond what the outcomes rewarded — arrives at the end carrying something different than someone who gave only what was necessary.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">What This Story Quietly Teaches</div>
+      <div class="insight-text">Excellence without urgency — the ability to perform at the highest level without the performance becoming a measure of personal worth — is not a natural disposition. It is built through preparation so thorough that the work becomes independent of the need for external validation. Federer's final years demonstrated that this is possible. His ending demonstrated what it produces: the freedom to stop when stopping is the right answer, rather than when circumstances force the question.</div>
+    </div>
+
+    <div class="body-text">
+      <p>This episode comes near the end of the Arrival Myth series — and in that context, Federer's story reads differently than it might in isolation. The series has been examining what people are actually waiting for when they defer their sense of fullness to the future, and what changes when they stop deferring. Federer's career, viewed through this lens, describes someone who appears to have largely stopped deferring very early — someone who inhabited the preparation and the competition as though they mattered in themselves, rather than as vehicles toward some final feeling of having arrived.</p>
+      <p>The result was not only a legendary career. It was a life visibly lived in the work — and a ending that demonstrated, more clearly than any performance, that the preparation had produced exactly what the opening signal described: not only capability, but character.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>The measure of preparation is not only<br>the quality of performance it enables.<br>It is the quality of the ending it makes possible.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════
+       CLOSING REFLECTION
+  ═══════════════════════ -->
+  <section class="closing-block" id="closing">
+
+    <h2 class="section-title" style="font-size:clamp(28px,4vw,40px);margin-bottom:24px;">Closing <em>Reflection</em></h2>
+
+    <div class="closing-quote">
+      Capability fades with time.<br>Character does not.<br>Preparation builds both — but only one of them outlasts everything else.
+    </div>
+
+    <div style="max-width:580px;margin:0 auto 52px;font-family:'EB Garamond',serif;font-size:17.5px;color:var(--text-secondary);line-height:1.9;">
+      <p>Three reflections. One discovery. Preparation builds more than the skill it was designed to improve. It builds the person doing the improving. And the person it builds — through honest repetition, through returning after failure, through preparing beyond what the moment demands — carries something into every future moment that no outcome could have granted and no setback can entirely remove.</p>
+      <p>Federer's ending was not separate from his preparation. It was its highest expression. The grace with which he closed his career was simply what decades of genuine preparation, honestly conducted, inevitably produces. Not as a reward. As a consequence.</p>
+      <p>The question this issue leaves is not about performance. It is about what kind of person you are becoming through the way you prepare — and whether, when the time arrives, that person will be capable of ending well.</p>
+    </div>
+
+    <div class="closing-byline">Mind Anchor · Anchored Intelligence · Issue 13</div>
+
+  </section>
+
+</div><!-- /issue-wrap -->
+</main>
+
+
+<!-- ═══════════════════════════════════
+     CONTINUE YOUR JOURNEY
+════════════════════════════════════ -->
+<section class="journey-section" id="journey" aria-label="Continue Your Journey">
+  <div class="journey-inner">
+
+    <div class="journey-header">
+      <div class="journey-eyebrow">Continue Your Journey</div>
+      <h2 class="journey-title">Learning doesn't end<br>with one <em>preparation.</em></h2>
+      <p class="journey-intro">Choose the next step that best matches where you are today.</p>
+    </div>
+
+    <div class="journey-grid">
+
+      <!-- 1 — Continue Learning -->
+      <div class="journey-card">
+        <span class="journey-card-num">01 &ensp;·&ensp; Continue Learning</span>
+        <div class="journey-card-title">The Complete Knowledge Library</div>
+        <p class="journey-card-desc">Explore the supporting article for this week's issue — a focused companion piece that deepens one specific dimension of today's reflection. The natural continuation of what you just read.</p>
+        <a href="https://mindanchor-jai.github.io/Articles/The%20Arrival%20Myth/Article4.html"
+           class="journey-card-link"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Explore the Knowledge Library">
+          Explore the Article <span class="journey-card-link-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- 2 — Week 5 Workbook -->
+      <div class="journey-card">
+        <span class="journey-card-num">02 &ensp;·&ensp; Reflect Independently</span>
+        <div class="journey-card-title">Week 13 Workbook</div>
+        <p class="journey-card-desc">A guided workbook designed to help you examine what your current preparation is building — beyond the capability it was designed to produce. Private reflection at your own pace.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeORrVS9VmW0oRwOgwZcMWxAOrkxyBOKHmqgz_BixUi3_Gkww/viewform"
+           class="journey-card-link"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Open the Week 13 Workbook">
+          Open the Workbook <span class="journey-card-link-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- 3 — Contact -->
+      <div class="journey-card">
+        <span class="journey-card-num">03 &ensp;·&ensp; Contact Mind Anchor</span>
+        <div class="journey-card-title">Institutional Communication</div>
+        <p class="journey-card-desc">For speaking engagements, partnerships, collaborations, media enquiries, or general institutional communication.</p>
+        <a href="mailto:mind.anchor@zohomail.in" class="journey-email" aria-label="Email Mind Anchor">mind.anchor@zohomail.in</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWTTbHcbT40PYG-wqRX7cyqprlqXYnOEpkrJ4YVeC84s-UMw/viewform"
+           class="journey-card-link"
+           target="_blank" rel="noopener noreferrer"
+           style="margin-top:16px;display:inline-flex;"
+           aria-label="Open the Contact Form">
+          Open Contact Form <span class="journey-card-link-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- 4 — Strategic Inquiry -->
+      <div class="journey-card">
+        <span class="journey-card-num">04 &ensp;·&ensp; Strategic Inquiry</span>
+        <div class="journey-card-title">Structured Professional Engagement</div>
+        <p class="journey-card-desc">If independent observation is no longer sufficient for the complexity of your situation, a Strategic Inquiry offers structured professional diagnosis. This is not for everyone — and it is not designed to be.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqQ2gbSued-LvhwPuQY_fah-yzdZsiE14xI4Kmlw6rd5WcjA/viewform"
+           class="journey-card-link"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Begin a Strategic Inquiry">
+          Begin an Inquiry <span class="journey-card-link-arrow">→</span>
+        </a>
+      </div>
+
+    </div><!-- /journey-grid -->
+
+  </div><!-- /journey-inner -->
+</section>
+
+
+<!-- ═══════════════════════
+     FOOTER
+═══════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+
+    <svg class="footer-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="#d4a843"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="#d4a843"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="#d4a843" opacity="0.7"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="#d4a843" opacity="0.7"/>
+    </svg>
+
+    <div class="footer-name">Mind Anchor</div>
+    <div class="footer-sub">Anchored Intelligence — by Jai</div>
+
+    <div class="footer-rule"></div>
+
+    <div class="footer-meta">
+      Issue 13 · What Preparation Produces<br>
+      Invisible patterns shaping people, pressure, and performance.<br><br>
+      12 · The Floor Beneath Everything &ensp;·&ensp; 11 · Invisible Architecture &ensp;·&ensp; 10 · The Permanence Illusion<br>
+      09 · The Hidden Contract &ensp;·&ensp; 08 · Emotional Governance Infrastructure<br><br>
+      © Mind Anchor · All rights reserved<br><br>
+      Capability fades with time. Character does not.<br>
+      Preparation builds both.
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
