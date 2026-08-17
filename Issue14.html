@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchored Intelligence — Issue 14 | Mind Anchor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ─── CSS Variables ─── */
+:root {
+  --navy-deepest: #040d1f;
+  --navy-deep:    #070f24;
+  --navy-mid:     #0c1735;
+  --navy-light:   #112050;
+  --gold-bright:  #d4a843;
+  --gold-mid:     #b8901f;
+  --gold-soft:    #c8a84b;
+  --gold-muted:   #8a6a1a;
+  --gold-pale:    #f0d080;
+  --gold-whisper:  rgba(212,168,67,0.08);
+  --gold-whisper2: rgba(212,168,67,0.15);
+  --cream:      #f5edd8;
+  --cream-mid:  #e8d9b8;
+  --text-primary:   #e8d9b8;
+  --text-secondary: rgba(232,217,184,0.72);
+  --text-muted:     rgba(232,217,184,0.45);
+  --divider:        rgba(212,168,67,0.2);
+  --divider-strong: rgba(212,168,67,0.45);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background-color:var(--navy-deepest);
+  color:var(--text-primary);
+  font-family:'EB Garamond','Cormorant Garamond',Georgia,serif;
+  font-size:19px;line-height:1.85;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;opacity:0.6;
+}
+
+.issue-wrap{max-width:760px;margin:0 auto;padding:0 32px;}
+
+/* ─── Ribbon — completion edition, full gold ─── */
+.issue-ribbon{
+  background:linear-gradient(90deg,var(--gold-mid),var(--gold-bright),var(--gold-pale),var(--gold-bright),var(--gold-soft),var(--gold-bright),var(--gold-mid));
+  height:4px;width:100%;
+}
+
+/* ─── Masthead ─── */
+.masthead{
+  background:var(--navy-deep);border-bottom:1px solid var(--divider);
+  padding:64px 0 60px;text-align:center;position:relative;overflow:hidden;
+}
+.masthead::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(212,168,67,0.11) 0%,transparent 70%);
+  pointer-events:none;
+}
+.masthead::after{
+  content:'';position:absolute;bottom:0;left:15%;right:15%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,168,67,0.45),transparent);
+}
+.masthead-inner{max-width:760px;margin:0 auto;padding:0 32px;position:relative;z-index:2;}
+
+.peacock-emblem{width:72px;height:72px;margin:0 auto 32px;opacity:0.95;animation:peacock-glow 3.5s ease-in-out infinite;}
+@keyframes peacock-glow{
+  0%,100%{filter:drop-shadow(0 0 8px rgba(212,168,67,0.4));}
+  50%     {filter:drop-shadow(0 0 20px rgba(212,168,67,0.75));}
+}
+
+.publication-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.32em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:18px;}
+
+/* Completion badge */
+.issue-badge{
+  display:inline-flex;align-items:center;gap:10px;margin:0 auto 32px;
+  border:1px solid var(--gold-soft);padding:8px 22px;
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;
+  color:var(--gold-bright);text-transform:uppercase;background:rgba(212,168,67,0.08);
+}
+.issue-badge span{opacity:0.38;}
+
+.masthead-title{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,7.5vw,68px);font-weight:300;letter-spacing:0.04em;color:var(--cream);line-height:1.05;margin-bottom:10px;}
+.masthead-title em{font-style:italic;color:var(--gold-soft);}
+.masthead-issue-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(17px,2.5vw,22px);color:var(--text-muted);letter-spacing:0.04em;margin-bottom:20px;}
+.masthead-tagline{font-family:'EB Garamond',serif;font-style:italic;font-size:16px;color:var(--text-secondary);letter-spacing:0.06em;margin-bottom:32px;}
+.masthead-meta{display:flex;align-items:center;justify-content:center;gap:28px;font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;}
+.masthead-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--gold-muted);opacity:0.5;}
+
+/* ─── Peacock dividers ─── */
+.peacock-divider{display:flex;align-items:center;justify-content:center;gap:20px;margin:0;padding:20px 0;}
+.peacock-divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--divider),transparent);}
+.feather-eye{width:22px;height:22px;opacity:0.7;}
+
+/* ─── ToC ─── */
+.toc-section{background:linear-gradient(135deg,rgba(12,23,53,0.9) 0%,rgba(7,15,36,0.95) 100%);border:1px solid var(--divider);border-radius:2px;padding:44px 52px;margin:48px 0;position:relative;overflow:hidden;}
+.toc-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-soft),transparent);}
+.toc-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:14px;}
+.toc-label::after{content:'';flex:1;height:1px;background:var(--divider);}
+.toc-series-line{font-family:'EB Garamond',serif;font-style:italic;font-size:13px;color:var(--text-muted);margin-bottom:24px;letter-spacing:0.02em;padding-bottom:20px;border-bottom:1px solid rgba(212,168,67,0.1);}
+.toc-series-line a{color:var(--gold-muted);text-decoration:none;transition:color 0.3s;}
+.toc-series-line a:hover{color:var(--gold-soft);}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.toc-item{border-bottom:1px solid rgba(212,168,67,0.08);padding:15px 0;display:flex;align-items:baseline;gap:0;transition:all 0.3s ease;}
+.toc-item:last-child{border-bottom:none;padding-bottom:0;}
+.toc-item:hover .toc-item-title{color:var(--gold-soft);}
+.toc-item:hover .toc-item-num{color:var(--gold-bright);}
+.toc-item-num{font-family:'Cinzel',serif;font-size:10px;color:var(--gold-muted);letter-spacing:0.15em;min-width:32px;transition:color 0.3s;}
+.toc-item-dots{flex:1;border-bottom:1px dotted rgba(212,168,67,0.2);margin:0 16px;position:relative;top:-4px;}
+.toc-item-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--text-primary);text-decoration:none;letter-spacing:0.02em;transition:color 0.3s;flex-shrink:0;max-width:68%;text-align:right;}
+.toc-item-sub{font-style:italic;font-size:13px;color:var(--text-muted);display:block;margin-top:3px;text-align:right;}
+
+/* ─── Section blocks ─── */
+.section-block{padding:80px 0;border-bottom:1px solid rgba(212,168,67,0.1);}
+.section-block:last-of-type{border-bottom:none;}
+.section-eyebrow{display:flex;align-items:center;gap:16px;margin-bottom:40px;}
+.section-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;color:var(--gold-bright);text-transform:uppercase;}
+.section-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--divider),transparent);}
+.section-tag{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-muted);text-transform:uppercase;border:1px solid var(--divider);padding:4px 10px;white-space:nowrap;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5.5vw,48px);font-weight:300;line-height:1.12;color:var(--cream);margin-bottom:24px;letter-spacing:0.01em;}
+.section-title em{font-style:italic;color:var(--gold-soft);}
+.section-subtitle{font-family:'EB Garamond',serif;font-style:italic;font-size:17.5px;color:var(--text-secondary);margin-bottom:44px;padding-bottom:36px;border-bottom:1px solid rgba(212,168,67,0.12);letter-spacing:0.03em;line-height:1.6;}
+
+/* ─── Body text ─── */
+.body-text{font-family:'EB Garamond',serif;font-size:20px;line-height:1.95;color:var(--text-secondary);margin-bottom:32px;}
+.body-text+.body-text{margin-top:-10px;}
+p{margin-bottom:28px;}p:last-child{margin-bottom:0;}
+
+/* ─── Lead line ─── */
+.lead-line{font-family:'Cormorant Garamond',serif;font-size:clamp(23px,3.8vw,32px);font-weight:300;font-style:italic;color:var(--cream);line-height:1.38;margin-bottom:48px;border-left:2px solid var(--gold-soft);padding-left:32px;letter-spacing:0.01em;}
+
+/* ─── Pull quote ─── */
+.pull-quote{margin:60px -8px;padding:44px 52px;border-left:2px solid var(--gold-soft);background:var(--gold-whisper);position:relative;}
+.pull-quote::before{content:'\201C';position:absolute;top:-12px;left:44px;font-family:'Cormorant Garamond',serif;font-size:88px;color:var(--gold-soft);opacity:0.28;line-height:1;}
+.pull-quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(21px,3.5vw,28px);line-height:1.5;color:var(--cream);letter-spacing:0.02em;margin:0;}
+
+/* ─── Insight box ─── */
+.insight-box{background:linear-gradient(135deg,rgba(17,32,80,0.6),rgba(12,23,53,0.8));border:1px solid var(--divider);border-top:2px solid var(--gold-soft);padding:36px 40px;margin:48px 0;}
+.insight-label{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.35em;color:var(--gold-bright);text-transform:uppercase;margin-bottom:16px;}
+.insight-text{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.5vw,21px);line-height:1.65;color:var(--cream);font-weight:400;}
+
+/* ─── SERIES ARC SYNTHESIS — Issue 14 hero element ─── */
+.series-synthesis{
+  margin:56px 0;
+  border:1px solid var(--divider);
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,rgba(12,23,53,0.8),rgba(7,15,36,0.9));
+}
+.series-synthesis::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold-mid),var(--gold-bright),var(--gold-mid));}
+.series-synthesis-header{
+  padding:24px 36px 20px;
+  border-bottom:1px solid var(--divider);
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.35em;
+  color:var(--gold-muted);text-transform:uppercase;
+}
+.synthesis-item{
+  display:grid;grid-template-columns:48px 1fr;
+  border-bottom:1px solid rgba(212,168,67,0.07);
+  position:relative;
+}
+.synthesis-item:last-child{border-bottom:none;}
+.synthesis-num{
+  padding:20px 0 20px 20px;
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.15em;
+  color:var(--gold-muted);
+  border-right:1px solid rgba(212,168,67,0.08);
+  display:flex;align-items:center;justify-content:center;
+}
+.synthesis-content{padding:20px 24px 20px 20px;}
+.synthesis-issue{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.28em;
+  color:var(--gold-muted);text-transform:uppercase;
+  margin-bottom:4px;display:block;
+}
+.synthesis-title{
+  font-family:'Cormorant Garamond',serif;font-size:17px;
+  color:var(--cream);font-weight:400;margin-bottom:4px;
+}
+.synthesis-lesson{
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:15px;color:var(--text-muted);
+}
+.synthesis-item.synthesis-final .synthesis-content .synthesis-title{color:var(--gold-soft);}
+.synthesis-item.synthesis-final{background:rgba(212,168,67,0.04);}
+
+/* ─── Manifesto block (Issue 14 unique) ─── */
+.manifesto-block{
+  margin:56px 0;
+  background:rgba(7,15,36,0.6);
+  border:1px solid var(--divider);
+  border-top:2px solid var(--gold-bright);
+  padding:48px 44px;
+  position:relative;
+}
+.manifesto-label{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;
+  color:var(--gold-bright);text-transform:uppercase;margin-bottom:28px;
+}
+.manifesto-line{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(19px,3vw,24px);
+  color:var(--text-secondary);
+  line-height:1.7;
+  padding:10px 0;
+  border-bottom:1px solid rgba(212,168,67,0.06);
+  display:flex;align-items:baseline;gap:16px;
+}
+.manifesto-line:last-child{border-bottom:none;}
+.manifesto-dash{color:var(--gold-muted);flex-shrink:0;font-size:14px;}
+.manifesto-text em{color:var(--gold-soft);font-style:italic;}
+
+/* ─── Fragment list ─── */
+.fragment-list{list-style:none;margin:32px 0;padding:0;}
+.fragment-list li{font-family:'EB Garamond',serif;font-size:18px;color:var(--text-secondary);padding:7px 0 7px 24px;position:relative;letter-spacing:0.02em;}
+.fragment-list li::before{content:'—';position:absolute;left:0;color:var(--gold-muted);font-size:14px;}
+
+/* ─── Ashes invisible grief ─── */
+.ashes-section .invisible-grief{padding:40px 0;margin:40px 0;border-top:1px solid rgba(212,168,67,0.12);border-bottom:1px solid rgba(212,168,67,0.12);}
+.ashes-section .invisible-grief p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,3vw,25px);color:var(--text-secondary);line-height:1.65;text-align:center;max-width:580px;margin:0 auto;}
+
+/* ─── Signal line ─── */
+.signal-line{text-align:center;padding:56px 0;}
+.signal-line p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,4vw,30px);color:var(--gold-soft);letter-spacing:0.03em;line-height:1.5;max-width:580px;margin:0 auto;}
+
+/* ─── Closing block — completion edition ─── */
+.closing-block{
+  background:linear-gradient(180deg,transparent 0%,rgba(212,168,67,0.05) 50%,transparent 100%);
+  padding:100px 0;text-align:center;border-top:1px solid var(--divider);
+}
+.closing-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,3.5vw,30px);color:var(--cream);line-height:1.5;margin:0 auto 52px;max-width:620px;}
+.closing-byline{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;}
+
+/* ─── CONTINUE YOUR JOURNEY ─── */
+.journey-section{background:var(--navy-deep);border-top:1px solid var(--divider);padding:88px 0 80px;}
+.journey-inner{max-width:760px;margin:0 auto;padding:0 32px;}
+.journey-header{text-align:center;margin-bottom:64px;}
+.journey-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.38em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:16px;}
+.journey-eyebrow::before,.journey-eyebrow::after{content:'';display:block;width:48px;height:1px;background:var(--divider);}
+.journey-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,44px);font-weight:300;color:var(--cream);line-height:1.15;margin-bottom:16px;letter-spacing:0.01em;}
+.journey-title em{font-style:italic;color:var(--gold-soft);}
+.journey-intro{font-family:'EB Garamond',serif;font-style:italic;font-size:17.5px;color:var(--text-secondary);max-width:520px;margin:0 auto;line-height:1.7;}
+.journey-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;border:1px solid var(--divider);}
+.journey-card{padding:40px 36px;background:rgba(7,15,36,0.6);border-bottom:1px solid var(--divider);transition:background 0.3s;}
+.journey-card:hover{background:rgba(12,23,53,0.7);}
+.journey-card:nth-child(odd){border-right:1px solid var(--divider);}
+.journey-card:nth-last-child(-n+2){border-bottom:none;}
+.journey-card-num{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.3em;color:var(--gold-muted);text-transform:uppercase;margin-bottom:16px;display:block;}
+.journey-card-title{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,22px);font-weight:400;color:var(--cream);margin-bottom:12px;letter-spacing:0.01em;line-height:1.25;}
+.journey-card-desc{font-family:'EB Garamond',serif;font-size:15.5px;color:var(--text-muted);line-height:1.7;margin-bottom:24px;}
+.journey-card-link{display:inline-flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold-soft);text-decoration:none;border-bottom:1px solid var(--divider);padding-bottom:2px;transition:color 0.3s,border-color 0.3s;}
+.journey-card-link:hover{color:var(--gold-bright);border-color:var(--gold-bright);}
+.journey-card-link-arrow{font-size:12px;transition:transform 0.3s;}
+.journey-card-link:hover .journey-card-link-arrow{transform:translateX(3px);}
+.journey-email{display:block;font-family:'EB Garamond',serif;font-style:italic;font-size:16px;color:var(--gold-soft);text-decoration:none;margin-top:8px;letter-spacing:0.02em;transition:color 0.3s;}
+.journey-email:hover{color:var(--gold-bright);}
+
+/* ─── Footer ─── */
+.footer{background:var(--navy-deepest);border-top:1px solid var(--divider);padding:56px 0;text-align:center;}
+.footer-inner{max-width:760px;margin:0 auto;padding:0 32px;}
+.footer-emblem{width:52px;height:52px;margin:0 auto 28px;opacity:0.65;}
+.footer-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.3em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:8px;}
+.footer-sub{font-family:'EB Garamond',serif;font-style:italic;font-size:14px;color:var(--text-muted);margin-bottom:32px;}
+.footer-rule{width:80px;height:1px;background:var(--divider);margin:28px auto;}
+.footer-meta{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.25em;color:var(--gold-muted);text-transform:uppercase;line-height:2.2;}
+
+/* ─── Animation ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+.masthead-inner>*{animation:fadeUp 0.8s ease both;}
+.peacock-emblem{animation-delay:0.1s;}.issue-badge{animation-delay:0.2s;}
+.publication-label{animation-delay:0.25s;}.masthead-title{animation-delay:0.36s;}
+.masthead-issue-subtitle{animation-delay:0.48s;}.masthead-tagline{animation-delay:0.54s;}.masthead-meta{animation-delay:0.66s;}
+
+/* ─── Responsive ─── */
+@media(max-width:640px){
+  .issue-wrap,.journey-inner{padding:0 20px;}
+  .toc-section{padding:36px 24px;}
+  .pull-quote{padding:30px 24px;margin:44px 0;}
+  .insight-box{padding:28px 24px;}
+  .toc-item-title{max-width:55%;font-size:15px;}
+  .body-text{font-size:18px;}
+  .journey-grid{grid-template-columns:1fr;}
+  .journey-card{border-right:none !important;}
+  .journey-card:nth-last-child(-n+2){border-bottom:1px solid var(--divider);}
+  .journey-card:last-child{border-bottom:none;}
+  .synthesis-item{grid-template-columns:36px 1fr;}
+  .manifesto-block{padding:36px 24px;}
+}
+::selection{background:rgba(212,168,67,0.25);color:var(--cream);}
+
+</style>
+</head>
+<body>
+
+<div class="issue-ribbon"></div>
+
+<!-- ═══════════════════════
+     MASTHEAD
+═══════════════════════ -->
+<header class="masthead">
+  <div class="masthead-inner">
+
+    <svg class="peacock-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="url(#gG14)"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="url(#gG14)"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="url(#gG14)" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="url(#gG14)" opacity="0.95"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="url(#gG14)" opacity="0.95"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="url(#gG14)" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="url(#gG14)"/>
+      <circle cx="50" cy="30" r="5" fill="url(#gG14)"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="url(#gG14)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="url(#gG14)" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="url(#gG14)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="url(#gG14)"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="url(#gG14)"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="url(#gG14)"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="url(#gG14)" opacity="0.7"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="url(#gG14)" opacity="0.8"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="url(#gG14)" opacity="0.7"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="url(#gG14)" opacity="0.8"/>
+      <ellipse cx="30" cy="90" rx="3" ry="3.5" fill="url(#gG14)" opacity="0.5"/>
+      <ellipse cx="66" cy="90" rx="3" ry="3.5" fill="url(#gG14)" opacity="0.5"/>
+      <defs>
+        <linearGradient id="gG14" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f0d080"/>
+          <stop offset="50%" stop-color="#d4a843"/>
+          <stop offset="100%" stop-color="#b8901f"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="issue-badge">
+      <span>Issue 01–13 ✦</span> Issue 14 · Series Completion
+    </div>
+
+    <div class="publication-label">Mind Anchor · Anchored Intelligence</div>
+    <h1 class="masthead-title"><em>Anchored</em> Intelligence</h1>
+    <p class="masthead-issue-subtitle">What the Practice Became</p>
+    <p class="masthead-tagline">Invisible patterns shaping people, pressure, and performance.</p>
+
+    <div class="masthead-meta">
+      <span>Issue 14</span>
+      <span class="masthead-meta-dot"></span>
+      <span>The Arrival Myth · Complete</span>
+      <span class="masthead-meta-dot"></span>
+      <span>Mind Anchor · Jai</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="issue-wrap">
+
+  <!-- ─── ToC ─── -->
+  <nav class="toc-section" aria-label="Table of Contents" style="margin-top:52px;">
+    <div class="toc-label">Contents — Issue 14 · Series Completion</div>
+    <div class="toc-series-line">
+      <a href="#">← 13: What Preparation Produces</a> &ensp;·&ensp;
+      <a href="#">← 12: The Floor Beneath Everything</a> &ensp;·&ensp;
+      <a href="#">← 09: The Hidden Contract</a>
+    </div>
+    <ul class="toc-list">
+      <li class="toc-item">
+        <span class="toc-item-num">I</span>
+        <span class="toc-item-dots"></span>
+        <a href="#opening-signal" class="toc-item-title">
+          Opening Signal
+          <span class="toc-item-sub">Completion Without Closure</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">II</span>
+        <span class="toc-item-dots"></span>
+        <a href="#field-diagnosis" class="toc-item-title">
+          Field Diagnosis
+          <span class="toc-item-sub">Treated as the Enemy — the Final Manifestation</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">III</span>
+        <span class="toc-item-dots"></span>
+        <a href="#ashes" class="toc-item-title">
+          Ashes to Arrival · Episode 16
+          <span class="toc-item-sub">Doing What You Love Until the End — APJ Abdul Kalam</span>
+        </a>
+      </li>
+      <li class="toc-item">
+        <span class="toc-item-num">IV</span>
+        <span class="toc-item-dots"></span>
+        <a href="#journey" class="toc-item-title">
+          Continue Your Journey
+          <span class="toc-item-sub">Four pathways from here</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg width="28" height="28" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:0.55">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════
+       I · OPENING SIGNAL
+  ═══════════════════════ -->
+  <section class="section-block" id="opening-signal">
+
+    <div class="section-eyebrow">
+      <span class="section-num">I</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Opening Signal · Series Completion</span>
+    </div>
+
+    <h2 class="section-title">Completion<br><em>Without Closure</em></h2>
+    <p class="section-subtitle">This issue completes the Arrival Myth series. Not with an answer — but with a reorientation. The series began by identifying a condition. It ends by suggesting that the condition is not something to escape from, but something to understand clearly enough that it no longer governs invisibly.</p>
+
+    <p class="lead-line">Something that is completed is not the same as something that is finished. The practice continues. What changes is the relationship to it.</p>
+
+    <div class="body-text">
+      <p>Across fourteen issues and the full course of this series, the Arrival Myth appeared in a variety of forms. Some were personal and quiet. Some were organizational and visible. Some arrived as ambition. Some arrived wearing the language of virtue. Some built themselves into the invisible architecture of leadership. Some waited silently inside preparation, revealing their shape only in the ending.</p>
+      <p>In each form, the mechanism was the same: a belief, often unexamined, that emotional fullness exists at a future address — and that the present is the journey rather than the destination.</p>
+    </div>
+
+    <!-- Series synthesis arc -->
+    <div class="series-synthesis">
+      <div class="series-synthesis-header">The Arrival Myth Series · A Complete Arc</div>
+
+      <div class="synthesis-item">
+        <div class="synthesis-num">09</div>
+        <div class="synthesis-content">
+          <span class="synthesis-issue">The Hidden Contract</span>
+          <div class="synthesis-title">The When–Then Script</div>
+          <div class="synthesis-lesson">The invisible sentence governing when we allow ourselves to feel okay.</div>
+        </div>
+      </div>
+      <div class="synthesis-item">
+        <div class="synthesis-num">10</div>
+        <div class="synthesis-content">
+          <span class="synthesis-issue">The Permanence Illusion</span>
+          <div class="synthesis-title">Temporary Experiences as Permanent Evidence</div>
+          <div class="synthesis-lesson">Asking moments to answer questions they were not designed to hold.</div>
+        </div>
+      </div>
+      <div class="synthesis-item">
+        <div class="synthesis-num">11</div>
+        <div class="synthesis-content">
+          <span class="synthesis-issue">Invisible Architecture</span>
+          <div class="synthesis-title">The Hidden Things Carrying More Than We Realize</div>
+          <div class="synthesis-lesson">Stability stored in conditions we have begun treating as permanent.</div>
+        </div>
+      </div>
+      <div class="synthesis-item">
+        <div class="synthesis-num">12</div>
+        <div class="synthesis-content">
+          <span class="synthesis-issue">The Floor Beneath Everything</span>
+          <div class="synthesis-title">Resilience as Architecture, Not Performance</div>
+          <div class="synthesis-lesson">The floor beneath a resilient life was built long before it was needed.</div>
+        </div>
+      </div>
+      <div class="synthesis-item">
+        <div class="synthesis-num">13</div>
+        <div class="synthesis-content">
+          <span class="synthesis-issue">What Preparation Produces</span>
+          <div class="synthesis-title">Capability and Character, Simultaneously</div>
+          <div class="synthesis-lesson">Preparation builds more than the skill it was designed to improve.</div>
+        </div>
+      </div>
+      <div class="synthesis-item synthesis-final">
+        <div class="synthesis-num" style="color:var(--gold-bright);">14</div>
+        <div class="synthesis-content">
+          <span class="synthesis-issue">What the Practice Became</span>
+          <div class="synthesis-title">Completion Without Closure</div>
+          <div class="synthesis-lesson">Happiness is not a destination. It is a capacity. And capacities continue to develop.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">What the Series Was Ultimately Exploring</div>
+      <div class="insight-text">The Arrival Myth is not a collection of individual misunderstandings. It is a single pattern expressed across multiple forms. At its core: the repeated human tendency to place the conditions for internal fullness at a future address — in a milestone, a recognition, a disappearance of discomfort, or a version of life that hasn't yet arrived. The series was not an argument against ambition. It was an argument for inhabiting the present while pursuing the future.</div>
+    </div>
+
+    <div class="body-text">
+      <p>What the practice became, across these issues, is something that can now be stated plainly: happiness — or its closest structural equivalent — is not a destination that a sufficient achievement unlocks. It is a capacity that grows through practice, through honest self-examination, through the accumulated experience of remaining fully present in one's own life rather than perpetually delayed from it.</p>
+      <p>That capacity continues to develop. The series is complete. The work is ongoing.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>Arrival was never the question.<br>The question was always what you brought<br>to the place where you already were.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════
+       II · FIELD DIAGNOSIS
+  ═══════════════════════ -->
+  <section class="section-block" id="field-diagnosis">
+
+    <div class="section-eyebrow">
+      <span class="section-num">II</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Field Diagnosis · Final Manifestation</span>
+    </div>
+
+    <h2 class="section-title">Treated as<br><em>the Enemy</em></h2>
+    <p class="section-subtitle">The final manifestation of the Arrival Myth is also the quietest — the way people have learned to treat their own internal experience as an obstacle to be overcome rather than a companion to be understood. Waiting for the discomfort to disappear before they begin.</p>
+
+    <div class="body-text">
+      <p>There is a diagnostic question that arrives near the end of most serious self-examination. Not a question about ambition or strategy or values. A quieter question: have I been treating my own inner life as something that needs to resolve itself before I can begin?</p>
+      <p>When that question is asked honestly, the answer is often uncomfortable. Not because the answer is always yes. But because the places where the answer is yes tend to be precisely the areas where life has felt most suspended.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>Most people are not waiting for the right opportunity. They are waiting for the discomfort to disappear first.</p>
+    </div>
+
+    <div class="body-text">
+      <p>I've treated my anxiety as a problem to solve rather than information to interpret. I've treated my uncertainty as a condition to resolve rather than a feature of meaningful engagement. I've treated my internal dissonance as evidence that something is wrong rather than evidence that something real is happening.</p>
+      <p>In each case, the result has been the same: deferral. The internal experience is assigned the role of gatekeeper — and the gatekeeper never quite gives permission.</p>
+    </div>
+
+    <!-- Manifesto block -->
+    <div class="manifesto-block">
+      <div class="manifesto-label">The Final Manifestation — What Was Waiting for Permission</div>
+      <div class="manifesto-line">
+        <span class="manifesto-dash">—</span>
+        <span class="manifesto-text">Waiting for the <em>anxiety</em> to resolve before pursuing the thing that matters.</span>
+      </div>
+      <div class="manifesto-line">
+        <span class="manifesto-dash">—</span>
+        <span class="manifesto-text">Waiting for the <em>uncertainty</em> to lift before making the decision.</span>
+      </div>
+      <div class="manifesto-line">
+        <span class="manifesto-dash">—</span>
+        <span class="manifesto-text">Waiting for the <em>doubt</em> to disappear before believing the work is worth continuing.</span>
+      </div>
+      <div class="manifesto-line">
+        <span class="manifesto-dash">—</span>
+        <span class="manifesto-text">Waiting to <em>feel ready</em> before beginning something for which readiness is only produced by beginning.</span>
+      </div>
+      <div class="manifesto-line">
+        <span class="manifesto-dash">—</span>
+        <span class="manifesto-text">Waiting for the <em>discomfort</em> to become tolerable enough that action feels justified.</span>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>This is the final manifestation because it is the most intimate. Earlier manifestations were about the relationship with achievement, with permanence, with endings, with preparation. This one is about the relationship with the self that does all of those things. And the way that relationship shapes — or constrains — everything else.</p>
+      <p>The diagnosis is precise: internal experience has been assigned a governing role it was never designed to hold. Feelings are informative. They are not instructive. Discomfort tells you something important is nearby. It does not tell you whether to approach or retreat. That decision requires something the discomfort alone cannot provide — a relationship with your own internal life that is curious rather than adversarial.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">What Changes When the Pattern Is Recognized</div>
+      <div class="insight-text">The discomfort does not disappear. The uncertainty does not resolve. The doubt does not silence itself before the work begins. What changes is the interpretation. The internal experience stops being treated as evidence that something is wrong. It begins being understood as evidence that something real is happening — and that the appropriate response is engagement, not deferral. The gatekeeper loses its authority. The practice begins.</div>
+    </div>
+
+    <div class="body-text">
+      <p>This is what the Arrival Myth series was ultimately building toward: not a technique or a framework, but a different kind of relationship — between the person and their own internal experience, between ambition and the present moment, between what is being pursued and who is doing the pursuing. A relationship characterized not by waiting for internal conditions to resolve themselves, but by bringing full engagement to the conditions as they actually exist.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════
+       III · ASHES TO ARRIVAL
+  ═══════════════════════ -->
+  <section class="section-block ashes-section" id="ashes">
+
+    <div class="section-eyebrow">
+      <span class="section-num">III</span>
+      <div class="section-rule"></div>
+      <span class="section-tag">Ashes to Arrival · Episode 16</span>
+    </div>
+
+    <h2 class="section-title">Doing What You Love<br><em>Until the End</em></h2>
+    <p class="section-subtitle">APJ Abdul Kalam — on living without deferral, the fullness of a life given entirely to others, and what it looks like when a person has genuinely stopped waiting for happiness to arrive and begun inhabiting it as a practice.</p>
+
+    <div class="body-text">
+      <p>There are lives that make an argument not through what was said, but through how they were lived. APJ Abdul Kalam's life is one of those arguments. Not because it was without difficulty or loss. Not because it was uncomplicated by circumstance or constraint. But because, across its full length, it consistently demonstrated something the Arrival Myth series has been examining from every angle: it is possible to inhabit the present fully, to give completely, and to experience that giving as the life itself rather than as the path toward something better.</p>
+    </div>
+
+    <div class="ashes-section">
+      <div class="invisible-grief">
+        <p>There is a particular kind of grief that belongs to people who spend their lives in service — the grief of knowing that the need will always exceed the capacity to meet it. Kalam knew this. He continued anyway. Not because the grief disappeared, but because it was not the governing question. The governing question was what he could still contribute today.</p>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>He died in 2015 on a stage in Shillong, mid-lecture, doing what he had always done: teaching. Not at the end of a long retirement. Not after a careful withdrawal from the work. At the moment of fullest engagement with the thing he had given his life to. The way a person ends is not always in their control. The way they inhabit the years before the end is.</p>
+      <p>What his life demonstrated — quietly, through the accumulated evidence of decades — was that the Arrival Myth is not an inevitable condition of human psychology. It is a learned pattern. And what can be learned can, with sufficient attention and practice, be unlearned. Or more precisely: seen through clearly enough that it loses its governing authority.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>He never seemed to be waiting to begin living. He was always already inside it.</p>
+    </div>
+
+    <div class="body-text">
+      <p>The Arrival Myth tells us that the life we want exists somewhere ahead of us. In the next role, the next recognition, the next resolution of discomfort. Kalam's life suggests something different: the life we want exists in the quality of attention we bring to what we are doing right now. Not as philosophy. As demonstrated practice. He brought extraordinary attention to his students, to his science, to his country, and to the young people who came to him for vision and encouragement. That attention was not a product of having arrived somewhere. It was the substance of the life itself.</p>
+      <p>This is the most quietly radical thing the Arrival Myth series can offer. Not a technique for becoming happier. Not a framework for resolving internal conflict. But an example — a living, complete example — of what it looks like when a person stops treating the present as a waiting room and begins treating it as the destination. The capacity for that does not arrive automatically. It develops through exactly the kind of practice this series has been exploring: through honesty about where the deferral lives, through repeated return to what actually matters, through the slow accumulation of days in which the governing question was not "when will I feel ready?" but "what can I do today?"</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">What This Life Quietly Teaches</div>
+      <div class="insight-text">Happiness as a practiced capacity — not a destination, not a reward, not a condition that waits for its prerequisites to be met — looks like this. It looks like a man on a stage in Shillong, mid-sentence, doing what he has always done. Fully present. Fully given. Fully there. This is what the series was building toward. Not as an argument. As an example.</div>
+    </div>
+
+    <div class="body-text">
+      <p>The series completes here. Not because the questions have been answered. But because the most useful questions have been identified, and the practice of living with them — rather than waiting for their resolution — has been demonstrated clearly enough to begin.</p>
+      <p>That is completion without closure. The work continues. The capacity continues to develop. What has changed is the relationship to it.</p>
+    </div>
+
+    <div class="signal-line">
+      <p>He did not arrive at a life well lived.<br>He practised it — every day —<br>until the practice became the life itself.</p>
+    </div>
+
+  </section>
+
+  <!-- peacock divider -->
+  <div class="peacock-divider">
+    <div class="peacock-divider-line"></div>
+    <svg class="feather-eye" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="20" cy="30" rx="12" ry="16" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+      <ellipse cx="20" cy="32" rx="6" ry="8" fill="#d4a843" opacity="0.25"/>
+      <ellipse cx="20" cy="33" rx="3" ry="4" fill="#d4a843" opacity="0.5"/>
+      <line x1="20" y1="2" x2="20" y2="14" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="20" cy="5" r="2" fill="#d4a843" opacity="0.5"/>
+    </svg>
+    <div class="peacock-divider-line"></div>
+  </div>
+
+
+  <!-- ═══════════════════════
+       CLOSING REFLECTION — SERIES COMPLETE
+  ═══════════════════════ -->
+  <section class="closing-block" id="closing">
+
+    <h2 class="section-title" style="font-size:clamp(28px,4vw,40px);margin-bottom:24px;">Series <em>Complete</em></h2>
+
+    <div class="closing-quote">
+      Happiness is not a destination where the difficult things finally resolve.<br>
+      It is a capacity — built through practice,<br>deepened through honest attention,<br>and present in every moment you choose not to defer it.
+    </div>
+
+    <div style="max-width:580px;margin:0 auto 52px;font-family:'EB Garamond',serif;font-size:17.5px;color:var(--text-secondary);line-height:1.9;">
+      <p>The Arrival Myth series began by naming a pattern. It ends by demonstrating its opposite. Not as a technique, but as a life — Kalam's life, and all the lives like it that have quietly proven the same thing across different centuries and contexts: the present is not a waiting room. The capacity for fullness is not something that arrives with the next milestone.</p>
+      <p>It is something that develops. Issue by issue, practice by practice, day by day.</p>
+      <p>The series is complete. The practice continues.</p>
+    </div>
+
+    <div class="closing-byline">Mind Anchor · Anchored Intelligence · Issue 14 · The Arrival Myth · Complete</div>
+
+  </section>
+
+</div><!-- /issue-wrap -->
+</main>
+
+
+<!-- ═══════════════════════════════════
+     CONTINUE YOUR JOURNEY
+════════════════════════════════════ -->
+<section class="journey-section" id="journey" aria-label="Continue Your Journey">
+  <div class="journey-inner">
+
+    <div class="journey-header">
+      <div class="journey-eyebrow">Continue Your Journey</div>
+      <h2 class="journey-title">Learning doesn't end<br>with one <em>chapter.</em></h2>
+      <p class="journey-intro">The series is complete. The practice continues. Choose the next step that best matches where you are today.</p>
+    </div>
+
+    <div class="journey-grid">
+
+      <!-- 1 — Continue Learning -->
+      <div class="journey-card">
+        <span class="journey-card-num">01 &ensp;·&ensp; Continue Learning</span>
+        <div class="journey-card-title">The Complete Knowledge Library</div>
+        <p class="journey-card-desc">Explore the final supporting article of the Arrival Myth series — a synthesis piece that draws together what each manifestation revealed, and what the practice looks like going forward.</p>
+        <a href="https://mindanchor-jai.github.io/Articles/The%20Arrival%20Myth/Article6.html"
+           class="journey-card-link"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Explore the Knowledge Library">
+          Explore the Article <span class="journey-card-link-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- 2 — Return to the Archive -->
+      <div class="journey-card">
+        <span class="journey-card-num">02 &ensp;·&ensp; Return to the Archive</span>
+        <div class="journey-card-title">The Full Series — Issues 09–14</div>
+        <p class="journey-card-desc">The complete Arrival Myth arc is available in the archive. Each issue stands alone. Together, they form a complete examination of the pattern and its resolution.</p>
+        <a href="https://mindanchor-jai.github.io/Articles/The%20Arrival%20Myth/Article1.html"
+           class="journey-card-link"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Return to the full series archive">
+          Return to the Archive <span class="journey-card-link-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- 3 — Contact -->
+      <div class="journey-card">
+        <span class="journey-card-num">03 &ensp;·&ensp; Contact Mind Anchor</span>
+        <div class="journey-card-title">Institutional Communication</div>
+        <p class="journey-card-desc">For speaking engagements, partnerships, collaborations, media enquiries, or general institutional communication.</p>
+        <a href="mailto:mind.anchor@zohomail.in" class="journey-email" aria-label="Email Mind Anchor">mind.anchor@zohomail.in</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWTTbHcbT40PYG-wqRX7cyqprlqXYnOEpkrJ4YVeC84s-UMw/viewform"
+           class="journey-card-link"
+           target="_blank" rel="noopener noreferrer"
+           style="margin-top:16px;display:inline-flex;"
+           aria-label="Open the Contact Form">
+          Open Contact Form <span class="journey-card-link-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- 4 — Strategic Inquiry -->
+      <div class="journey-card">
+        <span class="journey-card-num">04 &ensp;·&ensp; Strategic Inquiry</span>
+        <div class="journey-card-title">Structured Professional Engagement</div>
+        <p class="journey-card-desc">If independent observation is no longer sufficient for the complexity of your situation, a Strategic Inquiry offers structured professional diagnosis. This is not for everyone — and it is not designed to be.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqQ2gbSued-LvhwPuQY_fah-yzdZsiE14xI4Kmlw6rd5WcjA/viewform"
+           class="journey-card-link"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Begin a Strategic Inquiry">
+          Begin an Inquiry <span class="journey-card-link-arrow">→</span>
+        </a>
+      </div>
+
+    </div><!-- /journey-grid -->
+
+  </div><!-- /journey-inner -->
+</section>
+
+
+<!-- ═══════════════════════
+     FOOTER
+═══════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+
+    <svg class="footer-emblem" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="47" y="22" width="6" height="68" rx="1" fill="#d4a843"/>
+      <rect x="22" y="36" width="56" height="5" rx="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="16" r="8" fill="none" stroke="#d4a843" stroke-width="4"/>
+      <path d="M26 90 Q18 98 22 106 Q30 110 38 102 L47 90" fill="#d4a843"/>
+      <path d="M74 90 Q82 98 78 106 Q70 110 62 102 L53 90" fill="#d4a843"/>
+      <ellipse cx="50" cy="64" rx="11" ry="14" fill="#d4a843" opacity="0.9"/>
+      <path d="M50 50 Q44 42 46 34 Q50 26 54 34 Q56 42 50 50Z" fill="#d4a843"/>
+      <circle cx="50" cy="30" r="5" fill="#d4a843"/>
+      <line x1="48" y1="25" x2="46" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="24" x2="50" y2="19" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="25" x2="54" y2="20" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="46" cy="19.5" r="1.5" fill="#d4a843"/>
+      <circle cx="50" cy="18.5" r="1.5" fill="#d4a843"/>
+      <circle cx="54" cy="19.5" r="1.5" fill="#d4a843"/>
+      <path d="M39 70 Q30 80 28 90 Q36 86 39 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M43 72 Q36 85 36 96 Q43 90 44 80Z" fill="#d4a843" opacity="0.7"/>
+      <path d="M57 70 Q66 80 68 90 Q60 86 57 78Z" fill="#d4a843" opacity="0.6"/>
+      <path d="M53 72 Q60 85 60 96 Q53 90 52 80Z" fill="#d4a843" opacity="0.7"/>
+    </svg>
+
+    <div class="footer-name">Mind Anchor</div>
+    <div class="footer-sub">Anchored Intelligence — by Jai</div>
+
+    <div class="footer-rule"></div>
+
+    <div class="footer-meta">
+      Issue 14 · What the Practice Became · The Arrival Myth Complete<br>
+      Invisible patterns shaping people, pressure, and performance.<br><br>
+      09 · The Hidden Contract &ensp;·&ensp; 10 · The Permanence Illusion &ensp;·&ensp; 11 · Invisible Architecture<br>
+      12 · The Floor Beneath Everything &ensp;·&ensp; 13 · What Preparation Produces &ensp;·&ensp; 14 · What the Practice Became<br><br>
+      © Mind Anchor · All rights reserved<br><br>
+      He did not arrive at a life well lived.<br>
+      He practised it — until the practice became the life itself.
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
