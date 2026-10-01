@@ -1,548 +1,449 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mind Anchor Newsletters</title>
-  <span class="pill">20 Issues</span>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anchored Intelligence - Newsletters | Mind Anchor</title>
+<meta name="description" content="Weekly psychological and strategic intelligence exploring the invisible patterns shaping people, pressure, leadership, and performance.">
+<link rel="icon" href="Icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-950:#05070d;
+    --navy-900:#0a0f1c;
+    --navy-850:#0d1424;
+    --navy-800:#111a30;
+    --navy-700:#1c2740;
+    --line:rgba(216,190,140,0.18);
+    --line-soft:rgba(216,190,140,0.10);
+    --gold-300:#e9d19c;
+    --gold-400:#d3ac5c;
+    --gold-600:#a9822f;
+    --ivory:#f2ede1;
+    --muted:#93a0b8;
+    --muted-soft:#5f6a80;
+    --serif:'Cormorant Garamond', Georgia, serif;
+    --sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --maxw:1240px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth; scroll-padding-top:90px;}
+  body{
+    background:var(--navy-950); color:var(--ivory); font-family:var(--sans);
+    line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 48px;}
+  .eyebrow{
+    font-family:var(--sans); font-size:12px; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--gold-400); font-weight:600; display:flex; align-items:center; gap:14px; margin-bottom:22px;
+  }
+  .eyebrow::after{content:""; flex:1; max-width:120px; height:1px; background:linear-gradient(90deg,var(--gold-600),transparent);}
+  h1,h2,h3{font-family:var(--serif); font-weight:500; letter-spacing:-0.01em; color:var(--ivory);}
+  p{color:var(--muted); font-size:16.5px;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; background:var(--gold-400); color:var(--navy-950);
+    font-family:var(--sans); font-weight:600; font-size:15px; padding:15px 28px; border:1px solid var(--gold-400);
+    transition:background .25s ease, transform .2s ease; cursor:pointer;
+  }
+  .btn:hover{background:var(--gold-300); transform:translateY(-1px);}
+  .divider{height:1px; background:var(--line-soft); width:100%;}
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .8s ease, transform .8s ease, border-color .25s ease, background .25s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
 
-  <style>
-:root{
-    --bg:#080d1c;
-    --bg2:#0c1430;
-    --panel:#101a3a;
-    --border:#243158;
+  /* HEADER */
+  header{
+    position:sticky; top:0; z-index:50; background:rgba(6,9,16,0.86); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .header-inner{
+    max-width:var(--maxw); margin:0 auto; padding:0 48px; height:78px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand img{height:36px; width:36px; border-radius:2px;}
+  .brand span{font-family:var(--serif); font-size:22px; letter-spacing:0.01em; color:var(--ivory);}
+  .socials{display:flex; align-items:center; gap:22px;}
+  .socials a{color:var(--ivory); opacity:0.75; transition:opacity .2s ease, color .2s ease;}
+  .socials a:hover{opacity:1; color:var(--gold-400);}
+  .socials svg{width:17px; height:17px; display:block;}
 
-    --gold:#c9a24b;
-    --gold-soft:#e2c785;
-    --gold-dim:#8a7134;
-
-    --text:#eae6d9;
-    --muted:#a7aec4;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    min-height:100vh;
-
+  /* HERO */
+  .hero{position:relative; padding:96px 0 90px; overflow:hidden;}
+  .hero-bg{
+    position:absolute; inset:0; z-index:0;
     background:
-        radial-gradient(
-            circle at top left,
-            rgba(201,162,75,.08),
-            transparent 35%
-        ),
-        linear-gradient(
-            180deg,
-            var(--bg),
-            var(--bg2)
-        );
+      radial-gradient(ellipse 700px 500px at 82% 28%, rgba(211,172,92,0.16), transparent 60%),
+      radial-gradient(ellipse 900px 700px at 90% 90%, rgba(24,38,66,0.9), transparent 65%),
+      linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 60%, var(--navy-950) 100%);
+  }
+  .hero-rings{position:absolute; right:6%; top:50%; transform:translateY(-50%); width:480px; height:480px; opacity:0.55; z-index:0;}
+  .hero-inner{position:relative; z-index:1; max-width:var(--maxw); margin:0 auto; padding:0 48px;}
+  .hero h1{font-size:clamp(46px,6vw,76px); line-height:1.06; max-width:12ch;}
+  .hero h1 em{font-style:normal; color:var(--gold-300);}
+  .hero p.intro{margin-top:26px; max-width:50ch; font-size:18px;}
+  .pills{display:flex; flex-wrap:wrap; gap:12px; margin-top:36px;}
+  .pill{
+    padding:9px 18px; border:1px solid var(--line); color:var(--gold-300);
+    font-size:11.5px; letter-spacing:0.18em; text-transform:uppercase; font-weight:600;
+  }
 
-    color:var(--text);
-    font-family:'EB Garamond',serif;
+  /* ISSUES */
+  .issues{padding:90px 0 110px;}
+  .issues-head{display:flex; align-items:flex-end; justify-content:space-between; gap:30px; margin-bottom:54px; flex-wrap:wrap;}
+  .issues-head h2{font-size:40px; line-height:1.15; max-width:16ch;}
+  .issues-head .count{font-size:14.5px; color:var(--muted-soft);}
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .card{
+    position:relative; display:flex; flex-direction:column; padding:34px 30px 30px;
+    border:1px solid var(--line-soft);
+    background:linear-gradient(160deg, var(--navy-850), var(--navy-950));
+    overflow:hidden;
+  }
+  .card::before{
+    content:""; position:absolute; top:-70px; right:-70px; width:190px; height:190px; border-radius:50%;
+    border:1px solid var(--line-soft); box-shadow:0 0 0 28px rgba(216,190,140,0.03);
+    transition:border-color .3s ease;
+  }
+  .card:hover{border-color:var(--gold-400);}
+  .card:hover::before{border-color:var(--line);}
+  .card-top{position:relative; display:flex; align-items:baseline; justify-content:space-between; margin-bottom:22px;}
+  .num{font-family:var(--serif); font-size:40px; line-height:1; color:var(--gold-300);}
+  .issue{font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-400); font-weight:600;}
+  .card h3{position:relative; font-size:26px; line-height:1.2; margin-bottom:14px;}
+  .card p{position:relative; font-size:14.5px; line-height:1.7; margin-bottom:26px;}
+  .read{
+    position:relative; margin-top:auto; display:inline-flex; align-items:center; gap:8px; width:fit-content;
+    color:var(--gold-300); font-size:14.5px; font-weight:500;
+    border-bottom:1px solid var(--line); padding-bottom:2px; transition:border-color .2s ease, color .2s ease, gap .2s ease;
+  }
+  .card:hover .read{color:var(--gold-400); border-color:var(--gold-400); gap:12px;}
 
-    padding:80px 30px;
-}
+  /* FOOTER */
+  footer{padding:80px 0 34px; border-top:1px solid var(--line-soft);}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:50px;}
+  .footer-brand{font-family:var(--serif); font-size:24px; color:var(--ivory); margin-bottom:16px;}
+  .footer-col h4{font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-400); font-weight:600; margin-bottom:18px;}
+  .footer-col ul{list-style:none; display:flex; flex-direction:column; gap:12px;}
+  .footer-col a{color:var(--muted); font-size:14.5px; transition:color .2s ease;}
+  .footer-col a:hover{color:var(--gold-300);}
+  .footer-bottom{margin-top:70px; padding-top:26px; border-top:1px solid var(--line-soft); font-size:12.5px; color:var(--muted-soft);}
 
-.page{
-    max-width:1100px;
-    margin:auto;
-}
-
-header{
-    text-align:center;
-    margin-bottom:80px;
-}
-
-.logo{
-    width:95px;
-    margin-bottom:25px;
-}
-
-.eyebrow{
-    font-family:'Cinzel',serif;
-    color:var(--gold);
-
-    text-transform:uppercase;
-    letter-spacing:.35em;
-    font-size:11px;
-
-    margin-bottom:18px;
-}
-
-h1{
-    font-family:'Cormorant Garamond',serif;
-    font-size:72px;
-    font-weight:500;
-    line-height:1;
-
-    margin-bottom:20px;
-}
-
-.intro{
-    max-width:700px;
-    margin:auto;
-
-    color:var(--muted);
-
-    font-size:22px;
-    line-height:1.8;
-    font-style:italic;
-}
-
-.rule{
-    width:80px;
-    height:1px;
-
-    margin:40px auto;
-
-    background:var(--gold);
-}
-
-.meta{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:15px;
-}
-
-.pill{
-    padding:10px 18px;
-
-    border:1px solid var(--border);
-
-    background:rgba(255,255,255,.02);
-
-    color:var(--gold-soft);
-
-    font-family:'Cinzel',serif;
-    font-size:10px;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-}
-
-.grid{
-    display:grid;
-
-    grid-template-columns:
-    repeat(
-        auto-fit,
-        minmax(320px,1fr)
-    );
-
-    gap:30px;
-}
-
-.card{
-    background:var(--panel);
-
-    border:1px solid var(--border);
-    border-left:3px solid var(--gold);
-
-    padding:40px;
-
-    transition:.3s ease;
-}
-
-.card:hover{
-    transform:translateY(-5px);
-}
-
-.inner{
-    display:flex;
-    flex-direction:column;
-    height:100%;
-}
-
-.label{
-    font-family:'Cinzel',serif;
-
-    font-size:10px;
-    letter-spacing:.25em;
-    text-transform:uppercase;
-
-    color:var(--gold);
-
-    margin-bottom:20px;
-}
-
-h2{
-    font-family:'Cormorant Garamond',serif;
-
-    font-size:40px;
-    font-weight:500;
-    line-height:1.15;
-
-    margin-bottom:20px;
-}
-
-p{
-    color:var(--muted);
-
-    font-size:19px;
-    line-height:1.8;
-
-    margin-bottom:35px;
-}
-
-a{
-    margin-top:auto;
-
-    display:inline-block;
-    width:fit-content;
-
-    text-decoration:none;
-
-    padding:16px 28px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--gold),
-            var(--gold-soft)
-        );
-
-    color:var(--bg);
-
-    font-family:'Cinzel',serif;
-    font-size:11px;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-
-    transition:.3s ease;
-}
-
-a:hover{
-    opacity:.9;
-}
-
-footer{
-    margin-top:90px;
-    padding-top:35px;
-
-    border-top:1px solid var(--border);
-
-    text-align:center;
-
-    color:var(--muted);
-
-    font-family:'Cinzel',serif;
-    font-size:10px;
-    letter-spacing:.2em;
-    text-transform:uppercase;
-}
-
-@media(max-width:768px){
-
-    body{
-        padding:60px 20px;
-    }
-
-    h1{
-        font-size:52px;
-    }
-
-    .intro{
-        font-size:20px;
-    }
-
-    h2{
-        font-size:34px;
-    }
-
-    .card{
-        padding:35px;
-    }
-}
-  </style>
+  @media (max-width:1060px){
+    .grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:980px){
+    .wrap, .hero-inner, .header-inner{padding:0 28px;}
+    .hero{padding:70px 0 64px;}
+    .hero-rings{opacity:0.3; right:-80px;}
+    .issues{padding:64px 0 76px;}
+    .footer-grid{grid-template-columns:1fr 1fr; row-gap:40px;}
+  }
+  @media (max-width:640px){
+    .grid{grid-template-columns:1fr;}
+    .issues-head h2{font-size:32px;}
+    .socials{gap:16px;}
+    .footer-grid{grid-template-columns:1fr; gap:34px;}
+  }
+</style>
 </head>
-
 <body>
 
-  <main class="page">
+<header>
+  <div class="header-inner">
+    <a href="https://mindanchor-jai.github.io/" class="brand">
+      <img src="Icon.png" alt="Mind Anchor emblem">
+      <span>Mind.Anchor</span>
+    </a>
+    <nav class="socials">
+      <a href="https://www.linkedin.com/in/jainakra" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/mind.anchor_jai/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+      </a>
+      <a href="https://x.com/MindAnchor_Jai" target="_blank" rel="noopener" aria-label="X">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.9 10.6 21.2 3h-1.9l-6.3 6.6L8 3H3l7.4 9.9L3 21h1.9l6.7-7 5.4 7H22l-8.1-10.4Zm-2.4 2.5-.8-1L5.6 4.3h2.2l4.9 6.3.8 1 6.4 8.3h-2.2l-5.2-6.8Z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@MindAnchor_Jai" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10.5 9.5v5l4.4-2.5-4.4-2.5Z" fill="currentColor" stroke="none"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
 
-    <header>
+<main>
 
-      <img class="logo" src="Icon.png" alt="Mind Anchor Logo" />
-
-      <p class="eyebrow">Mind Anchor Editorial</p>
-
-      <h1>Newsletters</h1>
-
-      <p class="intro">
-        Weekly psychological and strategic intelligence exploring invisible patterns
-        shaping people, pressure, leadership, and performance.
-      </p>
-
-      <div class="rule"></div>
-
-      <div class="meta">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <svg class="hero-rings" viewBox="0 0 500 500" fill="none">
+      <circle cx="250" cy="250" r="230" stroke="var(--gold-400)" stroke-opacity="0.14"/>
+      <circle cx="250" cy="250" r="170" stroke="var(--gold-400)" stroke-opacity="0.2"/>
+      <circle cx="250" cy="250" r="110" stroke="var(--gold-400)" stroke-opacity="0.3"/>
+      <line x1="250" y1="20" x2="250" y2="480" stroke="var(--gold-400)" stroke-opacity="0.16"/>
+      <line x1="20" y1="250" x2="480" y2="250" stroke="var(--gold-400)" stroke-opacity="0.16"/>
+      <circle cx="250" cy="250" r="30" fill="var(--gold-400)" fill-opacity="0.2"/>
+      <circle cx="250" cy="250" r="8" fill="var(--gold-300)"/>
+    </svg>
+    <div class="hero-inner">
+      <div class="eyebrow">Anchored Intelligence</div>
+      <h1>The <em>Newsletters.</em></h1>
+      <p class="intro">Weekly psychological and strategic intelligence exploring the invisible patterns shaping people, pressure, leadership, and performance.</p>
+      <div class="pills">
         <span class="pill">Psychology</span>
         <span class="pill">Leadership</span>
         <span class="pill">Strategic Insight</span>
         <span class="pill">20 Issues</span>
       </div>
+    </div>
+  </section>
 
-    </header>
+  <div class="wrap"><div class="divider"></div></div>
 
-    <section class="grid">
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 01</p>
-          <h2>Anchored Intelligence</h2>
-          <p>
-            How emotional avoidance silently reshapes decisions, 
-            leadership, organizations, and identity—until relief 
-            becomes mistaken for wisdom.
-          </p>
-          <a href="Issue01.html">Open Newsletter →</a>
+  <section class="issues">
+    <div class="wrap">
+      <div class="issues-head">
+        <div>
+          <div class="eyebrow">Archive</div>
+          <h2>Ideas to think with.</h2>
         </div>
-      </article>
+        <div class="count">20 issues &middot; Issue 01 to Issue 20</div>
+      </div>
+      <div class="grid">
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 02</p>
-          <h2>The Proximity Tax</h2>
-          <p>
-            How emotional relief quietly becomes strategic self-sabotage-
-            reshaping founders, organizations, decisions, relationships, 
-            and long-term human potential.
-          </p>
-          <a href="Issue02.html">Open Newsletter →</a>
-        </div>
-      </article>
+      <a class="card reveal" href="Issue01.html">
+        <div class="card-top"><span class="num">01</span><span class="issue">Issue 01</span></div>
+        <h3>Anchored Intelligence</h3>
+        <p>How emotional avoidance silently reshapes decisions, leadership, organizations, and identity—until relief becomes mistaken for wisdom.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 03</p>
-          <h2>The Sovereignty Collapse</h2>
-          <p>
-            How avoidance evolves into a navigation system, 
-            silently surrendering autonomy and allowing 
-            opposition to determine direction, identity, and leadership.
-          </p>
-          <a href="Issue03.html">Open Newsletter →</a>
-        </div>
-      </article>
+      <a class="card reveal" href="Issue02.html">
+        <div class="card-top"><span class="num">02</span><span class="issue">Issue 02</span></div>
+        <h3>The Proximity Tax</h3>
+        <p>How emotional relief quietly becomes strategic self-sabotage- reshaping founders, organizations, decisions, relationships, and long-term human potential.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 04</p>
-          <h2>Shadow Governance Architecture</h2>
-          <p>
-            How founder's psychology silently becomes 
-            organizational architecture, reshaping 
-            culture, truth, decisions, accountability, 
-            and long-term performance.
-          </p>
-          <a href="Issue04.html">Open Newsletter →</a>
-        </div>
-      </article>
+      <a class="card reveal" href="Issue03.html">
+        <div class="card-top"><span class="num">03</span><span class="issue">Issue 03</span></div>
+        <h3>The Sovereignty Collapse</h3>
+        <p>How avoidance evolves into a navigation system, silently surrendering autonomy and allowing opposition to determine direction, identity, and leadership.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 05</p>
-          <h2>The Righteousness Loop</h2>
-          <p>
-            How emotional defenses become moral certainty, 
-            making identity resistant to feedback, 
-            learning, correction, and strategic decision-making.
-          </p>
-          <a href="Issue05.html">Open Newsletter →</a>
-        </div>
-      </article>
+      <a class="card reveal" href="Issue04.html">
+        <div class="card-top"><span class="num">04</span><span class="issue">Issue 04</span></div>
+        <h3>Shadow Governance Architecture</h3>
+        <p>How founder's psychology silently becomes organizational architecture, reshaping culture, truth, decisions, accountability, and long-term performance.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 06</p>
-          <h2>The Decoupled Mind</h2>
-          <p>
-            How identity becomes psychologically protected, 
-            making beliefs feel morally unquestionable 
-            and preventing truth, growth, adaptation, and strategic self-governance.
-          </p>
-          <a href="Issue06.html">Open Newsletter →</a>
-        </div>
-      </article>
+      <a class="card reveal" href="Issue05.html">
+        <div class="card-top"><span class="num">05</span><span class="issue">Issue 05</span></div>
+        <h3>The Righteousness Loop</h3>
+        <p>How emotional defenses become moral certainty, making identity resistant to feedback, learning, correction, and strategic decision-making.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 07</p>
-          <h2>The Weaponized Neutrality</h2>
-          <p>
-            How emotional independence preserves opportunities, 
-            expands strategic optionality, and transforms neutrality 
-            from personal recovery into lasting competitive advantage.
-          </p>
-          <a href="Issue07.html">Open Newsletter →</a>
-        </div>
-      </article>
+      <a class="card reveal" href="Issue06.html">
+        <div class="card-top"><span class="num">06</span><span class="issue">Issue 06</span></div>
+        <h3>The Decoupled Mind</h3>
+        <p>How identity becomes psychologically protected, making beliefs feel morally unquestionable and preventing truth, growth, adaptation, and strategic self-governance.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 08</p>
-          <h2>Emotional Governance Infrastructure</h2>
-          <p>
-            How organizations transform individual wisdom into enduring 
-            systems, preserving strategic clarity through governance, 
-            institutional memory, and emotionally resilient decision-making.
-          </p>
-          <a href="Issue08.html">Open Newsletter →</a> 
-        </div>
-      </article>
+      <a class="card reveal" href="Issue07.html">
+        <div class="card-top"><span class="num">07</span><span class="issue">Issue 07</span></div>
+        <h3>The Weaponized Neutrality</h3>
+        <p>How emotional independence preserves opportunities, expands strategic optionality, and transforms neutrality from personal recovery into lasting competitive advantage.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 09</p>
-          <h2>The When-Then Script</h2>
-          <p>
-            How invisible “when–then” contracts postpone emotional permission, 
-            making achievement carry psychological burdens it was never meant to bear.
-          </p>
-          <a href="Issue09.html">Open Newsletter →</a> 
-        </div>
-      </article>
+      <a class="card reveal" href="Issue08.html">
+        <div class="card-top"><span class="num">08</span><span class="issue">Issue 08</span></div>
+        <h3>Emotional Governance Infrastructure</h3>
+        <p>How organizations transform individual wisdom into enduring systems, preserving strategic clarity through governance, institutional memory, and emotionally resilient decision-making.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 10</p>
-          <h2>The Permanence Illusion</h2>
-          <p>
-            How temporary experiences become permanent conclusions, quietly shaping identity, 
-            ambition, healing, and the stories people tell about themselves.
-          </p>
-          <a href="Issue10.html">Open Newsletter →</a> 
-        </div>
-      </article>
+      <a class="card reveal" href="Issue09.html">
+        <div class="card-top"><span class="num">09</span><span class="issue">Issue 09</span></div>
+        <h3>The When-Then Script</h3>
+        <p>How invisible “when–then” contracts postpone emotional permission, making achievement carry psychological burdens it was never meant to bear.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 11</p>
-          <h2>The Invisible Architecture</h2>
-          <p>
-            How invisible structures quietly shape lives, organizations, and legacy—revealing 
-            that significance often exists long before it becomes visible.
-          </p>
-          <a href="Issue11.html">Open Newsletter →</a> 
-        </div>
-      </article>
+      <a class="card reveal" href="Issue10.html">
+        <div class="card-top"><span class="num">10</span><span class="issue">Issue 10</span></div>
+        <h3>The Permanence Illusion</h3>
+        <p>How temporary experiences become permanent conclusions, quietly shaping identity, ambition, healing, and the stories people tell about themselves.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 12</p>
-          <h2>The Floor Beneath Everything</h2>
-          <p>
-            How resilience is built through practice, creating an internal foundation that sustains identity, 
-            leadership, recovery, and performance under pressure.
-          </p>
-          <a href="Issue12.html">Open Newsletter →</a> 
-        </div>
-      </article>
+      <a class="card reveal" href="Issue11.html">
+        <div class="card-top"><span class="num">11</span><span class="issue">Issue 11</span></div>
+        <h3>The Invisible Architecture</h3>
+        <p>How invisible structures quietly shape lives, organizations, and legacy—revealing that significance often exists long before it becomes visible.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 13</p>
-          <h2>What Preparation Produces</h2>
-          <p>
-            How preparation quietly shapes character, revealing that the deepest product of disciplined practice 
-            is not capability - but the person it creates.
-          </p>
-          <a href="Issue13.html">Open Newsletter →</a> 
-        </div>
-      </article>
+      <a class="card reveal" href="Issue12.html">
+        <div class="card-top"><span class="num">12</span><span class="issue">Issue 12</span></div>
+        <h3>The Floor Beneath Everything</h3>
+        <p>How resilience is built through practice, creating an internal foundation that sustains identity, leadership, recovery, and performance under pressure.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 14</p>
-          <h2>What the Practice Became</h2>
-          <p>
-            How completion becomes a reorientation, revealing that happiness is practiced 
-            capacity not a destination, reward, or final arrival.
-          </p>
-          <a href="Issue14.html">Open Newsletter →</a> 
-        </div>
-      </article>
+      <a class="card reveal" href="Issue13.html">
+        <div class="card-top"><span class="num">13</span><span class="issue">Issue 13</span></div>
+        <h3>What Preparation Produces</h3>
+        <p>How preparation quietly shapes character, revealing that the deepest product of disciplined practice is not capability - but the person it creates.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 15</p>
-          <h2>When the Environment Becomes Real</h2>
-          <p>
-            How theory, mental models, and values are tested by real environments, and 
-            how repeated exposure turns intention into reliable behavior.
-          </p>
-          <a href="Issue15.html">Open Newsletter →</a> 
-        </div>
-      </article>
+      <a class="card reveal" href="Issue14.html">
+        <div class="card-top"><span class="num">14</span><span class="issue">Issue 14</span></div>
+        <h3>What the Practice Became</h3>
+        <p>How completion becomes a reorientation, revealing that happiness is practiced capacity not a destination, reward, or final arrival.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 16</p>
-          <h2>What Remains When We Leave?</h2>
-          <p>
-            Anchored Intelligence explores the invisible patterns that shape human behavior, 
-            leadership, pressure, performance, and lasting impact.
-          </p>
-          <a href="Issue16.html">Open Newsletter →</a> 
-        </div>
-      </article>
+      <a class="card reveal" href="Issue15.html">
+        <div class="card-top"><span class="num">15</span><span class="issue">Issue 15</span></div>
+        <h3>When the Environment Becomes Real</h3>
+        <p>How theory, mental models, and values are tested by real environments, and how repeated exposure turns intention into reliable behavior.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 17</p>
-          <h2>The Weight Behind the Moment</h2>
-          <p>
-            The edition explores how visible triggers can activate accumulated memory,
-            attachment, and meaning, making reactions larger than the moment itself.
-          </p>
-          <a href="Issue17.html">Open Newsletter →</a> 
-        </div>
-      </article>
+      <a class="card reveal" href="Issue16.html">
+        <div class="card-top"><span class="num">16</span><span class="issue">Issue 16</span></div>
+        <h3>What Remains When We Leave?</h3>
+        <p>Anchored Intelligence explores the invisible patterns that shape human behavior, leadership, pressure, performance, and lasting impact.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 18</p>
-          <h2>What Was Already There</h2>
-          <p>
-            This edition explores how visible triggers release accumulated pressure, 
-            revealing causes that began long before the final moment.
-          </p>
-          <a href="Issue18.html">Open Newsletter →</a> 
-        </div>
-      </article>
+      <a class="card reveal" href="Issue17.html">
+        <div class="card-top"><span class="num">17</span><span class="issue">Issue 17</span></div>
+        <h3>The Weight Behind the Moment</h3>
+        <p>The edition explores how visible triggers can activate accumulated memory, attachment, and meaning, making reactions larger than the moment itself.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 19</p>
-          <h2>When the Small Thing Isn't the Whole Story</h2>
-          <p>
-            This edition explores how a visible catalyst can reveal deeper causes, accumulated 
-            pressure, and patterns already developing beneath the moment.
-          </p>
-          <a href="Issue19.html">Open Newsletter →</a> 
-        </div>
-      </article>
+      <a class="card reveal" href="Issue18.html">
+        <div class="card-top"><span class="num">18</span><span class="issue">Issue 18</span></div>
+        <h3>What Was Already There</h3>
+        <p>This edition explores how visible triggers release accumulated pressure, revealing causes that began long before the final moment.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
 
-      <article class="card">
-        <div class="inner">
-          <p class="label">Issue 20</p>
-          <h2>When the Fix Works; But the Problem Returns</h2>
-          <p>
-            This edition explores why fixing visible triggers can stop symptoms without resolving
-            the deeper pattern that keeps producing them.
-          </p>
-          <a href="Issue20.html">Open Newsletter →</a> 
-        </div>
-      </article>
-    
-    </section>
-    <footer>
-      Mind Anchor - Jai
-    </footer>
-  </main>
+      <a class="card reveal" href="Issue19.html">
+        <div class="card-top"><span class="num">19</span><span class="issue">Issue 19</span></div>
+        <h3>When the Small Thing Isn't the Whole Story</h3>
+        <p>This edition explores how a visible catalyst can reveal deeper causes, accumulated pressure, and patterns already developing beneath the moment.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+
+      <a class="card reveal" href="Issue20.html">
+        <div class="card-top"><span class="num">20</span><span class="issue">Issue 20</span></div>
+        <h3>When the Fix Works; But the Problem Returns</h3>
+        <p>This edition explores why fixing visible triggers can stop symptoms without resolving the deeper pattern that keeps producing them.</p>
+        <span class="read">Read Issue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Mind.Anchor</div>
+        <p style="max-width:34ch; font-size:14.5px;">A reflection and self-understanding platform exploring the patterns behind how we think, feel, react, and decide.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="https://mindanchor-jai.github.io/Articles/" target="_blank" rel="noopener">Articles</a></li>
+          <li><a href="https://mindanchor-jai.github.io/Framework/Library.html" target="_blank" rel="noopener">Framework Library</a></li>
+          <li><a href="https://mindanchor-jai.github.io/Forms/index.html" target="_blank" rel="noopener">Weekly Workbooks</a></li>
+          <li><a href="https://open.spotify.com/show/71PbRvkzViXHC6QlTNsN4w" target="_blank" rel="noopener">Podcast</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://mindanchor-jai.github.io/#newsletter">Anchored Intelligence</a></li>
+          <li><a href="https://www.linkedin.com/in/jainakra" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/mind.anchor_jai/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://x.com/MindAnchor_Jai" target="_blank" rel="noopener">X</a></li>
+          <li><a href="https://www.youtube.com/@MindAnchor_Jai" target="_blank" rel="noopener">YouTube</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <ul>
+          <li><a href="https://mindanchor-jai.github.io/#about">Mind Anchor</a></li>
+          <li><a href="https://mindanchor-jai.github.io/#founder">Founder</a></li>
+          <li><a href="https://mindanchor-jai.github.io/#services">Services</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Mind Anchor. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
 </body>
 </html>
