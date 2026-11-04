@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchored Intelligence — Issue 26 | Mind Anchor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ─── Variables ─── */
+:root {
+  --navy-deepest: #040d1f;
+  --navy-deep:    #070f24;
+  --navy-mid:     #0c1735;
+  --gold-bright:  #d4a843;
+  --gold-mid:     #b8901f;
+  --gold-soft:    #c8a84b;
+  --cream:        #f5edd8;
+  --text-primary:   #ece1c8;
+  --text-secondary: rgba(236,225,200,0.82);
+  --text-muted:     rgba(236,225,200,0.6);
+  --divider:        rgba(212,168,67,0.22);
+  --divider-strong: rgba(212,168,67,0.5);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background-color:var(--navy-deepest);
+  color:var(--text-primary);
+  font-family:'EB Garamond',Georgia,serif;
+  font-size:19px;line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--gold-bright);}
+.wrap{max-width:720px;margin:0 auto;padding:0 28px;}
+
+/* ─── Ribbon ─── */
+.ribbon{height:3px;width:100%;background:linear-gradient(90deg,var(--gold-mid),var(--gold-bright),var(--gold-soft),var(--gold-mid));}
+
+/* ─── Masthead ─── */
+.masthead{padding:44px 0 40px;text-align:center;border-bottom:1px solid var(--divider);}
+.wordmark{font-family:'Cinzel',serif;font-size:12.5px;letter-spacing:0.28em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:16px;}
+.masthead h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,5.5vw,44px);color:var(--cream);letter-spacing:0.01em;}
+.masthead h1 em{font-style:italic;font-weight:400;color:var(--gold-bright);}
+.issue-line{font-family:'EB Garamond',serif;font-size:16.5px;color:var(--text-secondary);margin-top:10px;}
+.issue-line .num{font-family:'Cinzel',serif;font-size:12px;letter-spacing:0.12em;color:var(--gold-soft);}
+.tagline{font-family:'EB Garamond',serif;font-style:italic;font-size:15px;color:var(--text-muted);margin-top:14px;}
+
+/* ─── TOC ─── */
+.toc{margin:44px 0 8px;}
+.toc-label{font-family:'Cinzel',serif;font-size:12px;letter-spacing:0.18em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:18px;}
+.toc-list{list-style:none;}
+.toc-item{border-top:1px solid var(--divider);padding:14px 0;}
+.toc-item:last-child{border-bottom:1px solid var(--divider);}
+.toc-row{display:flex;align-items:baseline;gap:14px;}
+.toc-num{font-family:'Cinzel',serif;font-size:13px;color:var(--gold-bright);min-width:26px;}
+.toc-title{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--cream);text-decoration:none;flex:1;}
+.toc-sub{font-family:'EB Garamond',serif;font-size:14.5px;color:var(--text-muted);margin-left:40px;margin-top:3px;}
+
+/* ─── Section marker ─── */
+.section-block{padding:54px 0;}
+.section-marker{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+.marker-num{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.1em;color:var(--gold-bright);white-space:nowrap;}
+.marker-rule{flex:1;height:1px;background:var(--divider-strong);}
+.marker-tag{font-family:'Cinzel',serif;font-size:12px;letter-spacing:0.16em;color:var(--gold-soft);text-transform:uppercase;white-space:nowrap;}
+
+.section-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(27px,4.2vw,36px);color:var(--cream);line-height:1.25;margin-bottom:12px;}
+.section-title em{font-style:italic;color:var(--gold-bright);}
+.section-subtitle{font-family:'EB Garamond',serif;font-style:italic;font-size:16px;color:var(--text-muted);margin-bottom:22px;}
+
+.body-text p{margin-bottom:19px;color:var(--text-primary);}
+.body-text p:last-child{margin-bottom:0;}
+.body-text ul{margin:0 0 19px 22px;color:var(--text-primary);}
+.body-text li{margin-bottom:6px;}
+
+.pull-quote{font-family:'Cormorant Garamond',serif;font-size:23px;font-style:italic;color:var(--cream);line-height:1.5;border-left:2px solid var(--gold-bright);padding-left:22px;margin:30px 0;}
+
+.insight-box{background:var(--navy-mid);border-left:2px solid var(--gold-bright);padding:22px 24px;margin:30px 0;}
+.insight-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.12em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:10px;}
+.insight-text{font-family:'EB Garamond',serif;font-size:17px;color:var(--text-secondary);line-height:1.75;}
+
+/* ─── Ashes ─── */
+.ashes-section{background:var(--navy-deep);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider);}
+.episode-tag{font-family:'Cinzel',serif;font-size:11.5px;letter-spacing:0.14em;color:var(--gold-soft);text-transform:uppercase;}
+
+/* ─── Closing ─── */
+.closing-block{padding:58px 0 50px;text-align:center;border-top:1px solid var(--divider);}
+.closing-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:25px;color:var(--gold-soft);line-height:1.6;max-width:560px;margin:0 auto 30px;}
+.closing-body{max-width:560px;margin:0 auto;font-family:'EB Garamond',serif;font-size:16.5px;color:var(--text-secondary);line-height:1.85;text-align:left;}
+.closing-body p{margin-bottom:16px;}
+.closing-byline{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.1em;color:var(--text-muted);margin-top:26px;text-transform:uppercase;}
+
+/* ─── Journey ─── */
+.journey{background:var(--navy-deep);border-top:1px solid var(--divider);padding:56px 0 50px;}
+.journey-eyebrow{font-family:'Cinzel',serif;font-size:12px;letter-spacing:0.16em;color:var(--gold-soft);text-transform:uppercase;text-align:center;margin-bottom:14px;}
+.journey-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(25px,4vw,32px);color:var(--cream);text-align:center;line-height:1.3;margin-bottom:10px;}
+.journey-title em{font-style:italic;color:var(--gold-bright);}
+.journey-intro{text-align:center;font-family:'EB Garamond',serif;font-size:15.5px;color:var(--text-muted);margin-bottom:38px;}
+
+.journey-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--divider);border-left:1px solid var(--divider);}
+.journey-card{border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);padding:26px 24px;}
+.journey-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.1em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:10px;}
+.journey-card-title{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--cream);margin-bottom:8px;}
+.journey-card-desc{font-family:'EB Garamond',serif;font-size:14.5px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px;}
+.journey-link{font-family:'EB Garamond',serif;font-size:14.5px;color:var(--gold-bright);text-decoration:underline;text-underline-offset:3px;}
+.journey-email{display:block;font-family:'EB Garamond',serif;font-size:14px;color:var(--gold-bright);text-decoration:underline;text-underline-offset:3px;margin-bottom:10px;}
+
+/* ─── Footer ─── */
+.footer{padding:36px 0;text-align:center;border-top:1px solid var(--divider);}
+.footer-wordmark{font-family:'Cinzel',serif;font-size:11.5px;letter-spacing:0.22em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:8px;}
+.footer-line{font-family:'EB Garamond',serif;font-size:13.5px;color:var(--text-muted);}
+.footer-line a{color:var(--text-muted);text-decoration:underline;text-underline-offset:2px;}
+
+@media (max-width:640px){
+  body{font-size:17.5px;}
+  .journey-grid{grid-template-columns:1fr;}
+  .toc-sub{margin-left:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="ribbon"></div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="wordmark">Mind Anchor</div>
+    <h1><em>Anchored</em> Intelligence</h1>
+    <p class="issue-line"><span class="num">Issue 26</span> · When Uncertainty Becomes a Question</p>
+    <p class="tagline">Invisible patterns shaping people, pressure, and performance.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <nav class="toc" aria-label="Table of Contents">
+    <div class="toc-label">Contents — Issue 26</div>
+    <ul class="toc-list">
+      <li class="toc-item">
+        <div class="toc-row"><span class="toc-num">01</span><a href="#opening-signal" class="toc-title">Opening Signal</a></div>
+        <div class="toc-sub">When uncertainty becomes a question</div>
+      </li>
+      <li class="toc-item">
+        <div class="toc-row"><span class="toc-num">02</span><a href="#implementation-lens" class="toc-title">Implementation Lens</a></div>
+        <div class="toc-sub">Warning or question</div>
+      </li>
+      <li class="toc-item">
+        <div class="toc-row"><span class="toc-num">03</span><a href="#field-diagnosis" class="toc-title">Field Diagnosis</a></div>
+        <div class="toc-sub">Uncertainty as question, not warning</div>
+      </li>
+      <li class="toc-item">
+        <div class="toc-row"><span class="toc-num">04</span><a href="#ashes" class="toc-title">Ashes to Arrival</a></div>
+        <div class="toc-sub">Paulo Coelho — when fear stops making the decision</div>
+      </li>
+      <li class="toc-item">
+        <div class="toc-row"><span class="toc-num">05</span><a href="#journey" class="toc-title">Continue Your Journey</a></div>
+        <div class="toc-sub">Four pathways from here</div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- OPENING SIGNAL -->
+  <section class="section-block" id="opening-signal">
+    <div class="section-marker">
+      <span class="marker-num">01</span><div class="marker-rule"></div><span class="marker-tag">Opening Signal</span>
+    </div>
+    <h2 class="section-title">When Uncertainty<br>Becomes a <em>Question</em></h2>
+
+    <div class="body-text">
+      <p>There are moments when not knowing what will happen feels like a reason to step back. The outcome is unclear, something could go wrong, and waiting can seem like the safest response. Sometimes it is. But sometimes the decision to retreat arrives before we have properly considered what the uncertainty means.</p>
+      <p>The distinction is not between being cautious and being courageous. It is between choosing to wait because something genuinely needs attention and withdrawing because uncertainty itself has begun to feel like a verdict.</p>
+      <p>This issue explores what changes when not knowing is no longer treated as an automatic instruction to stop. Fear may remain, and the outcome may still be uncertain. Yet there may be another question worth asking: not only what could go wrong, but what might become clearer if we proceed.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">This Issue</div>
+      <div class="insight-text">Confidence need not mean knowing how things will turn out. It may begin with being able to consider a decision without demanding certainty first. And that leaves a deeper question: if confidence does not depend on certainty, what does it ultimately rest on?</div>
+    </div>
+  </section>
+
+  <!-- IMPLEMENTATION LENS -->
+  <section class="section-block" id="implementation-lens">
+    <div class="section-marker">
+      <span class="marker-num">02</span><div class="marker-rule"></div><span class="marker-tag">Implementation Lens</span>
+    </div>
+    <h2 class="section-title">Warning<br>or <em>Question</em></h2>
+    <p class="section-subtitle">When uncertainty stops being an automatic instruction to retreat.</p>
+
+    <div class="body-text">
+      <p>There are moments when pulling back feels like the obvious response. You do not know what will happen. You are unsure whether you can handle the situation. Before you have fully considered it, you may already find yourself stepping away — <em>I need to know more. I should wait until things are clearer. What if this goes badly?</em></p>
+      <p>There is a distinction worth examining: was waiting a decision you considered, or did uncertainty produce an immediate reflex to retreat? A considered decision to wait may reflect information that genuinely matters. A reflex can happen before you have had the opportunity to understand what is actually unknown.</p>
+      <p>This episode introduces a change in how uncertainty can be interpreted. Earlier, the question might have been <em>What happens if I do?</em> Later, it could become <em>What can I learn if I try?</em> The uncertainty itself does not necessarily become smaller, and fear may remain. What changes is the meaning attached to not knowing.</p>
+      <p>The approved workbook, <em>Warning or Question</em>, gives you an opportunity to examine this distinction in one moment from your own experience. Choose a recent situation in which you felt unsure about something you could have done. Look at what that uncertainty seemed to tell you to do: did you feel an immediate pull to withdraw, deliberately decide to wait, or some of both? Then consider what you did not know at the time, and what trying might have shown you. The workbook also asks whether there was a real risk worth respecting.</p>
+    </div>
+
+    <div class="pull-quote">The presence of uncertainty does not, by itself, establish that retreat is necessary.</div>
+
+    <div class="body-text">
+      <p>This matters because the distinction is not between being cautious and being confident, nor is it an argument that every uncertain situation should be entered. Sometimes waiting is a considered decision; sometimes more information or preparation is genuinely needed. The point is to recognise when uncertainty has been treated as a verdict before a decision has actually been made.</p>
+      <p>You do not have to reach a particular conclusion. You may recognise a reflex, find that your hesitation was considered, see both, or remain unsure — that, too, is a valid observation. What becomes visible is that uncertainty and confidence do not have to be opposites: a person can still feel afraid and remain engaged. This is a change in interpretation, not a rule for acting under uncertainty.</p>
+      <p>It also leaves a larger question open: if confidence does not depend on certainty, what does confidence ultimately rest on? That is the question the next episode takes up.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">The Movement This Section Makes</div>
+      <div class="insight-text">The episode establishes why uncertainty can become a question rather than a warning. The workbook gives you space to see whether that distinction appears in your own experience.</div>
+    </div>
+  </section>
+
+  <!-- FIELD DIAGNOSIS -->
+  <section class="section-block" id="field-diagnosis">
+    <div class="section-marker">
+      <span class="marker-num">03</span><div class="marker-rule"></div><span class="marker-tag">Field Diagnosis</span>
+    </div>
+    <h2 class="section-title">Uncertainty as Question,<br>Not <em>Warning</em></h2>
+
+    <div class="body-text">
+      <p>There are moments when uncertainty appears and the response seems to follow immediately. Something is unfamiliar, the outcome is unclear, a possibility of failure enters the picture, and before the situation has been considered fully, the person begins to pull back. The response may sound reasonable:</p>
+      <ul>
+        <li>"I'll do it when I know more."</li>
+        <li>"I need to know what will happen first."</li>
+        <li>"What if this goes badly?"</li>
+      </ul>
+      <p>Sometimes waiting is the considered choice. More information may genuinely be necessary, preparation may be incomplete, or there may be something important that should not be overlooked. But sometimes the retreat happens before a decision has really been made. A considered decision to wait is not the same as an automatic reflex to retreat.</p>
+      <p>In the earlier part of this inquiry, uncertainty could feel like a reason not to act: the possibility that something might go wrong became closely associated with the conclusion that perhaps the action should not be taken. But as acting without complete confidence became more familiar, the question could begin to change. Instead of asking only <em>What happens if I do?</em>, the person could begin asking <em>What can I learn if I try?</em></p>
+    </div>
+
+    <div class="pull-quote">The shift is not from fear to fearlessness. It is from treating uncertainty as a verdict to recognising it as information about what remains unknown.</div>
+
+    <div class="body-text">
+      <p>The uncertainty had not disappeared. Fear could still be present, and the possibility of embarrassment or failure had not been removed. What changed was the interpretation attached to not knowing. This matters because confidence is often imagined as a state in which fear and doubt have finally gone away; under that assumption, any remaining uncertainty can feel like evidence that a person is still not ready. A person may instead remain uncertain and still be less inclined to treat that uncertainty as an automatic instruction to withdraw.</p>
+      <p>That does not mean every uncertain situation should be entered, or that caution, preparation, or a decision to wait should be dismissed. Uncertainty can contain genuine risks. The point is that uncertainty alone does not settle what the appropriate response must be.</p>
+      <p>This also brings the previous episode into perspective. Episode 5 examined how action can create experiences that, when reflected upon, may become evidence about capability. Episode 6 considers one change that can follow: the person may begin to interpret unfamiliar situations differently because uncertainty no longer carries quite the same instruction to retreat. The older doubt need not vanish for this to become visible.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">A Question to Carry</div>
+      <div class="insight-text">When you feel unsure, what does your uncertainty usually ask you to do? Is that a decision, or a reflex? The question does not tell you whether to proceed; it creates room to recognise what is happening before interpreting the response as a settled decision. The larger question remains open: if confidence does not require certainty, and uncertainty does not automatically mean retreat, what is confidence ultimately grounded in? That is where the next article takes the inquiry.</div>
+    </div>
+  </section>
+
+  <!-- ASHES TO ARRIVAL -->
+  <section class="section-block ashes-section" id="ashes">
+    <div class="section-marker">
+      <span class="marker-num">04</span><div class="marker-rule"></div><span class="marker-tag">Ashes to Arrival</span>
+    </div>
+    <div class="episode-tag">Episode 28</div>
+    <h2 class="section-title" style="margin-top:10px;">When Fear Stops<br>Making the <em>Decision</em></h2>
+    <p class="section-subtitle">Paulo Coelho — writing <em>The Alchemist</em> without knowing how it would end.</p>
+
+    <div class="body-text">
+      <p>There is an important difference between feeling uncertain about an outcome and treating that uncertainty as a reason not to act. Paulo Coelho's experience while writing <em>The Alchemist</em> brings that distinction into focus.</p>
+      <p>He had reasons to doubt the outcome. His earlier books had not achieved commercial success, and the possibility that another attempt might fail was not imaginary. He was facing uncertainty with a history that gave it weight. Yet something changed in how he approached the decision to write. The interesting part is not simply that he continued despite being afraid; it is that the question guiding his attention changed. Instead of remaining with the possibility of failure, he began considering what he might discover by actually writing the book.</p>
+      <p>The first question asks uncertainty to predict the future. It places attention on an outcome that has not yet happened and invites the person to treat the possibility of failure as information about what they should do now. The second approaches the same uncertainty differently: it recognises that the outcome is unknown, but also that acting may produce information that thinking alone cannot. The fear has not necessarily become smaller. What has changed is the role it plays in the decision.</p>
+    </div>
+
+    <div class="pull-quote">The decision was made without knowledge of the outcome. The outcome became known only afterwards.</div>
+
+    <div class="body-text">
+      <p>We often assume that fear must be resolved before a meaningful action can begin, and wait to feel sufficiently certain. But uncertainty does not always offer that resolution. Coelho completed the book in two weeks, while the question of its reception remained unanswered. Its eventual international success belongs to a later part of the story, and it should not make the decision to write appear easier or more certain than it was at the time.</p>
+      <p>This offers a more precise understanding of confidence. Confidence does not always mean believing that something will succeed. Sometimes it means being able to make a considered decision without requiring that guarantee first. Fear can contain information about what matters, what is at stake, and what might go wrong, but it does not automatically determine what should happen next. Treating every fearful prediction as an instruction gives uncertainty more authority than it deserves.</p>
+      <p>There is also a limit to this interpretation. Not every fear should be ignored, and not every uncertain action is worth taking; sometimes fear points toward a genuine risk that deserves attention. The distinction is between examining that risk and allowing the mere presence of fear to settle the decision.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">What This Story Reveals</div>
+      <div class="insight-text">Fear can remain part of the experience without becoming the authority over the decision. The future did not become predictable before he began. Sometimes that is the point at which uncertainty stops being a reason to wait and becomes a question that action itself can help answer.</div>
+    </div>
+  </section>
+
+  <!-- CLOSING REFLECTION -->
+  <section class="closing-block" id="closing">
+    <h2 class="section-title" style="font-size:clamp(26px,4vw,34px);margin-bottom:22px;">Closing <em>Reflection</em></h2>
+    <div class="closing-quote">Not knowing what will happen is not yet a decision about what to do.</div>
+    <div class="closing-body">
+      <p>This issue followed one distinction at three distances: uncertainty as a verdict or a question in the opening, a workbook that separates a considered pause from a reflex to retreat, and Paulo Coelho beginning a book whose reception he could not know.</p>
+      <p>None of this asks you to ignore real risk. It asks something narrower: before letting uncertainty settle the matter, notice what it is actually asking of you.</p>
+    </div>
+    <div class="closing-byline">Mind Anchor · Anchored Intelligence · Issue 26</div>
+  </section>
+
+</div><!-- /wrap -->
+
+<!-- CONTINUE YOUR JOURNEY -->
+<section class="journey" id="journey" aria-label="Continue Your Journey">
+  <div class="journey-eyebrow">Continue Your Journey</div>
+  <h2 class="journey-title">Learning doesn't end<br>with one <em>question.</em></h2>
+  <p class="journey-intro">Choose the next step that best matches where you are today.</p>
+
+  <div class="journey-grid">
+    <div class="journey-card">
+      <div class="journey-num">01 · Continue Learning</div>
+      <div class="journey-card-title">The Complete Knowledge Library</div>
+      <p class="journey-card-desc">Explore the complete Knowledge Library and the supporting article on Confidence Through Evidence.</p>
+      <a href="https://mindanchors.com/Articles/Confidence%20Through%20Evidence/06(06).html" class="journey-link">Explore the Article →</a>
+    </div>
+    <div class="journey-card">
+      <div class="journey-num">02 · Reflect Independently</div>
+      <div class="journey-card-title">Week 6 Workbook</div>
+      <p class="journey-card-desc">Sometimes something small happens, and the reaction that follows is much bigger than the moment itself.</p>
+      <a href="https://mindanchors.com/Forms/CTEWB/WB_W6.html" class="journey-link">Open the Workbook →</a>
+    </div>
+    <div class="journey-card">
+      <div class="journey-num">03 · Contact Mind Anchor</div>
+      <div class="journey-card-title">Institutional Communication</div>
+      <p class="journey-card-desc">For speaking engagements, partnerships, collaborations, media enquiries, or general institutional communication.</p>
+      <a href="mailto:mind.anchor@zohomail.in" class="journey-email">mind.anchor@zohomail.in</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWTTbHcbT40PYG-wqRX7cyqprlqXYnOEpkrJ4YVeC84s-UMw/viewform" class="journey-link">Open Contact Form →</a>
+    </div>
+    <div class="journey-card">
+      <div class="journey-num">04 · Strategic Inquiry</div>
+      <div class="journey-card-title">Structured Professional Engagement</div>
+      <p class="journey-card-desc">Paid strategic engagements for individuals, founders, leaders, and organisations navigating decisions, recurring patterns, or situations that require deeper structured analysis. Submit an inquiry; your situation will be reviewed first, and if there is a suitable fit, the appropriate engagement, scope, and fee will be shared with you directly.</p>
+      <a href="https://mindanchors.com/Enquiry/" class="journey-link">Begin an Inquiry →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-wordmark">Mind Anchor</div>
+  <div class="footer-line">Anchored Intelligence · Issue 26 · <a href="mailto:mind.anchor@zohomail.in">mind.anchor@zohomail.in</a></div>
+</footer>
+
+</body>
+</html>
